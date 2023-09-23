@@ -1,0 +1,40 @@
+Thanks to Game Development Center for the great tutorials
+
+https://www.youtube.com/@GameDevelopmentCenter
+
+Laser beam
+
+MIT License
+
+Copyright (c) 2020 GDQuest
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+
+CC-By 4.0 - GDQuest and contributors - https://www.gdquest.com/
+
+Explosions from https://codemanu.itch.io/vfx-free-pack - This is a public domain asset, you can use it for both personal and comercial purposes.
+
+Some assets by Starlight Furnace - https://starlight-furnace.itch.io/isometric-map-pack-archology-south
+
+"I'm excited to make and share content for use in all sorts of rad projects, commercial or otherwise! Credit is greatly appreciated. "
+
+Jet from https://morozota.itch.io/fighters-21-century
+
+Fire animations from https://limofeus.itch.io/pixel-simulations, CC0 license

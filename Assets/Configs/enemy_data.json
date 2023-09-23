@@ -1,0 +1,27 @@
+{
+	"NormalTank": {
+		"speed": 110,
+		"hp": 200,
+		"damage": 21,
+		"sprite_path": "res://Assets/Enemies/tank_normal.png",
+		"cost": 100,
+		"move_sound": "average"
+	},
+	"FastTank": {
+		"speed": 150,
+		"hp": 50,
+		"damage": 5,
+		"sprite_path": "res://Assets/Enemies/tank_medium.png",
+		"cost": 50,
+		"move_sound": "fast"
+	},
+	"BossTank": {
+		"speed": 70,
+		"hp": 500,
+		"damage": 41,
+		"sprite_path": "res://Assets/Enemies/tank_huge.png",
+		"turret_sprite_path": "res://Assets/Enemies/big_gun.png",
+		"cost": 300,
+		"move_sound": "slow"
+	}
+}

@@ -1,0 +1,4 @@
+Duel Defense
+Copyright (c) 2023
+
+Thank you for playing! Below are the licenses for the projects that were used in the making of this game:

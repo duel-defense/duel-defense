@@ -1,0 +1,40 @@
+[gd_scene load_steps=8 format=3 uid="uid://chda2td08g4ne"]
+
+[ext_resource type="PackedScene" uid="uid://hxdgd1oagsk4" path="res://Scenes/UIScenes/MainMenu.tscn" id="1"]
+[ext_resource type="Script" path="res://Scenes/MainScenes/SceneHandler.gd" id="1_js57m"]
+[ext_resource type="Script" path="res://CommonScripts/ConfigurationManager.gd" id="4"]
+[ext_resource type="PackedScene" uid="uid://bnl7p1oeylqxr" path="res://Scenes/UIScenes/AboutPopup.tscn" id="4_4d0xc"]
+[ext_resource type="PackedScene" uid="uid://c7sq5e5ujjkt" path="res://Scenes/UIScenes/SettingsPopup.tscn" id="5_ciynv"]
+[ext_resource type="PackedScene" uid="uid://bw7rlknuhkw6x" path="res://Scenes/UIScenes/EditorPopup.tscn" id="6_qbtsl"]
+[ext_resource type="PackedScene" uid="uid://805uxnmkv55g" path="res://Scenes/UIScenes/EditorItemPopup.tscn" id="7_qa2fr"]
+
+[node name="SceneHandler" type="Node"]
+process_mode = 3
+script = ExtResource("1_js57m")
+
+[node name="ConfigurationManager" type="Node" parent="."]
+script = ExtResource("4")
+
+[node name="MainMenu" parent="." instance=ExtResource("1")]
+
+[node name="AboutPopup" parent="." instance=ExtResource("4_4d0xc")]
+initial_position = 1
+size = Vector2i(600, 300)
+visible = false
+
+[node name="SettingsPopup" parent="." instance=ExtResource("5_ciynv")]
+initial_position = 1
+visible = false
+
+[node name="EditorPopup" parent="." instance=ExtResource("6_qbtsl")]
+size = Vector2i(400, 500)
+visible = false
+
+[node name="EditorItemPopup" parent="." instance=ExtResource("7_qa2fr")]
+initial_position = 1
+size = Vector2i(300, 300)
+visible = false
+
+[connection signal="close_requested" from="AboutPopup" to="AboutPopup" method="_on_close_requested"]
+[connection signal="close_requested" from="EditorPopup" to="EditorPopup" method="_on_close_requested"]
+[connection signal="close_requested" from="EditorItemPopup" to="EditorItemPopup" method="_on_close_requested"]

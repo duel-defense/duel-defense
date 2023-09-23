@@ -1,0 +1,79 @@
+{
+	"category": {
+		"label": "Category",
+		"type": "dropdown",
+		"options": [
+			"Projectile",
+			"Custom",
+			"Missile",
+			"Ability"
+		]
+	},
+	"damage": {
+		"label": "Damage",
+		"type": "slider",
+		"min": 1,
+		"max": 1000,
+		"step": 0.5
+	},
+	"rof": {
+		"label": "Rate of Fire",
+		"type": "slider",
+		"min": 0.1,
+		"max": 5,
+		"step": 0.1
+	},
+	"range": {
+		"label": "Range",
+		"type": "slider",
+		"min": 20,
+		"max": 1000,
+		"step": 5
+	},
+	"build_anywhere": {
+		"label": "Build Anywhere",
+		"type": "checkbox"
+	},
+	"cost": {
+		"label": "Cost",
+		"type": "slider",
+		"min": 5,
+		"max": 1000,
+		"step": 5
+	},
+	"sound": {
+		"label": "Play Sound On Fire",
+		"type": "checkbox"
+	},
+	"in_build_menu": {
+		"label": "Show In Build Menu",
+		"type": "checkbox"
+	},
+	"speed": {
+		"label": "Speed",
+		"type": "slider",
+		"min": 20,
+		"max": 300,
+		"step": 5
+	},
+	"hp": {
+		"label": "Hit Points",
+		"type": "slider",
+		"min": 20,
+		"max": 300,
+		"step": 5
+	},
+	"move_sound": {
+		"label": "Move Sound",
+		"type": "dropdown",
+		"options": [
+			"average",
+			"fast",
+			"slow"
+		]
+	},
+	"sprite_path": {
+		"label": "Sprite Path",
+		"type": "text"
+	}
+}

@@ -1,0 +1,59 @@
+{
+	"time_between_waves": {
+		"label": "Seconds Between Waves",
+		"type": "slider",
+		"min": 1,
+		"max": 10
+	},
+	"money_change": {
+		"label": "Add to Starting Money",
+		"type": "slider",
+		"min": 0,
+		"max": 2000
+	},
+	"starting_base_health": {
+		"label": "Starting Base Health",
+		"type": "slider",
+		"min": 1,
+		"max": 200
+	},
+	"show_fps_monitor": {
+		"label": "Show FPS",
+		"type": "checkbox"
+	},
+	"master_volume": {
+		"label": "Master Volume",
+		"type": "slider",
+		"min": 0,
+		"max": 100,
+		"audio_bus": "Master"
+	},
+	"background_volume": {
+		"label": "Background Music Volume",
+		"type": "slider",
+		"min": 0,
+		"max": 100,
+		"audio_bus": "BackgroundMusic"
+	},
+	"interface_volume": {
+		"label": "Interface Effects Volume",
+		"type": "slider",
+		"min": 0,
+		"max": 100,
+		"audio_bus": "InterfaceEffects"
+	},
+	"sound_volume": {
+		"label": "Sound Effects Volume",
+		"type": "slider",
+		"min": 0,
+		"max": 100,
+		"audio_bus": "SoundEffects"
+	},
+	"ambience_volume": {
+		"label": "Ambience Volume",
+		"type": "slider",
+		"min": 0,
+		"max": 100,
+		"audio_bus": "Ambience"
+	}
+}

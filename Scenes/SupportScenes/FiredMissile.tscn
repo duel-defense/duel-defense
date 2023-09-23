@@ -1,0 +1,51 @@
+[gd_scene load_steps=8 format=3 uid="uid://dfahv7wvg27d"]
+
+[ext_resource type="Script" path="res://Scenes/SupportScenes/FiredMissile.gd" id="2"]
+[ext_resource type="Texture2D" uid="uid://d3yfx5lwee614" path="res://Assets/Towers/spaceMissiles_038.png" id="2_rny32"]
+[ext_resource type="AudioStream" uid="uid://dx47dxfqcmvt1" path="res://Assets/Audio/Sounds/thrusterFire_000.ogg" id="3"]
+
+[sub_resource type="RectangleShape2D" id="1"]
+size = Vector2(16, 8)
+
+[sub_resource type="Gradient" id="3"]
+offsets = PackedFloat32Array(0.010989, 0.967033, 0.978022, 1)
+colors = PackedColorArray(0.996078, 0.388235, 0.0392157, 1, 0.619608, 0.0156863, 0.0156863, 1, 0.243137, 0.00784314, 0.00784314, 1, 0.0117647, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="4"]
+gradient = SubResource("3")
+
+[sub_resource type="ParticleProcessMaterial" id="2"]
+spread = 0.0
+gravity = Vector3(0, 98, 0)
+color_ramp = SubResource("4")
+
+[node name="FiredMissile" type="Area2D"]
+script = ExtResource("2")
+
+[node name="Missile1" type="Sprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_rny32")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("1")
+
+[node name="SoundEffects" type="AudioStreamPlayer2D" parent="CollisionShape2D"]
+stream = ExtResource("3")
+volume_db = 4.5
+autoplay = true
+bus = &"SoundEffects"
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+position = Vector2(-18, 0)
+rotation = 1.5708
+scale = Vector2(3, 3)
+amount = 10
+process_material = SubResource("2")
+speed_scale = 3.0
+randomness = 0.3
+local_coords = true
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+
+[connection signal="body_entered" from="." to="." method="_on_Area2D_body_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenEnabler2D" to="." method="_on_visible_on_screen_enabler_2d_screen_exited"]

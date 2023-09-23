@@ -1,0 +1,497 @@
+{
+	"Map1": {
+		"waves": [
+			{
+				"turrets": [
+					{
+						"type": "GunT1",
+						"coords": {
+							"x": 2,
+							"y": 5
+						},
+						"delay": 0.5
+					},
+					{
+						"type": "GunT1",
+						"coords": {
+							"x": 2,
+							"y": 7
+						},
+						"delay": 0.5
+					},
+					{
+						"type": "MissileT1",
+						"coords": {
+							"x": 4,
+							"y": 5
+						},
+						"delay": 0.5
+					}
+				],
+				"enemies": [
+					{
+						"base": "Tank",
+						"category": "NormalTank",
+						"delay": 0.9
+					},
+					{
+						"base": "Tank",
+						"category": "NormalTank",
+						"delay": 1
+					},
+					{
+						"base": "Tank",
+						"category": "NormalTank",
+						"delay": 0.9
+					},
+					{
+						"base": "Tank",
+						"category": "NormalTank",
+						"delay": 1
+					}
+				],
+				"cost": 300,
+				"boss_wave": false
+			},
+			{
+				"custom_path": "PathTop",
+				"enemies": [
+					{
+						"base": "Tank",
+						"category": "FastTank",
+						"delay": 0.9
+					},
+					{
+						"base": "Tank",
+						"category": "FastTank",
+						"delay": 0.9
+					},
+					{
+						"base": "Tank",
+						"category": "FastTank",
+						"delay": 0.9
+					}
+				],
+				"cost": 200,
+				"boss_wave": false
+			},
+			{
+				"turrets": [
+					{
+						"type": "Laser",
+						"coords": {
+							"x": 2,
+							"y": 5
+						},
+						"delay": 0.5,
+						"upgrade": true
+					}
+				],
+				"enemies": [
+					{
+						"base": "Tank",
+						"category": "FastTank",
+						"delay": 0.9
+					},
+					{
+						"base": "Tank",
+						"category": "FastTank",
+						"delay": 0.5
+					},
+					{
+						"base": "Tank",
+						"category": "NormalTank",
+						"delay": 0.9
+					},
+					{
+						"base": "Tank",
+						"category": "NormalTank",
+						"delay": 1
+					},
+					{
+						"base": "Tank",
+						"category": "BossTank",
+						"delay": 2
+					}
+				],
+				"cost": 500,
+				"boss_wave": true
+			}
+		],
+		"starting_money": 1000,
+		"next_map": "Map1b",
+		"scene_name": "Map1"
+	},
+	"Map1b": {
+		"waves": [
+			{
+				"turrets": [
+					{
+						"type": "GunT1",
+						"coords": {
+							"x": 2,
+							"y": 5
+						},
+						"delay": 0.5
+					},
+					{
+						"type": "GunT1",
+						"coords": {
+							"x": 2,
+							"y": 7
+						},
+						"delay": 0.5
+					},
+					{
+						"type": "MissileT1",
+						"coords": {
+							"x": 4,
+							"y": 5
+						},
+						"delay": 0.5
+					}
+				],
+				"enemies": [
+					{
+						"base": "Tank",
+						"category": "BossTank",
+						"delay": 0.9
+					},
+					{
+						"base": "Tank",
+						"category": "BossTank",
+						"delay": 2
+					}
+				],
+				"cost": 300,
+				"boss_wave": false
+			},
+			{
+				"custom_path": "PathTop",
+				"enemies": [
+					{
+						"base": "Tank",
+						"category": "FastTank",
+						"delay": 0.9
+					},
+					{
+						"base": "Tank",
+						"category": "FastTank",
+						"delay": 0.9
+					},
+					{
+						"base": "Tank",
+						"category": "FastTank",
+						"delay": 0.9
+					}
+				],
+				"cost": 200,
+				"boss_wave": false
+			},
+			{
+				"turrets": [
+					{
+						"type": "Laser",
+						"coords": {
+							"x": 2,
+							"y": 5
+						},
+						"delay": 0.5,
+						"upgrade": true
+					}
+				],
+				"enemies": [
+					{
+						"base": "Tank",
+						"category": "FastTank",
+						"delay": 0.9
+					},
+					{
+						"base": "Tank",
+						"category": "FastTank",
+						"delay": 0.5
+					},
+					{
+						"base": "Tank",
+						"category": "NormalTank",
+						"delay": 0.9
+					},
+					{
+						"base": "Tank",
+						"category": "NormalTank",
+						"delay": 1
+					},
+					{
+						"base": "Tank",
+						"category": "BossTank",
+						"delay": 2
+					}
+				],
+				"cost": 500,
+				"boss_wave": true
+			}
+		],
+		"starting_money": 1000,
+		"next_map": "Map2",
+		"scene_name": "Map1"
+	},
+	"Map2": {
+		"waves": [
+			{
+				"enemies": [
+					{
+						"base": "Tank",
+						"category": "NormalTank",
+						"delay": 0.9
+					},
+					{
+						"base": "Tank",
+						"category": "NormalTank",
+						"delay": 2
+					},
+					{
+						"base": "Tank",
+						"category": "BossTank",
+						"delay": 3
+					},
+					{
+						"base": "Tank",
+						"category": "BossTank",
+						"delay": 3
+					},
+					{
+						"base": "Tank",
+						"category": "BossTank",
+						"delay": 3
+					},
+					{
+						"base": "Tank",
+						"category": "BossTank",
+						"delay": 3
+					}
+				],
+				"cost": 300
+			}
+		],
+		"starting_money": 1500,
+		"scene_name": "Map2"
+	},
+	"MainMenuMap": {
+		"waves": [
+			{
+				"turrets": [
+					{
+						"type": "GunT1",
+						"coords": {
+							"x": 6,
+							"y": 6
+						},
+						"delay": 0.5
+					},
+					{
+						"type": "GunT1",
+						"coords": {
+							"x": 6,
+							"y": 5
+						},
+						"delay": 0.5
+					},
+					{
+						"type": "GunT1",
+						"coords": {
+							"x": 8,
+							"y": 6
+						},
+						"delay": 0.5
+					},
+				],
+				"enemies": [
+					{
+						"base": "Tank",
+						"category": "NormalTank",
+						"delay": 0.9
+					},
+					{
+						"base": "Tank",
+						"category": "NormalTank",
+						"delay": 1
+					},
+					{
+						"base": "Tank",
+						"category": "NormalTank",
+						"delay": 0.9
+					},
+					{
+						"base": "Tank",
+						"category": "NormalTank",
+						"delay": 1
+					},
+					{
+						"base": "Tank",
+						"category": "NormalTank",
+						"delay": 0.9
+					},
+					{
+						"base": "Tank",
+						"category": "NormalTank",
+						"delay": 1
+					},
+					{
+						"base": "Tank",
+						"category": "NormalTank",
+						"delay": 0.9
+					},
+					{
+						"base": "Tank",
+						"category": "NormalTank",
+						"delay": 1
+					},
+					{
+						"base": "Tank",
+						"category": "NormalTank",
+						"delay": 0.7
+					}
+				],
+				"cost": 300,
+				"boss_wave": false
+			},
+			{
+				"turrets": [
+					{
+						"type": "Laser",
+						"coords": {
+							"x": 6,
+							"y": 6
+						},
+						"delay": 0.8,
+						"upgrade": true
+					},
+					{
+						"type": "MissileT1",
+						"coords": {
+							"x": 8,
+							"y": 4
+						},
+						"delay": 1
+					}
+				],
+				"enemies": [
+					{
+						"base": "Tank",
+						"category": "FastTank",
+						"delay": 0.7
+					},
+					{
+						"base": "Tank",
+						"category": "FastTank",
+						"delay": 0.5
+					},
+					{
+						"base": "Tank",
+						"category": "FastTank",
+						"delay": 0.5
+					},
+					{
+						"base": "Tank",
+						"category": "FastTank",
+						"delay": 0.7
+					},
+					{
+						"base": "Tank",
+						"category": "FastTank",
+						"delay": 0.5
+					},
+					{
+						"base": "Tank",
+						"category": "FastTank",
+						"delay": 0.5
+					},
+					{
+						"base": "Tank",
+						"category": "FastTank",
+						"delay": 0.7
+					},
+					{
+						"base": "Tank",
+						"category": "FastTank",
+						"delay": 0.5
+					},
+					{
+						"base": "Tank",
+						"category": "FastTank",
+						"delay": 0.5
+					},
+					{
+						"base": "Tank",
+						"category": "FastTank",
+						"delay": 0.7
+					},
+					{
+						"base": "Tank",
+						"category": "FastTank",
+						"delay": 0.5
+					},
+					{
+						"base": "Tank",
+						"category": "FastTank",
+						"delay": 0.5
+					}
+				],
+				"cost": 200,
+				"boss_wave": false
+			},
+			{
+				"turrets": [
+					{
+						"type": "GunT1",
+						"coords": {
+							"x": 6,
+							"y": 4
+						},
+						"delay": 4,
+						"upgrade": false
+					},
+					{
+						"type": "AbilityBombT1",
+						"coords": {
+							"x": 7,
+							"y": 6
+						},
+						"delay": 1
+					}
+				],
+				"enemies": [
+					{
+						"base": "Tank",
+						"category": "FastTank",
+						"delay": 0.7
+					},
+					{
+						"base": "Tank",
+						"category": "FastTank",
+						"delay": 0.5
+					},
+					{
+						"base": "Tank",
+						"category": "NormalTank",
+						"delay": 0.7
+					},
+					{
+						"base": "Tank",
+						"category": "NormalTank",
+						"delay": 1
+					},
+					{
+						"base": "Tank",
+						"category": "BossTank",
+						"delay": 3
+					}
+				],
+				"cost": 500,
+				"boss_wave": true
+			}
+		],
+		"starting_money": 1000,
+		"scene_name": "MainMenuMap"
+	}
+}

@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://woh3k1wdnyfw"
+path="res://.godot/imported/Wasteland Showdown.mp3-f9420b59076389331ee65ca6a1a95d9e.mp3str"
+
+[deps]
+
+source_file="res://Assets/Audio/Music/Wasteland Showdown.mp3"
+dest_files=["res://.godot/imported/Wasteland Showdown.mp3-f9420b59076389331ee65ca6a1a95d9e.mp3str"]
+
+[params]
+
+loop=true
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

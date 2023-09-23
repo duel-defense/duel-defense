@@ -1,0 +1,42 @@
+[gd_scene load_steps=6 format=3 uid="uid://b1c3s5smf4185"]
+
+[ext_resource type="Script" path="res://Scenes/SupportScenes/Base.gd" id="1_fb1vt"]
+[ext_resource type="Texture2D" uid="uid://4kb0e2gp2oms" path="res://Assets/Environment/Props/Cylindrical Tank A - Size 1 - Red.png" id="2_w6glo"]
+[ext_resource type="Script" path="res://Scenes/Turrets/ClickableArea.gd" id="3_aihyu"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_018tf"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2yih1"]
+size = Vector2(80.9996, 99.0002)
+
+[node name="Base" type="Node2D"]
+script = ExtResource("1_fb1vt")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+texture = ExtResource("2_w6glo")
+
+[node name="HealthBar" type="TextureProgressBar" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -70.0
+offset_top = -90.0
+offset_bottom = -82.0
+grow_horizontal = 2
+scale = Vector2(2, 2)
+value = 100.0
+nine_patch_stretch = true
+texture_progress = SubResource("CanvasTexture_018tf")
+tint_under = Color(0.160784, 0.156863, 0.156863, 1)
+tint_progress = Color(0.219608, 0.988235, 0.0117647, 1)
+
+[node name="Impact" type="Marker2D" parent="."]
+
+[node name="ClickableArea" type="Area2D" parent="."]
+script = ExtResource("3_aihyu")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ClickableArea"]
+position = Vector2(-0.499992, 3.50006)
+shape = SubResource("RectangleShape2D_2yih1")
+
+[connection signal="input_event" from="ClickableArea" to="ClickableArea" method="_on_ClickableArea_input_event"]

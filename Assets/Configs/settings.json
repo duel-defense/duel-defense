@@ -1,0 +1,13 @@
+{
+	"time_between_waves": 10,
+	"show_fps_monitor": false,
+	"money_change": 0,
+	"starting_base_health": 100,
+	"starting_map": "Map1",
+	"main_menu_map": "MainMenuMap",
+	"master_volume": 100,
+	"background_volume": 50,
+	"interface_volume": 40,
+	"sound_volume": 100,
+	"ambience_volume": 80
+}

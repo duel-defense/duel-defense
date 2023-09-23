@@ -1,0 +1,146 @@
+[gd_scene load_steps=22 format=3 uid="uid://dyfq7386knnmd"]
+
+[ext_resource type="Texture2D" uid="uid://dk1gfb3fpqq5o" path="res://Assets/Towers/towers_walls_blank.png" id="2_qtm66"]
+[ext_resource type="Script" path="res://Scenes/Turrets/Laser.gd" id="3"]
+[ext_resource type="Texture2D" uid="uid://ee3lsbjg0ykt" path="res://Assets/Towers/turret_02_mk4.png" id="3_1t2n2"]
+[ext_resource type="PackedScene" uid="uid://vj7m38plioo3" path="res://Scenes/Effects/LaserBeam2D.tscn" id="4"]
+[ext_resource type="Script" path="res://Scenes/Turrets/ClickableArea.gd" id="5"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nhnxx"]
+atlas = ExtResource("2_qtm66")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_yqlh5"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nhnxx")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gbigq"]
+atlas = ExtResource("3_1t2n2")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ktelj"]
+atlas = ExtResource("3_1t2n2")
+region = Rect2(0, 128, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p5xbs"]
+atlas = ExtResource("3_1t2n2")
+region = Rect2(0, 256, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5wri3"]
+atlas = ExtResource("3_1t2n2")
+region = Rect2(0, 384, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wr21p"]
+atlas = ExtResource("3_1t2n2")
+region = Rect2(0, 512, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e1872"]
+atlas = ExtResource("3_1t2n2")
+region = Rect2(0, 640, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ixkmo"]
+atlas = ExtResource("3_1t2n2")
+region = Rect2(0, 768, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fx3dq"]
+atlas = ExtResource("3_1t2n2")
+region = Rect2(0, 896, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_20jdd"]
+atlas = ExtResource("3_1t2n2")
+region = Rect2(0, 1024, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_we4on"]
+atlas = ExtResource("3_1t2n2")
+region = Rect2(0, 1152, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jwgct"]
+atlas = ExtResource("3_1t2n2")
+region = Rect2(0, 1280, 128, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_gavj4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gbigq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ktelj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p5xbs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5wri3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wr21p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e1872")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ixkmo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fx3dq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_20jdd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_we4on")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jwgct")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="1"]
+radius = 175.0
+
+[sub_resource type="RectangleShape2D" id="2"]
+size = Vector2(59, 59)
+
+[node name="Laser" type="Node2D"]
+script = ExtResource("3")
+
+[node name="Base" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_yqlh5")
+
+[node name="Turret" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_gavj4")
+frame_progress = 0.287274
+offset = Vector2(10, 0)
+
+[node name="Muzzle1" type="Marker2D" parent="Turret"]
+position = Vector2(63, 0)
+
+[node name="Fire" parent="Turret/Muzzle1" instance=ExtResource("4")]
+
+[node name="Range" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Range"]
+shape = SubResource("1")
+
+[node name="ClickableArea" type="Area2D" parent="."]
+script = ExtResource("5")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ClickableArea"]
+position = Vector2(3.5, -0.5)
+shape = SubResource("2")
+
+[connection signal="collided" from="Turret/Muzzle1/Fire" to="." method="_on_Fire_collided"]
+[connection signal="body_entered" from="Range" to="." method="_on_Range_body_entered"]
+[connection signal="body_exited" from="Range" to="." method="_on_Range_body_exited"]
+[connection signal="input_event" from="ClickableArea" to="ClickableArea" method="_on_ClickableArea_input_event"]
