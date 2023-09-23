@@ -37,7 +37,7 @@ movie_writer/movie_file="/home/dnimon/Downloads/movie.avi"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/console/plugin.cfg", "res://addons/controller_icons/plugin.cfg", "res://addons/debug_menu/plugin.cfg", "res://addons/kanban_tasks/plugin.cfg", "res://addons/logger/plugin.cfg", "res://addons/material-design-icons/plugin.cfg")
+enabled=PackedStringArray("res://addons/console/plugin.cfg", "res://addons/controller_icons/plugin.cfg", "res://addons/debug_menu/plugin.cfg", "res://addons/logger/plugin.cfg", "res://addons/material-design-icons/plugin.cfg")
 
 [global]
 
