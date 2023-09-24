@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://addons/material-design-icons/nodes/MaterialButton.gd" id="4_d12vk"]
 
 [node name="EditorPopup" type="Window"]
+title = "Editor"
 initial_position = 1
 size = Vector2i(400, 510)
 exclusive = true

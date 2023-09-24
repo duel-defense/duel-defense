@@ -4,6 +4,7 @@
 [ext_resource type="Theme" uid="uid://yove688wbh0t" path="res://Resources/Themes/MainTheme.tres" id="2"]
 
 [node name="AboutPopup" type="Window"]
+title = "About"
 initial_position = 2
 size = Vector2i(400, 300)
 exclusive = true
