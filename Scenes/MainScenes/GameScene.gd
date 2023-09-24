@@ -260,7 +260,10 @@ func cancel_upgrade_mode(_tower = null):
 	controller_mouse_movement = null
 	
 func upgrade_requested(upgrade_name):
-	var cost = GameData.config.tower_data[upgrade_name].upgrade_cost
+	var tower_data = GameData.config.tower_data[upgrade_name]
+	if tower_data.category == "Action":
+		return action_requested(tower_data)
+	var cost = tower_data.upgrade_cost
 	if (current_money - cost) < 0:
 		GodotLogger.info("upgrade_requested, not enough money")
 		GameData.play_error_sound(interface_effects)
@@ -277,6 +280,25 @@ func upgrade_requested(upgrade_name):
 	
 	upgrade_node.free()
 	verify_and_build()
+	
+func action_requested(tower_data):
+	if not upgrade_node:
+		return cancel_upgrade_mode()
+	
+	var current_tower_type = upgrade_node.type
+	var current_tower_cost = GameData.config.tower_data[current_tower_type].cost
+	
+	if tower_data.action == "sell":
+		change_money(current_tower_cost)
+		
+		var current_tile = map_node.get_node("TowerExclusion").local_to_map(upgrade_node.position)
+		var tile_position = map_node.get_node("TowerExclusion").map_to_local(current_tile)
+		
+		map_node.get_node("TowerExclusion").erase_cell(0, current_tile)
+		upgrade_node.free()
+		
+		
+	cancel_upgrade_mode()
 
 ### wave functions
 

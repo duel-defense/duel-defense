@@ -174,8 +174,9 @@ alignment = 1
 
 [node name="UpgradeBar" type="HBoxContainer" parent="UI/HUD/InfoBar/M/H"]
 visible = false
-custom_minimum_size = Vector2(0, 60)
+custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
+theme_override_constants/separation = 20
 alignment = 1
 
 [node name="Sep" type="Control" parent="UI/HUD/InfoBar/M/H"]

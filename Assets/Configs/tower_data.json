@@ -6,7 +6,7 @@
 		"category": "Projectile",
 		"cost": 200,
 		"build_anywhere": false,
-		"upgrades": ["GunT2", "Laser"],
+		"upgrades": ["GunT2", "Laser", "ActionSell"],
 		"sound": true,
 		"in_build_menu": true,
 		"scene_name": "Gun"
@@ -16,10 +16,10 @@
 		"rof": 0.5,
 		"range": 600,
 		"category": "Projectile",
-		"cost": 300,
+		"cost": 500,
 		"build_anywhere": false,
 		"upgrade_cost": 300,
-		"upgrades": ["GunT3"],
+		"upgrades": ["GunT3", "ActionSell"],
 		"sound": true,
 		"in_build_menu": false,
 		"scene_name": "Gun",
@@ -33,10 +33,10 @@
 		"rof": 1.25,
 		"range": 650,
 		"category": "Projectile",
-		"cost": 300,
+		"cost": 1000,
 		"build_anywhere": false,
 		"upgrade_cost": 500,
-		"upgrades": [],
+		"upgrades": ["ActionSell"],
 		"sound": true,
 		"in_build_menu": false,
 		"scene_name": "Gun",
@@ -53,7 +53,7 @@
 		"cost": 400,
 		"build_anywhere": false,
 		"upgrade_cost": 200,
-		"upgrades": ["LaserT2"],
+		"upgrades": ["LaserT2", "ActionSell"],
 		"sound": true,
 		"in_build_menu": true,
 		"scene_name": "Laser"
@@ -63,10 +63,10 @@
 		"rof": 0.1,
 		"range": 600,
 		"category": "Custom",
-		"cost": 400,
+		"cost": 600,
 		"build_anywhere": false,
 		"upgrade_cost": 200,
-		"upgrades": [],
+		"upgrades": ["ActionSell"],
 		"sound": true,
 		"in_build_menu": false,
 		"scene_name": "Laser",
@@ -82,7 +82,7 @@
 		"category": "Missile",
 		"cost": 500,
 		"build_anywhere": false,
-		"upgrades": [],
+		"upgrades": ["ActionSell"],
 		"sound": true,
 		"in_build_menu": true,
 		"scene_name": "Missile"
@@ -112,5 +112,12 @@
 		"in_build_menu": true,
 		"scene_name": "AbilityJet",
 		"cooldown": 2
+	},
+	"ActionSell": {
+		"in_build_menu": false,
+		"category": "Action",
+		"action": "sell",
+		"icon": "currency-usd",
+		"label": "Sell"
 	}
 }

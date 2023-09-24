@@ -197,22 +197,38 @@ func setup_build_buttons(buttons, parent_node, show_regardless = false, func_nam
 			button.offset_left = 10
 			button.connect("pressed", Callable(get_parent(), func_name).bind(button.get_name()))
 			
-			var icon = load("res://Scenes/Turrets/" + item.scene_name + ".tscn").instantiate()
-			icon.name = button_name
-			icon.type = button_name
-			icon.scale = Vector2(0.7, 0.7)
-			icon.position = Vector2(40, 40)
-			icon.icon_mode = true
+			if item.category != "Action":
+				var icon = load("res://Scenes/Turrets/" + item.scene_name + ".tscn").instantiate()
+				icon.name = button_name
+				icon.type = button_name
+				icon.scale = Vector2(0.7, 0.7)
+				icon.position = Vector2(40, 40)
+				icon.icon_mode = true
+					
+				button.add_child(icon)
 				
-			button.add_child(icon)
-			
-			var label = Label.new()
-			if func_name == "upgrade_requested":
-				label.text = "$%s" % item.upgrade_cost
+				var label = Label.new()
+				if func_name == "upgrade_requested":
+					label.text = "$%s" % item.upgrade_cost
+				else:
+					label.text = "$%s" % item.cost
+				label.set("theme_override_fonts/font", font)
+				button.add_child(label)
 			else:
-				label.text = "$%s" % item.cost
-			label.set("theme_override_fonts/font", font)
-			button.add_child(label)
+				var icon_script = load("res://addons/material-design-icons/nodes/MaterialIcon.gd")
+				var icon = Label.new()
+				icon.set_script(icon_script)
+				icon.icon_name = item.icon
+				icon.set_anchors_preset(Control.PRESET_FULL_RECT)
+				icon.icon_size = 50
+				icon.horizontal_alignment = HorizontalAlignment.HORIZONTAL_ALIGNMENT_CENTER
+				icon.vertical_alignment = VerticalAlignment.VERTICAL_ALIGNMENT_CENTER
+				button.add_child(icon)
+				
+				var label = Label.new()
+				label.text = item.label
+				label.set("theme_override_fonts/font", font)
+				button.add_child(label)
 			
 			parent_node.add_child(button)
 			
