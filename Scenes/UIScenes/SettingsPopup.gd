@@ -3,6 +3,8 @@ extends WindowPopup
 const UIBuilder = preload("res://CommonScripts/UIBuilder.gd")
 @onready var ui_builder = UIBuilder.new(self)
 
+@export var configuration_manager: Node
+
 func _ready():
 	process_settings()
 	
@@ -28,4 +30,5 @@ func _on_close_requested():
 
 
 func _on_reset_button_pressed():
-	GameData.reset
+	configuration_manager.reset_config("settings")
+	process_settings()

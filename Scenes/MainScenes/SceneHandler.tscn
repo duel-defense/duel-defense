@@ -21,9 +21,10 @@ script = ExtResource("4")
 initial_position = 1
 visible = false
 
-[node name="SettingsPopup" parent="." instance=ExtResource("5_ciynv")]
+[node name="SettingsPopup" parent="." node_paths=PackedStringArray("configuration_manager") instance=ExtResource("5_ciynv")]
 initial_position = 1
 visible = false
+configuration_manager = NodePath("../ConfigurationManager")
 
 [node name="EditorPopup" parent="." instance=ExtResource("6_qbtsl")]
 size = Vector2i(400, 500)

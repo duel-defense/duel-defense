@@ -74,3 +74,8 @@ func write_config_process(config_key):
 	var path = user_config_path + filename
 	fs.write_file(path, JSON.stringify(config_container[config_key]))
 	GodotLogger.debug("Written for " + config_key)
+
+func reset_config(key):
+	var filename = "%s.json" % key
+	config_container.erase(key)
+	parse_json(default_config_path, filename)
