@@ -11,7 +11,7 @@ var destroyed
 var hide_hp_bar = false
 var timer
 
-@onready var health_bar = get_node("HealthBar")
+@onready var health_bar = get_node("Sprite2D/HealthBar")
 @onready var impact_area = get_node("Impact")
 @onready var sound_effects = get_node("CharacterBody2D/SoundEffects")
 @onready var sprite = get_node("Sprite2D")
@@ -106,6 +106,7 @@ func on_destroy():
 		
 		var new_explosion = explosion.instantiate()
 		new_explosion.position = explosion_location
+		health_bar.visible = false
 		new_explosion.connect('animation_finished', Callable(self, 'destroy_complete'))
 		new_explosion.connect('hide_sprite', Callable(self, 'hide_sprite'))
 		impact_area.add_child(new_explosion)

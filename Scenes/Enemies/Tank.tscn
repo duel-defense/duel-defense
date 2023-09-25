@@ -4,11 +4,10 @@
 [ext_resource type="Texture2D" uid="uid://ijbogj0vfj1x" path="res://Assets/Enemies/tank_normal.png" id="3_ao31g"]
 [ext_resource type="AudioStream" uid="uid://cv35ws8q6phim" path="res://Assets/Audio/Sounds/engine_heavy_average_loop.ogg" id="4"]
 [ext_resource type="Texture2D" uid="uid://ngufxmb135gv" path="res://Assets/Enemies/turret_01_mk1.png" id="4_smqi3"]
+[ext_resource type="Texture2D" uid="uid://cxrq6wncjn55f" path="res://Assets/UI/progress_bar.svg" id="5_mxfde"]
 
 [sub_resource type="RectangleShape2D" id="1"]
 size = Vector2(24, 16)
-
-[sub_resource type="CanvasTexture" id="CanvasTexture_gi3br"]
 
 [node name="Tank" type="PathFollow2D" groups=["enemy"]]
 loop = false
@@ -35,14 +34,15 @@ texture = ExtResource("3_ao31g")
 position = Vector2(5, -1)
 texture = ExtResource("4_smqi3")
 
-[node name="HealthBar" type="TextureProgressBar" parent="."]
+[node name="HealthBar" type="TextureProgressBar" parent="Sprite2D"]
 offset_left = -30.0
 offset_top = -30.0
 offset_right = 30.0
 offset_bottom = -24.0
 value = 50.0
 nine_patch_stretch = true
-texture_progress = SubResource("CanvasTexture_gi3br")
+texture_under = ExtResource("5_mxfde")
+texture_progress = ExtResource("5_mxfde")
 tint_under = Color(0.160784, 0.156863, 0.156863, 1)
 tint_progress = Color(0.219608, 0.988235, 0.0117647, 1)
 
