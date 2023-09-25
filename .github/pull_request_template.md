@@ -8,5 +8,5 @@
 
 ### License Checklist
 
-* [ ] Confirm that you are ok with these changes being used in a project that could be sold commercially in the future
+* [ ] Confirm that you are ok with these changes being used for a commercial release of this game
 * [ ] Confirm that you are agreeing that these changes will be licensed under the license shown in the LICENSE.md file
