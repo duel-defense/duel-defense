@@ -2,9 +2,8 @@
 
 [ext_resource type="Script" path="res://Scenes/SupportScenes/Base.gd" id="1_fb1vt"]
 [ext_resource type="Texture2D" uid="uid://4kb0e2gp2oms" path="res://Assets/Environment/Props/Cylindrical Tank A - Size 1 - Red.png" id="2_w6glo"]
+[ext_resource type="Texture2D" uid="uid://cxrq6wncjn55f" path="res://Assets/UI/progress_bar.svg" id="3_3duxe"]
 [ext_resource type="Script" path="res://Scenes/Turrets/ClickableArea.gd" id="3_aihyu"]
-
-[sub_resource type="CanvasTexture" id="CanvasTexture_018tf"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2yih1"]
 size = Vector2(80.9996, 99.0002)
@@ -26,7 +25,8 @@ grow_horizontal = 2
 scale = Vector2(2, 2)
 value = 100.0
 nine_patch_stretch = true
-texture_progress = SubResource("CanvasTexture_018tf")
+texture_under = ExtResource("3_3duxe")
+texture_progress = ExtResource("3_3duxe")
 tint_under = Color(0.160784, 0.156863, 0.156863, 1)
 tint_progress = Color(0.219608, 0.988235, 0.0117647, 1)
 

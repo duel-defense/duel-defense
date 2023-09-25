@@ -1,4 +1,4 @@
-extends "res://Scenes/UIScenes/WindowPopup.gd"
+extends WindowPopup
 
 const FS = preload("res://CommonScripts/FS.gd")
 @onready var fs = FS.new()

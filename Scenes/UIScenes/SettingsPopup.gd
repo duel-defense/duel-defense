@@ -1,7 +1,9 @@
-extends "res://Scenes/UIScenes/WindowPopup.gd"
+extends WindowPopup
 
 const UIBuilder = preload("res://CommonScripts/UIBuilder.gd")
 @onready var ui_builder = UIBuilder.new(self)
+
+@export var configuration_manager: Node
 
 func _ready():
 	process_settings()
@@ -25,3 +27,8 @@ func value_changed(value, setting_key, label_node = null):
 
 func _on_close_requested():
 	visible = false
+
+
+func _on_reset_button_pressed():
+	configuration_manager.reset_config("settings")
+	process_settings()

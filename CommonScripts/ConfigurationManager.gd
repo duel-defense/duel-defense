@@ -39,24 +39,30 @@ func read_config_dir(path):
 	
 	for filename in config_files:
 		if '.json' in filename:
-			var config_key = filename.split(".json")[0]
-			if !config_container.has(config_key):
-				GodotLogger.info("Found config: " + config_key + " from " + path)
-				
-				var file_str = fs.read_file(path + filename)
-				var test_json_conv = JSON.new()
-				test_json_conv.parse(file_str)
-				var config_data = test_json_conv.get_data()
-				if config_data and len(config_data.keys()) != 0:
-					config_container[config_key] = config_data
-				else:
-					GodotLogger.warn("Malformed file for " + filename + ", ignorning")
+			parse_json(path, filename)
 		elif '.cfg' in filename:
-			var config_key = filename.split(".cfg")[0]
-			if !config_container.has(config_key):
-				GodotLogger.info("Found config: " + config_key + " from " + path)
-				var file_str = fs.read_file(path + filename)
-				config_container[config_key] = file_str.split("\n")
+			parse_cfg(path, filename)
+
+func parse_json(path, filename):
+	var config_key = filename.split(".json")[0]
+	if !config_container.has(config_key):
+		GodotLogger.info("Found config: " + config_key + " from " + path)
+					
+		var file_str = fs.read_file(path + filename)
+		var test_json_conv = JSON.new()
+		test_json_conv.parse(file_str)
+		var config_data = test_json_conv.get_data()
+		if config_data and len(config_data.keys()) != 0:
+			config_container[config_key] = config_data
+		else:
+			GodotLogger.warn("Malformed file for " + filename + ", ignorning")
+		
+func parse_cfg(path, filename):
+	var config_key = filename.split(".cfg")[0]
+	if !config_container.has(config_key):
+		GodotLogger.info("Found config: " + config_key + " from " + path)
+		var file_str = fs.read_file(path + filename)
+		config_container[config_key] = file_str.split("\n")
 
 func write_config(config_key):
 	if !write_requests.has(config_key):
@@ -68,3 +74,8 @@ func write_config_process(config_key):
 	var path = user_config_path + filename
 	fs.write_file(path, JSON.stringify(config_container[config_key]))
 	GodotLogger.debug("Written for " + config_key)
+
+func reset_config(key):
+	var filename = "%s.json" % key
+	config_container.erase(key)
+	parse_json(default_config_path, filename)

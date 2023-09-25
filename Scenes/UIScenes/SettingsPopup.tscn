@@ -1,30 +1,69 @@
-[gd_scene load_steps=3 format=3 uid="uid://c7sq5e5ujjkt"]
+[gd_scene load_steps=5 format=3 uid="uid://c7sq5e5ujjkt"]
 
 [ext_resource type="Script" path="res://Scenes/UIScenes/SettingsPopup.gd" id="1"]
 [ext_resource type="Theme" uid="uid://yove688wbh0t" path="res://Resources/Themes/MainTheme.tres" id="2"]
+[ext_resource type="FontFile" uid="uid://c0tncv8pnqgq4" path="res://addons/material-design-icons/fonts/material_design_icons.ttf" id="3_n5els"]
+[ext_resource type="Script" path="res://addons/material-design-icons/nodes/MaterialButton.gd" id="4_p73nn"]
 
-[node name="SettingsPopup" type="Window"]
+[node name="SettingsPopup" type="Window" node_paths=PackedStringArray("content_container")]
+title = "Settings"
 initial_position = 2
-size = Vector2i(300, 300)
+size = Vector2i(420, 360)
 exclusive = true
+theme_override_colors/title_color = Color(0.878431, 0.878431, 0.878431, 1)
+theme_override_constants/title_height = 32
 script = ExtResource("1")
+content_container = NodePath("VBoxContainer/ScrollContainer/VBoxContainer")
 
-[node name="ScrollContainer" type="ScrollContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 10.0
-offset_top = 10.0
-offset_right = -10.0
-offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
 focus_mode = 2
 follow_focus = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 focus_mode = 2
 theme = ExtResource("2")
 
+[node name="ResetButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+theme_override_fonts/font = ExtResource("3_n5els")
+theme_override_font_sizes/font_size = 64
+text = "󰝳"
+alignment = 0
+script = ExtResource("4_p73nn")
+icon_name = "lock-reset"
+icon_size = 64
+
+[node name="Label" type="Label" parent="VBoxContainer/ResetButton"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -34.0
+offset_top = -21.0
+offset_right = 34.0
+offset_bottom = 21.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 32
+text = "Reset"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [connection signal="close_requested" from="." to="." method="_on_close_requested"]
+[connection signal="pressed" from="VBoxContainer/ResetButton" to="." method="_on_reset_button_pressed"]
