@@ -28,7 +28,7 @@ This will switch to a map called Map1, enable to debug automatic turrets, and st
 
 ## License Information
 
-TODO - Add License file for the project
+License for the game can be seen here - https://github.com/d10sfan/duel-defense/blob/main/LICENSE.md
 
 For any assets used in the project, see the Assets/AssetsLicenses folder.
 
