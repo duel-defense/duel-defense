@@ -21,6 +21,9 @@ var money_number = 0
 var remaining_number
 
 var bar_focus = false
+var small_ui = false
+
+var small_ui_set = 1024
 
 var cooldown_timers = []
 
@@ -31,6 +34,8 @@ func _ready():
 	Console.add_command("list_towers", on_list_towers)
 	Console.add_command("list_tower_data", on_list_tower_data, 1)
 	Console.add_command("toggle_play", on_toggle_play)
+	
+	get_tree().get_root().size_changed.connect(on_window_resized)
 	
 func _physics_process(_delta):
 	if Input.is_action_just_pressed("ui_fastforward"):
@@ -50,6 +55,17 @@ func ui_bar_focus_toggle(force_off = false, bar = build_bar):
 		bar_focus = false
 	else:
 		bar_focus = !bar_focus
+	
+	if small_ui and not bar_focus:
+		get_tree().set_group("ui_details", "visible", true)
+		get_tree().set_group("ui_build", "visible", false)
+		get_tree().set_group("ui_buildsmall", "visible", true)
+	elif small_ui and bar_focus:
+		get_tree().set_group("ui_details", "visible", false)
+		if bar.name != "UpgradeBar":
+			get_tree().set_group("ui_build", "visible", true)
+		get_tree().set_group("ui_buildsmall", "visible", false)
+		
 	if bar_focus:
 		info_bar.self_modulate = "000000b4"
 		var build_bar_children = bar.get_children()
@@ -57,8 +73,28 @@ func ui_bar_focus_toggle(force_off = false, bar = build_bar):
 			build_bar_children[0].grab_focus()
 	else:
 		info_bar.self_modulate = "00000078"
-		bar.visible = false
-		bar.visible = true
+		if not small_ui:
+			bar.visible = false
+			bar.visible = true
+		
+func on_window_resized():
+	if bar_focus:
+		return
+	var window_size = DisplayServer.window_get_size()
+	
+	if small_ui and window_size.x >= small_ui_set:
+		get_tree().set_group("ui_details", "visible", true)
+		get_tree().set_group("ui_build", "visible", true)
+		get_tree().set_group("ui_buildsmall", "visible", false)
+		small_ui = false
+	elif not small_ui and window_size.x < small_ui_set:
+		get_tree().set_group("ui_details", "visible", true)
+		get_tree().set_group("ui_build", "visible", false)
+		get_tree().set_group("ui_buildsmall", "visible", true)
+		small_ui = true
+	
+func _on_start_build_mode_pressed():
+	ui_bar_focus_toggle()
 
 ### game control functions
 
