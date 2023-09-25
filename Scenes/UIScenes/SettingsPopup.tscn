@@ -8,6 +8,8 @@ title = "Settings"
 initial_position = 2
 size = Vector2i(300, 300)
 exclusive = true
+theme_override_colors/title_color = Color(0.878431, 0.878431, 0.878431, 1)
+theme_override_constants/title_height = 32
 script = ExtResource("1")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
