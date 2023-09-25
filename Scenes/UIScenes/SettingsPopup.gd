@@ -1,4 +1,4 @@
-extends "res://Scenes/UIScenes/WindowPopup.gd"
+extends WindowPopup
 
 const UIBuilder = preload("res://CommonScripts/UIBuilder.gd")
 @onready var ui_builder = UIBuilder.new(self)
@@ -25,3 +25,7 @@ func value_changed(value, setting_key, label_node = null):
 
 func _on_close_requested():
 	visible = false
+
+
+func _on_reset_button_pressed():
+	GameData.reset

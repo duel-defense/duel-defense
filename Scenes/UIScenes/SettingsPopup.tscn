@@ -5,40 +5,37 @@
 [ext_resource type="FontFile" uid="uid://c0tncv8pnqgq4" path="res://addons/material-design-icons/fonts/material_design_icons.ttf" id="3_n5els"]
 [ext_resource type="Script" path="res://addons/material-design-icons/nodes/MaterialButton.gd" id="4_p73nn"]
 
-[node name="SettingsPopup" type="Window"]
+[node name="SettingsPopup" type="Window" node_paths=PackedStringArray("content_container")]
 title = "Settings"
 initial_position = 2
-size = Vector2i(360, 300)
+size = Vector2i(420, 360)
 exclusive = true
 theme_override_colors/title_color = Color(0.878431, 0.878431, 0.878431, 1)
 theme_override_constants/title_height = 32
 script = ExtResource("1")
+content_container = NodePath("VBoxContainer/ScrollContainer/VBoxContainer")
 
-[node name="ScrollContainer" type="ScrollContainer" parent="."]
-offset_right = 400.0
-offset_bottom = 440.0
-size_flags_horizontal = 3
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
+layout_mode = 2
 size_flags_vertical = 3
 focus_mode = 2
 follow_focus = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 focus_mode = 2
 theme = ExtResource("2")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -64.0
-grow_horizontal = 2
-grow_vertical = 0
-
-[node name="ResetButton" type="Button" parent="HBoxContainer"]
+[node name="ResetButton" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 focus_mode = 0
@@ -50,7 +47,7 @@ script = ExtResource("4_p73nn")
 icon_name = "lock-reset"
 icon_size = 64
 
-[node name="Label" type="Label" parent="HBoxContainer/ResetButton"]
+[node name="Label" type="Label" parent="VBoxContainer/ResetButton"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -69,3 +66,4 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [connection signal="close_requested" from="." to="." method="_on_close_requested"]
+[connection signal="pressed" from="VBoxContainer/ResetButton" to="." method="_on_reset_button_pressed"]

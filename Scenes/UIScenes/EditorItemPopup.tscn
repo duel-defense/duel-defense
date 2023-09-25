@@ -3,11 +3,12 @@
 [ext_resource type="Script" path="res://Scenes/UIScenes/EditorItemPopup.gd" id="1"]
 [ext_resource type="Theme" uid="uid://yove688wbh0t" path="res://Resources/Themes/MainTheme.tres" id="2"]
 
-[node name="EditorItemPopup" type="Window"]
+[node name="EditorItemPopup" type="Window" node_paths=PackedStringArray("content_container")]
 title = "Editor Item"
 theme_override_colors/title_color = Color(0.878431, 0.878431, 0.878431, 1)
 theme_override_constants/title_height = 32
 script = ExtResource("1")
+content_container = NodePath("ScrollContainer/VBoxContainer")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
 anchors_preset = 15
