@@ -20,6 +20,7 @@ var enemies_in_wave = 0
 var boss_wave = false
 
 var debug_tile_coords = false
+var debug_resolution = false
 
 var base_health = GameData.config.settings.starting_base_health
 var current_money
@@ -85,6 +86,9 @@ func _ready():
 	Console.add_command("place_tower", on_place_tower, 3)
 	Console.add_command("set_base_damage", on_set_base_damage, 1)
 	Console.add_command("spawn_missiles", on_spawn_missiles, 1)
+	Console.add_command("set_debug_resolution", on_set_debug_resolution, 1)
+	
+	get_tree().get_root().size_changed.connect(on_window_resized)
 	
 func _physics_process(_delta):
 	if Input.is_action_just_pressed("ui_accept"):
@@ -152,7 +156,7 @@ func initiate_build_mode(tower_type):
 	build_type = tower_type
 	build_mode = true
 	var mouse_pos = get_global_mouse_position()
-	ui.set_tower_preview(build_type, mouse_pos)
+	set_tower_preview(build_type, mouse_pos)
 	update_tower_preview(mouse_pos)
 	ui.info_bar.visible = false
 	
@@ -164,22 +168,50 @@ func update_tower_preview(mouse_position = get_global_mouse_position()):
 	var road_valid = map_node.get_node("Ground").get_cell_source_id(1, current_tile) == -1
 	
 	if (tower_valid and road_valid) or GameData.config.tower_data[build_type].build_anywhere:
-		ui.update_tower_preview(tile_position, "a3a3e4")
+		update_tower_preview_scene(tile_position, "a3a3e4")
 		build_valid = true
 		build_location = tile_position
 		build_tile = current_tile
 	else:
 		build_valid = false
-		ui.update_tower_preview(tile_position, "f44336")
+		update_tower_preview_scene(tile_position, "f44336")
 
 func update_debug_tile_coords(mouse_position):
 	var current_tile = map_node.get_node("TowerExclusion").local_to_map(mouse_position)
 	debug_message.text = str(current_tile)
+	
+func set_tower_preview(tower_type, mouse_position):
+	var drag_tower = load("res://Scenes/Turrets/" + GameData.config.tower_data[tower_type].scene_name + ".tscn").instantiate()
+	drag_tower.set_name("DragTower")
+	drag_tower.modulate = Color("a3a3e4", 0.4)
+	drag_tower.type = tower_type
+	
+	var range_texture = Sprite2D.new()
+	range_texture.set_name("RangeTexture")
+	range_texture.position = Vector2(0,0)
+	var scaling = GameData.config.tower_data[tower_type].range / 100
+	range_texture.scale = Vector2(scaling, scaling)
+	var texture = load("res://Assets/UI/circle.svg")
+	range_texture.texture = texture
+	range_texture.modulate = Color("a3a3e4", 0.4)
+	
+	var control	= Node2D.new()
+	control.add_child(drag_tower, true)
+	control.add_child(range_texture, true)
+	control.position = mouse_position
+	control.set_name("TowerPreview")
+	add_child(control, true)
+
+func update_tower_preview_scene(new_position, color):
+	get_node("TowerPreview").position = new_position
+	if get_node("TowerPreview/DragTower").modulate != Color(color, 0.4):
+		get_node("TowerPreview/DragTower").modulate = Color(color, 0.4)
+		get_node("TowerPreview/RangeTexture").modulate = Color(color, 0.4)
 
 func cancel_build_mode():
 	build_mode = false
 	build_valid = false
-	var tower_preview = get_node_or_null("UI/TowerPreview")
+	var tower_preview = get_node_or_null("TowerPreview")
 	if tower_preview:
 		tower_preview.free()
 	ui.info_bar.visible = true
@@ -545,6 +577,26 @@ func on_set_debug_tile_coords(new_value):
 	debug_message.visible = debug_tile_coords
 		
 	GodotLogger.info("Setting debug_tile_coords to %s" % debug_tile_coords)
+	
+func on_set_debug_resolution(new_value):
+	if not new_value:
+		Console.print_line("set_debug_resolution <boolean>")
+		return
+		
+	if new_value == "true":
+		debug_resolution = true
+	else:
+		debug_resolution = false
+		
+	debug_message.visible = debug_resolution
+		
+	GodotLogger.info("Setting debug_resolution to %s" % debug_resolution)
+	
+func on_window_resized():
+	if not debug_resolution:
+		return
+	var window_size = DisplayServer.window_get_size()
+	debug_message.text = "%s" % window_size
 
 func on_set_game_speed(speed_str):
 	if not speed_str:

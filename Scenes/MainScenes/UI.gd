@@ -21,6 +21,9 @@ var money_number = 0
 var remaining_number
 
 var bar_focus = false
+var small_ui = false
+
+var small_ui_set = 1024
 
 var cooldown_timers = []
 
@@ -31,6 +34,8 @@ func _ready():
 	Console.add_command("list_towers", on_list_towers)
 	Console.add_command("list_tower_data", on_list_tower_data, 1)
 	Console.add_command("toggle_play", on_toggle_play)
+	
+	get_tree().get_root().size_changed.connect(on_window_resized)
 	
 func _physics_process(_delta):
 	if Input.is_action_just_pressed("ui_fastforward"):
@@ -50,6 +55,17 @@ func ui_bar_focus_toggle(force_off = false, bar = build_bar):
 		bar_focus = false
 	else:
 		bar_focus = !bar_focus
+	
+	if small_ui and not bar_focus:
+		get_tree().set_group("ui_details", "visible", true)
+		get_tree().set_group("ui_build", "visible", false)
+		get_tree().set_group("ui_buildsmall", "visible", true)
+	elif small_ui and bar_focus:
+		get_tree().set_group("ui_details", "visible", false)
+		if bar.name != "UpgradeBar":
+			get_tree().set_group("ui_build", "visible", true)
+		get_tree().set_group("ui_buildsmall", "visible", false)
+		
 	if bar_focus:
 		info_bar.self_modulate = "000000b4"
 		var build_bar_children = bar.get_children()
@@ -57,39 +73,28 @@ func ui_bar_focus_toggle(force_off = false, bar = build_bar):
 			build_bar_children[0].grab_focus()
 	else:
 		info_bar.self_modulate = "00000078"
-		bar.visible = false
-		bar.visible = true
-
-### build functions
-
-func set_tower_preview(tower_type, mouse_position):
-	var drag_tower = load("res://Scenes/Turrets/" + GameData.config.tower_data[tower_type].scene_name + ".tscn").instantiate()
-	drag_tower.set_name("DragTower")
-	drag_tower.modulate = Color("a3a3e4", 0.4)
-	drag_tower.type = tower_type
+		if not small_ui:
+			bar.visible = false
+			bar.visible = true
+		
+func on_window_resized():
+	if bar_focus:
+		return
+	var window_size = DisplayServer.window_get_size()
 	
-	var range_texture = Sprite2D.new()
-	range_texture.set_name("RangeTexture")
-	range_texture.position = Vector2(0,0)
-	var scaling = GameData.config.tower_data[tower_type].range / 100
-	range_texture.scale = Vector2(scaling, scaling)
-	var texture = load("res://Assets/UI/circle.svg")
-	range_texture.texture = texture
-	range_texture.modulate = Color("a3a3e4", 0.4)
+	if small_ui and window_size.x >= small_ui_set:
+		get_tree().set_group("ui_details", "visible", true)
+		get_tree().set_group("ui_build", "visible", true)
+		get_tree().set_group("ui_buildsmall", "visible", false)
+		small_ui = false
+	elif not small_ui and window_size.x < small_ui_set:
+		get_tree().set_group("ui_details", "visible", true)
+		get_tree().set_group("ui_build", "visible", false)
+		get_tree().set_group("ui_buildsmall", "visible", true)
+		small_ui = true
 	
-	var control	= Control.new()
-	control.add_child(drag_tower, true)
-	control.add_child(range_texture, true)
-	control.position = mouse_position
-	control.set_name("TowerPreview")
-	add_child(control, true)
-	move_child(get_node("TowerPreview"), 0)
-
-func update_tower_preview(new_position, color):
-	get_node("TowerPreview").position = new_position
-	if get_node("TowerPreview/DragTower").modulate != Color(color, 0.4):
-		get_node("TowerPreview/DragTower").modulate = Color(color, 0.4)
-		get_node("TowerPreview/RangeTexture").modulate = Color(color, 0.4)
+func _on_start_build_mode_pressed():
+	ui_bar_focus_toggle()
 
 ### game control functions
 

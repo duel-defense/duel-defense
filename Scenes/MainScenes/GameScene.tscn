@@ -11,10 +11,9 @@
 [ext_resource type="Texture2D" uid="uid://c8t6nj5nejist" path="res://addons/controller_icons/assets/key/p.png" id="9_ih3gp"]
 [ext_resource type="Script" path="res://addons/material-design-icons/nodes/MaterialIcon.gd" id="9_qcndx"]
 [ext_resource type="Texture2D" uid="uid://broeuieppu0ni" path="res://addons/controller_icons/assets/key/f.png" id="10_xq5fe"]
+[ext_resource type="Script" path="res://Scenes/MainScenes/Camera.gd" id="12_3nie2"]
 [ext_resource type="AudioStream" uid="uid://1mgkinft07ww" path="res://Assets/Audio/Music/Tactical Pursuit.mp3" id="16"]
 [ext_resource type="AudioStream" uid="uid://b80ay3f50p8he" path="res://Assets/Audio/Music/2 Part Invention in B Minor.mp3" id="17"]
-
-[sub_resource type="CanvasTexture" id="CanvasTexture_evcs7"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_e1lhj"]
 
@@ -133,7 +132,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 mouse_filter = 2
 
-[node name="Symbol" type="Label" parent="UI/HUD/InfoBar/M/H"]
+[node name="Symbol" type="Label" parent="UI/HUD/InfoBar/M/H" groups=["ui_details"]]
 custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
@@ -142,7 +141,7 @@ theme_override_font_sizes/font_size = 36
 text = "$"
 vertical_alignment = 1
 
-[node name="Money" type="Label" parent="UI/HUD/InfoBar/M/H"]
+[node name="Money" type="Label" parent="UI/HUD/InfoBar/M/H" groups=["ui_details"]]
 custom_minimum_size = Vector2(110, 60)
 layout_mode = 2
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
@@ -166,13 +165,55 @@ stretch_mode = 5
 script = ExtResource("7_onet4")
 path = "ui_select"
 
-[node name="BuildBar" type="HBoxContainer" parent="UI/HUD/InfoBar/M/H"]
+[node name="BuildBar" type="HBoxContainer" parent="UI/HUD/InfoBar/M/H" groups=["ui_build"]]
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 theme_override_constants/separation = 20
 alignment = 1
 
-[node name="UpgradeBar" type="HBoxContainer" parent="UI/HUD/InfoBar/M/H"]
+[node name="BuildBarSmall" type="HBoxContainer" parent="UI/HUD/InfoBar/M/H" groups=["ui_buildsmall"]]
+visible = false
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="StartBuildMode" type="Button" parent="UI/HUD/InfoBar/M/H/BuildBarSmall"]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+
+[node name="MaterialIcon" type="Label" parent="UI/HUD/InfoBar/M/H/BuildBarSmall/StartBuildMode"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -25.0
+offset_top = -27.0
+offset_right = 25.0
+offset_bottom = 27.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("3_7q1i4")
+theme_override_font_sizes/font_size = 50
+text = "󱔟"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("9_qcndx")
+icon_name = "office-building-outline"
+icon_size = 50
+
+[node name="Label" type="Label" parent="UI/HUD/InfoBar/M/H/BuildBarSmall/StartBuildMode"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+theme_override_fonts/font = ExtResource("3_m0p65")
+text = "BUILD"
+
+[node name="UpgradeBar" type="HBoxContainer" parent="UI/HUD/InfoBar/M/H" groups=["ui_upgrade"]]
 visible = false
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
@@ -185,37 +226,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
 
-[node name="HPWrapper" type="HBoxContainer" parent="UI/HUD/InfoBar/M/H"]
-visible = false
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="Icon" type="Label" parent="UI/HUD/InfoBar/M/H/HPWrapper"]
-custom_minimum_size = Vector2(60, 60)
-layout_mode = 2
-size_flags_horizontal = 10
-theme_override_fonts/font = ExtResource("3_7q1i4")
-theme_override_font_sizes/font_size = 48
-text = "󰋜"
-horizontal_alignment = 1
-vertical_alignment = 1
-script = ExtResource("9_qcndx")
-icon_name = "home"
-icon_size = 48
-
-[node name="HP" type="TextureProgressBar" parent="UI/HUD/InfoBar/M/H/HPWrapper"]
-custom_minimum_size = Vector2(400, 30)
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-value = 100.0
-nine_patch_stretch = true
-texture_progress = SubResource("CanvasTexture_evcs7")
-tint_under = Color(0.211765, 0.203922, 0.203922, 1)
-tint_progress = Color(0.207843, 1, 0.0156863, 1)
-
-[node name="GameControls" type="HBoxContainer" parent="UI/HUD/InfoBar/M/H"]
+[node name="GameControls" type="HBoxContainer" parent="UI/HUD/InfoBar/M/H" groups=["ui_details"]]
 layout_mode = 2
 
 [node name="PausePlay" type="Button" parent="UI/HUD/InfoBar/M/H/GameControls"]
@@ -290,6 +301,10 @@ grow_vertical = 0
 horizontal_alignment = 1
 autowrap_mode = 1
 
+[node name="Camera" type="Camera2D" parent="."]
+anchor_mode = 0
+script = ExtResource("12_3nie2")
+
 [node name="InterfaceEffects" type="AudioStreamPlayer" parent="."]
 bus = &"InterfaceEffects"
 
@@ -303,5 +318,6 @@ process_mode = 3
 stream = ExtResource("17")
 bus = &"BackgroundMusic"
 
+[connection signal="pressed" from="UI/HUD/InfoBar/M/H/BuildBarSmall/StartBuildMode" to="UI" method="_on_start_build_mode_pressed"]
 [connection signal="pressed" from="UI/HUD/InfoBar/M/H/GameControls/PausePlay" to="UI" method="_on_PausePlay_pressed"]
 [connection signal="pressed" from="UI/HUD/InfoBar/M/H/GameControls/SpeedUp" to="UI" method="_on_SpeedUp_pressed"]
