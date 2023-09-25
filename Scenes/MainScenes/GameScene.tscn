@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://qbeqdmnh41d0"]
+[gd_scene load_steps=18 format=3 uid="uid://qbeqdmnh41d0"]
 
 [ext_resource type="FontFile" uid="uid://c0tncv8pnqgq4" path="res://addons/material-design-icons/fonts/material_design_icons.ttf" id="3_7q1i4"]
 [ext_resource type="FontFile" uid="uid://yj0t3tghbpke" path="res://Assets/UI/OperationNapalm-Regular.ttf" id="3_m0p65"]
@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://c8t6nj5nejist" path="res://addons/controller_icons/assets/key/p.png" id="9_ih3gp"]
 [ext_resource type="Script" path="res://addons/material-design-icons/nodes/MaterialIcon.gd" id="9_qcndx"]
 [ext_resource type="Texture2D" uid="uid://broeuieppu0ni" path="res://addons/controller_icons/assets/key/f.png" id="10_xq5fe"]
+[ext_resource type="Script" path="res://Scenes/MainScenes/Camera.gd" id="12_3nie2"]
 [ext_resource type="AudioStream" uid="uid://1mgkinft07ww" path="res://Assets/Audio/Music/Tactical Pursuit.mp3" id="16"]
 [ext_resource type="AudioStream" uid="uid://b80ay3f50p8he" path="res://Assets/Audio/Music/2 Part Invention in B Minor.mp3" id="17"]
 
@@ -289,6 +290,10 @@ grow_horizontal = 2
 grow_vertical = 0
 horizontal_alignment = 1
 autowrap_mode = 1
+
+[node name="Camera" type="Camera2D" parent="."]
+anchor_mode = 0
+script = ExtResource("12_3nie2")
 
 [node name="InterfaceEffects" type="AudioStreamPlayer" parent="."]
 bus = &"InterfaceEffects"

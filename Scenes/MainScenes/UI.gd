@@ -60,37 +60,6 @@ func ui_bar_focus_toggle(force_off = false, bar = build_bar):
 		bar.visible = false
 		bar.visible = true
 
-### build functions
-
-func set_tower_preview(tower_type, mouse_position):
-	var drag_tower = load("res://Scenes/Turrets/" + GameData.config.tower_data[tower_type].scene_name + ".tscn").instantiate()
-	drag_tower.set_name("DragTower")
-	drag_tower.modulate = Color("a3a3e4", 0.4)
-	drag_tower.type = tower_type
-	
-	var range_texture = Sprite2D.new()
-	range_texture.set_name("RangeTexture")
-	range_texture.position = Vector2(0,0)
-	var scaling = GameData.config.tower_data[tower_type].range / 100
-	range_texture.scale = Vector2(scaling, scaling)
-	var texture = load("res://Assets/UI/circle.svg")
-	range_texture.texture = texture
-	range_texture.modulate = Color("a3a3e4", 0.4)
-	
-	var control	= Control.new()
-	control.add_child(drag_tower, true)
-	control.add_child(range_texture, true)
-	control.position = mouse_position
-	control.set_name("TowerPreview")
-	add_child(control, true)
-	move_child(get_node("TowerPreview"), 0)
-
-func update_tower_preview(new_position, color):
-	get_node("TowerPreview").position = new_position
-	if get_node("TowerPreview/DragTower").modulate != Color(color, 0.4):
-		get_node("TowerPreview/DragTower").modulate = Color(color, 0.4)
-		get_node("TowerPreview/RangeTexture").modulate = Color(color, 0.4)
-
 ### game control functions
 
 func _on_PausePlay_pressed():
