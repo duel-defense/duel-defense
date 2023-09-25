@@ -20,6 +20,7 @@ var enemies_in_wave = 0
 var boss_wave = false
 
 var debug_tile_coords = false
+var debug_resolution = false
 
 var base_health = GameData.config.settings.starting_base_health
 var current_money
@@ -85,6 +86,9 @@ func _ready():
 	Console.add_command("place_tower", on_place_tower, 3)
 	Console.add_command("set_base_damage", on_set_base_damage, 1)
 	Console.add_command("spawn_missiles", on_spawn_missiles, 1)
+	Console.add_command("set_debug_resolution", on_set_debug_resolution, 1)
+	
+	get_tree().get_root().size_changed.connect(on_window_resized)
 	
 func _physics_process(_delta):
 	if Input.is_action_just_pressed("ui_accept"):
@@ -573,6 +577,26 @@ func on_set_debug_tile_coords(new_value):
 	debug_message.visible = debug_tile_coords
 		
 	GodotLogger.info("Setting debug_tile_coords to %s" % debug_tile_coords)
+	
+func on_set_debug_resolution(new_value):
+	if not new_value:
+		Console.print_line("set_debug_resolution <boolean>")
+		return
+		
+	if new_value == "true":
+		debug_resolution = true
+	else:
+		debug_resolution = false
+		
+	debug_message.visible = debug_resolution
+		
+	GodotLogger.info("Setting debug_resolution to %s" % debug_resolution)
+	
+func on_window_resized():
+	if not debug_resolution:
+		return
+	var window_size = DisplayServer.window_get_size()
+	debug_message.text = "%s" % window_size
 
 func on_set_game_speed(speed_str):
 	if not speed_str:
