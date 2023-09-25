@@ -39,30 +39,24 @@ func read_config_dir(path):
 	
 	for filename in config_files:
 		if '.json' in filename:
-			parse_json(path, filename)
+			var config_key = filename.split(".json")[0]
+			if !config_container.has(config_key):
+				GodotLogger.info("Found config: " + config_key + " from " + path)
+				
+				var file_str = fs.read_file(path + filename)
+				var test_json_conv = JSON.new()
+				test_json_conv.parse(file_str)
+				var config_data = test_json_conv.get_data()
+				if config_data and len(config_data.keys()) != 0:
+					config_container[config_key] = config_data
+				else:
+					GodotLogger.warn("Malformed file for " + filename + ", ignorning")
 		elif '.cfg' in filename:
-			parse_cfg(path, filename)
-
-func parse_json(path, filename):
-	var config_key = filename.split(".json")[0]
-	if !config_container.has(config_key):
-		GodotLogger.info("Found config: " + config_key + " from " + path)
-					
-		var file_str = fs.read_file(path + filename)
-		var test_json_conv = JSON.new()
-		test_json_conv.parse(file_str)
-		var config_data = test_json_conv.get_data()
-		if config_data and len(config_data.keys()) != 0:
-			config_container[config_key] = config_data
-		else:
-			GodotLogger.warn("Malformed file for " + filename + ", ignorning")
-		
-func parse_cfg(path, filename):
-	var config_key = filename.split(".cfg")[0]
-	if !config_container.has(config_key):
-		GodotLogger.info("Found config: " + config_key + " from " + path)
-		var file_str = fs.read_file(path + filename)
-		config_container[config_key] = file_str.split("\n")
+			var config_key = filename.split(".cfg")[0]
+			if !config_container.has(config_key):
+				GodotLogger.info("Found config: " + config_key + " from " + path)
+				var file_str = fs.read_file(path + filename)
+				config_container[config_key] = file_str.split("\n")
 
 func write_config(config_key):
 	if !write_requests.has(config_key):

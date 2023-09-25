@@ -3,24 +3,22 @@
 [ext_resource type="Script" path="res://Scenes/UIScenes/AboutPopup.gd" id="1"]
 [ext_resource type="Theme" uid="uid://yove688wbh0t" path="res://Resources/Themes/MainTheme.tres" id="2"]
 
-[node name="AboutPopup" type="Window" node_paths=PackedStringArray("content_container")]
+[node name="AboutPopup" type="Window"]
 title = "About"
 initial_position = 2
-size = Vector2i(600, 300)
+size = Vector2i(400, 300)
 exclusive = true
 theme_override_colors/title_color = Color(0.878431, 0.878431, 0.878431, 1)
 theme_override_constants/title_height = 32
 script = ExtResource("1")
-content_container = NodePath("ScrollContainer/VBoxContainer")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
 offset_left = 10.0
 offset_top = 10.0
-offset_right = -10.0
-offset_bottom = -10.0
+offset_right = 50.0
+offset_bottom = 10.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
 focus_mode = 2
 follow_focus = true
 

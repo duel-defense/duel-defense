@@ -1,4 +1,4 @@
-extends WindowPopup
+extends "res://Scenes/UIScenes/WindowPopup.gd"
 
 const UIBuilder = preload("res://CommonScripts/UIBuilder.gd")
 @onready var ui_builder = UIBuilder.new(self)

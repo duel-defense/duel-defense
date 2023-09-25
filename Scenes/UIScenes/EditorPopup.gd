@@ -1,4 +1,4 @@
-extends WindowPopup
+extends "res://Scenes/UIScenes/WindowPopup.gd"
 
 var edit_icon = preload("res://Assets/UI/gear.png")
 
