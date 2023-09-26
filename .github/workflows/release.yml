@@ -1,0 +1,41 @@
+name: Release
+
+on:
+  push:
+    tags:
+        - 'v*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Export Game
+      id: export
+      uses: firebelley/godot-export@v5.2.0
+      with:
+        # Defining all the required inputs
+        godot_executable_download_url: https://downloads.tuxfamily.org/godotengine/4.1.1/Godot_v4.1.1-stable_linux.x86_64.zip
+        godot_export_templates_download_url: https://downloads.tuxfamily.org/godotengine/4.1.1/Godot_v4.1.1-stable_export_templates.tpz
+        relative_project_path: ./
+        archive_output: true
+    - name: Create Release
+      uses: ncipollo/release-action@v1.13.0
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        generateReleaseNotes: true
+        tag: ${{ github.ref_name }}
+        artifacts: ${{ steps.export.outputs.archive_directory }}/*
+    - name: Publish Linux
+      uses: dulvui/itchio-butler-upload@v0.0.1
+      with:
+        working-directory: ${{ steps.export.outputs.archive_directory }}/LinuxX11.zip
+        api-key: ${{ secrets.BUTLER_API_KEY }}
+        user: d10sfan
+        game: duel-defense
+        channel: linux
+    - name: Publish Web
+      env:
+        BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
+      run: ./butler push ${{ steps.export.outputs.archive_directory }}/Web.zip d10sfan/duel-defense:html5
