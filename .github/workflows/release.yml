@@ -27,15 +27,18 @@ jobs:
         generateReleaseNotes: true
         tag: ${{ github.ref_name }}
         artifacts: ${{ steps.export.outputs.archive_directory }}/*
+    - name: Setup Butler
+      shell: bash
+      run: |
+        curl -L -o butler.zip https://broth.itch.ovh/butler/linux-amd64/LATEST/archive/default
+        unzip butler.zip
+        chmod +x butler
+        ./butler -V
     - name: Publish Linux
-      uses: dulvui/itchio-butler-upload@v0.0.1
-      with:
-        working-directory: ${{ steps.export.outputs.archive_directory }}/LinuxX11.zip
-        api-key: ${{ secrets.BUTLER_API_KEY }}
-        user: d10sfan
-        game: duel-defense
-        channel: linux
+      env:
+        BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
+      run: ./butler push ${{ steps.export.outputs.archive_directory }}/LinuxX11.zip d10sfan/duel-defense:linux --userversion ${{ github.ref_name }}
     - name: Publish Web
       env:
         BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
-      run: ./butler push ${{ steps.export.outputs.archive_directory }}/Web.zip d10sfan/duel-defense:html5
+      run: ./butler push ${{ steps.export.outputs.archive_directory }}/Web.zip d10sfan/duel-defense:html5 --userversion ${{ github.ref_name }}
