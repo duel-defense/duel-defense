@@ -21,10 +21,10 @@ jobs:
     - name: Upload Linux Artifact
       uses: actions/upload-artifact@v3
       with:
-        name: linux.zip
+        name: linux
         path: ${{ steps.export.outputs.archive_directory }}/LinuxX11.zip
     - name: Upload Web Artifact
       uses: actions/upload-artifact@v3
       with:
-        name: web.zip
+        name: web
         path: ${{ steps.export.outputs.archive_directory }}/Web.zip
