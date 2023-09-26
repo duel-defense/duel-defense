@@ -19,8 +19,11 @@ jobs:
         archive_output: true
         debug_mode: true
         cache: true
-    - name: Upload Artifacts
+    - name: Upload Linux Artifact
       uses: actions/upload-artifact@v3
       with:
-        name: export
-        path: ${{ steps.export.outputs.archive_directory }}/*
+        path: ${{ steps.export.outputs.archive_directory }}/LinuxX11.zip
+    - name: Upload Web Artifact
+      uses: actions/upload-artifact@v3
+      with:
+        path: ${{ steps.export.outputs.archive_directory }}/Web.zip
