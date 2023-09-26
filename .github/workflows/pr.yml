@@ -17,7 +17,7 @@ jobs:
         godot_export_templates_download_url: https://downloads.tuxfamily.org/godotengine/4.1.1/Godot_v4.1.1-stable_export_templates.tpz
         relative_project_path: ./
         archive_output: true
-        debug_mode: true
+        export_debug: true
         cache: true
     - name: Upload Linux Artifact
       uses: actions/upload-artifact@v3
