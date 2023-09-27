@@ -159,6 +159,7 @@ func initiate_build_mode(tower_type):
 	set_tower_preview(build_type, mouse_pos)
 	update_tower_preview(mouse_pos)
 	ui.info_bar.visible = false
+	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 	
 func update_tower_preview(mouse_position = get_global_mouse_position()):
 	var current_tile = map_node.get_node("TowerExclusion").local_to_map(mouse_position)
@@ -216,6 +217,8 @@ func cancel_build_mode():
 		tower_preview.free()
 	ui.info_bar.visible = true
 	controller_mouse_movement = null
+	if ControllerIcons._last_input_type == ControllerIcons.InputType.KEYBOARD_MOUSE:
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	
 func verify_and_build():
 	if build_valid:
