@@ -22,6 +22,9 @@
 		"sprite_path": "res://Assets/Enemies/tank_huge.png",
 		"turret_sprite_path": "res://Assets/Enemies/big_gun.png",
 		"cost": 300,
-		"move_sound": "slow"
+		"move_sound": "slow",
+		"engine_trail_x": -60,
+		"engine_trail_width": 3,
+		"engine_trail_max_points": 10
 	}
 }
