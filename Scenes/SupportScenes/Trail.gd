@@ -18,6 +18,7 @@ func _physics_process(_delta):
 	process_count += 1
 	queue_redraw()
 
+# referenced https://gravityace.com/devlog/happy-trails/
 func _draw():
 	if points.size() < 2:
 		return
