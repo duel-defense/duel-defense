@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://off0mut66bi2"]
+[gd_scene load_steps=8 format=3 uid="uid://off0mut66bi2"]
 
 [ext_resource type="Script" path="res://Scenes/Enemies/Tank.gd" id="1"]
 [ext_resource type="Texture2D" uid="uid://ijbogj0vfj1x" path="res://Assets/Enemies/tank_normal.png" id="3_ao31g"]
 [ext_resource type="AudioStream" uid="uid://cv35ws8q6phim" path="res://Assets/Audio/Sounds/engine_heavy_average_loop.ogg" id="4"]
 [ext_resource type="Texture2D" uid="uid://ngufxmb135gv" path="res://Assets/Enemies/turret_01_mk1.png" id="4_smqi3"]
 [ext_resource type="Texture2D" uid="uid://cxrq6wncjn55f" path="res://Assets/UI/progress_bar.svg" id="5_mxfde"]
+[ext_resource type="Script" path="res://Scenes/SupportScenes/Trail.gd" id="6_8jb6s"]
 
 [sub_resource type="RectangleShape2D" id="1"]
 size = Vector2(24, 16)
@@ -26,6 +27,16 @@ max_distance = 1000.0
 bus = &"Ambience"
 
 [node name="ImpactEffects" type="Node" parent="CharacterBody2D"]
+
+[node name="Trail" type="Node2D" parent="." groups=["trail"]]
+modulate = Color(1, 1, 0.341176, 1)
+position = Vector2(-35, -28)
+script = ExtResource("6_8jb6s")
+
+[node name="Trail2" type="Node2D" parent="." groups=["trail"]]
+modulate = Color(1, 1, 0.341176, 1)
+position = Vector2(-35, 28)
+script = ExtResource("6_8jb6s")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("3_ao31g")

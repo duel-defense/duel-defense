@@ -15,6 +15,7 @@ var timer
 @onready var impact_area = get_node("Impact")
 @onready var sound_effects = get_node("CharacterBody2D/SoundEffects")
 @onready var sprite = get_node("Sprite2D")
+@onready var trails = get_node("Trails")
 var projectile_impact = preload("res://Scenes/Effects/ProjectileImpact.tscn")
 var explosion = preload("res://Scenes/Effects/Explosion.tscn")
 var impact_sound = preload("res://Assets/Audio/Sounds/impactMining_000.ogg")
@@ -38,6 +39,15 @@ func _ready():
 	if "turret_sprite_path" in tmp_enemy_data:
 		var turret_texture = load(tmp_enemy_data.turret_sprite_path)
 		sprite.get_node("Turret").texture = turret_texture
+		
+	if "engine_trail_x" in tmp_enemy_data:
+		set_trail_property("position_x", tmp_enemy_data.engine_trail_x)
+		
+	if "engine_trail_max_points" in tmp_enemy_data:
+		set_trail_property("max_points", tmp_enemy_data.engine_trail_max_points)
+		
+	if "engine_trail_width" in tmp_enemy_data:
+		set_trail_property("width", tmp_enemy_data.engine_trail_width)
 	
 	health_bar.max_value = hp
 	health_bar.value = hp
@@ -47,6 +57,14 @@ func _ready():
 		health_bar.visible = false
 	
 	sound_effects.stream = load("res://Assets/Audio/Sounds/engine_heavy_" + tmp_enemy_data.move_sound + "_loop.ogg")
+
+func set_trail_property(name, value):
+	for child in get_children():
+		if child.is_in_group("trail"):
+			if name == "position_x":
+				child.position.x = value
+			else:
+				child[name] = value
 
 func _physics_process(delta):
 	if progress_ratio == 1.0:
@@ -107,6 +125,9 @@ func on_destroy():
 		var new_explosion = explosion.instantiate()
 		new_explosion.position = explosion_location
 		health_bar.visible = false
+		for child in get_children():
+			if child.is_in_group("trail"):
+				child.visible = false
 		new_explosion.connect('animation_finished', Callable(self, 'destroy_complete'))
 		new_explosion.connect('hide_sprite', Callable(self, 'hide_sprite'))
 		impact_area.add_child(new_explosion)
