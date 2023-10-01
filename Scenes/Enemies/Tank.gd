@@ -15,7 +15,6 @@ var timer
 @onready var impact_area = get_node("Impact")
 @onready var sound_effects = get_node("CharacterBody2D/SoundEffects")
 @onready var sprite = get_node("Sprite2D")
-@onready var trails = get_node("Trails")
 var projectile_impact = preload("res://Scenes/Effects/ProjectileImpact.tscn")
 var explosion = preload("res://Scenes/Effects/Explosion.tscn")
 var impact_sound = preload("res://Assets/Audio/Sounds/impactMining_000.ogg")
@@ -58,13 +57,13 @@ func _ready():
 	
 	sound_effects.stream = load("res://Assets/Audio/Sounds/engine_heavy_" + tmp_enemy_data.move_sound + "_loop.ogg")
 
-func set_trail_property(name, value):
+func set_trail_property(property_name, value):
 	for child in get_children():
 		if child.is_in_group("trail"):
-			if name == "position_x":
+			if property_name == "position_x":
 				child.position.x = value
 			else:
-				child[name] = value
+				child[property_name] = value
 
 func _physics_process(delta):
 	if progress_ratio == 1.0:
