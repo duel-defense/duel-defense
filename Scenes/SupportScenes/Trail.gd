@@ -31,6 +31,6 @@ func _draw():
 		final_points.append(points[i] - global_position)
 		color.a = lerp(1.0, 0.0, float(i) / float(points.size()))
 		colors.append(color)
-		
-	draw_polyline_colors(final_points, colors, width, true)
+	
 	draw_set_transform(Vector2(0, 0), -get_parent().rotation)
+	draw_polyline_colors(final_points, colors, width, true)
