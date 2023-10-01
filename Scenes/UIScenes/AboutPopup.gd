@@ -4,8 +4,19 @@ const FS = preload("res://CommonScripts/FS.gd")
 @onready var fs = FS.new()
 var licenses_path = "res://Assets/AssetLicenses/"
 
+@onready var scroll_container = get_node("ScrollContainer")
+
 func _ready():
 	process_license_files()
+	
+func _input(event: InputEvent):
+	if visible:
+		if event.is_action_pressed("ui_down"):
+			await get_tree().process_frame
+			scroll_container.set_v_scroll(scroll_container.get_v_scroll() + 100)
+		elif event.is_action_pressed("ui_up"):
+			await get_tree().process_frame
+			scroll_container.set_v_scroll(scroll_container.get_v_scroll() - 100)
 	
 func process_license_files():
 	var license_files = fs.list_files_in_directory(licenses_path)
