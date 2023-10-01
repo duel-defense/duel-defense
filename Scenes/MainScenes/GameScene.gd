@@ -135,8 +135,6 @@ func _unhandled_input(event):
 			controller_mouse_movement += movement
 			update_tower_preview(controller_mouse_movement)
 	elif build_mode and event is InputEventScreenTouch:
-		update_tower_preview(event.position)
-		
 		if event.double_tap:
 			verify_and_build()
 	elif build_mode and event is InputEventScreenDrag:

@@ -289,3 +289,10 @@ func on_list_tower_data(tower_type):
 
 func on_toggle_play():
 	_on_PausePlay_pressed()
+
+
+func _on_menu_pressed():
+	var menu_event = InputEventAction.new()
+	menu_event.action = "ui_menu"
+	menu_event.pressed = true
+	Input.parse_input_event(menu_event)

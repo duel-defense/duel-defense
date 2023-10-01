@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://qbeqdmnh41d0"]
+[gd_scene load_steps=18 format=3 uid="uid://qbeqdmnh41d0"]
 
 [ext_resource type="FontFile" uid="uid://c0tncv8pnqgq4" path="res://addons/material-design-icons/fonts/material_design_icons.ttf" id="3_7q1i4"]
 [ext_resource type="FontFile" uid="uid://yj0t3tghbpke" path="res://Assets/UI/OperationNapalm-Regular.ttf" id="3_m0p65"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" path="res://addons/controller_icons/objects/TextureRect.gd" id="7_onet4"]
 [ext_resource type="Texture2D" uid="uid://c8t6nj5nejist" path="res://addons/controller_icons/assets/key/p.png" id="9_ih3gp"]
 [ext_resource type="Script" path="res://addons/material-design-icons/nodes/MaterialIcon.gd" id="9_qcndx"]
+[ext_resource type="Texture2D" uid="uid://cnghdqiitl0fu" path="res://addons/controller_icons/assets/key/esc.png" id="10_4xo34"]
 [ext_resource type="Texture2D" uid="uid://broeuieppu0ni" path="res://addons/controller_icons/assets/key/f.png" id="10_xq5fe"]
 [ext_resource type="Script" path="res://Scenes/MainScenes/Camera.gd" id="12_3nie2"]
 [ext_resource type="AudioStream" uid="uid://1mgkinft07ww" path="res://Assets/Audio/Music/Tactical Pursuit.mp3" id="16"]
@@ -229,6 +230,34 @@ mouse_filter = 2
 [node name="GameControls" type="HBoxContainer" parent="UI/HUD/InfoBar/M/H" groups=["ui_details"]]
 layout_mode = 2
 
+[node name="Menu" type="Button" parent="UI/HUD/InfoBar/M/H/GameControls"]
+process_mode = 3
+custom_minimum_size = Vector2(70, 70)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("3_7q1i4")
+theme_override_font_sizes/font_size = 100
+theme_override_styles/focus = SubResource("StyleBoxEmpty_e1lhj")
+text = "󰍜"
+flat = true
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("6_rf8we")
+icon_name = "menu"
+icon_size = 100
+
+[node name="ControllerTextureRect" type="TextureRect" parent="UI/HUD/InfoBar/M/H/GameControls/Menu"]
+show_behind_parent = true
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("10_4xo34")
+expand_mode = 1
+script = ExtResource("7_onet4")
+path = "ui_cancel"
+
 [node name="PausePlay" type="Button" parent="UI/HUD/InfoBar/M/H/GameControls"]
 process_mode = 3
 custom_minimum_size = Vector2(70, 70)
@@ -319,5 +348,6 @@ stream = ExtResource("17")
 bus = &"BackgroundMusic"
 
 [connection signal="pressed" from="UI/HUD/InfoBar/M/H/BuildBarSmall/StartBuildMode" to="UI" method="_on_start_build_mode_pressed"]
+[connection signal="pressed" from="UI/HUD/InfoBar/M/H/GameControls/Menu" to="UI" method="_on_menu_pressed"]
 [connection signal="pressed" from="UI/HUD/InfoBar/M/H/GameControls/PausePlay" to="UI" method="_on_PausePlay_pressed"]
 [connection signal="pressed" from="UI/HUD/InfoBar/M/H/GameControls/SpeedUp" to="UI" method="_on_SpeedUp_pressed"]
