@@ -16,3 +16,5 @@ data_*/
 out/*
 
 !out/.gitkeep
+
+debug.keystore

@@ -8,6 +8,28 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v3
+    - name: Setup JDK
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+    - name: Setup Android SDK
+      uses: android-actions/setup-android@v3
+    - name: Setup wine
+      id: wine_install
+      run: |
+        sudo apt install wine64
+        echo "WINE_PATH=$(which wine64)" >> $GITHUB_OUTPUT
+    - name: Save Android Debug Keystore
+      uses: akiojin/decode-base64-github-action@v0.1.0
+      with:
+        base64: ${{ secrets.ANDROID_DEBUG_KEYSTORE }}
+        output-path: debug.keystore
+    - name: Setup Android Debug Keystore
+      run: |
+        echo "GODOT_ANDROID_KEYSTORE_DEBUG_PATH=debug.keystore" >> $GITHUB_ENV
+        echo "GODOT_ANDROID_KEYSTORE_DEBUG_USER=${{ secrets.ANDROID_DEBUG_KEYSTORE_USER }}" >> $GITHUB_ENV
+        echo "GODOT_ANDROID_KEYSTORE_DEBUG_PASSWORD=${{ secrets.ANDROID_DEBUG_KEYSTORE_PASSWORD }}" >> $GITHUB_ENV
     - name: Export Game
       id: export
       uses: firebelley/godot-export@v5.2.0
@@ -18,6 +40,7 @@ jobs:
         archive_output: true
         export_debug: true
         cache: true
+        wine_path: ${{ steps.wine_install.outputs.WINE_PATH }}
     - name: Upload Linux Artifact
       uses: actions/upload-artifact@v3
       with:
@@ -28,3 +51,13 @@ jobs:
       with:
         name: web
         path: ${{ steps.export.outputs.archive_directory }}/Web.zip
+    - name: Upload Windows Artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: windows
+        path: ${{ steps.export.outputs.archive_directory }}/Windows Desktop.zip
+    - name: Upload Android Artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: android
+        path: ${{ steps.export.outputs.archive_directory }}/Android.zip
