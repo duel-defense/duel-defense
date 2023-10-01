@@ -23,6 +23,11 @@ jobs:
       run: |
         sudo apt install wine64
         echo "WINE_PATH=$(which wine64)" >> $GITHUB_OUTPUT
+    - name: Setup Android Debug Keystore
+      uses: akiojin/decode-base64-github-action@v0.1.0
+      with:
+        base64: ${{ secrets.ANDROID_DEBUG_KEYSTORE }}
+        output-path: debug.keystore
     - name: Export Game
       id: export
       uses: firebelley/godot-export@v5.2.0
@@ -59,7 +64,7 @@ jobs:
     - name: Publish Windows
       env:
         BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
-      run: ./butler push ${{ steps.export.outputs.archive_directory }}/Windows.zip d10sfan/duel-defense:win --userversion ${{ github.ref_name }}
+      run: ./butler push ${{ steps.export.outputs.archive_directory }}/"Windows Desktop.zip" d10sfan/duel-defense:win --userversion ${{ github.ref_name }}
     - name: Publish Android
       env:
         BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
