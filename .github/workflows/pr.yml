@@ -20,11 +20,16 @@ jobs:
       run: |
         sudo apt install wine64
         echo "WINE_PATH=$(which wine64)" >> $GITHUB_OUTPUT
-    - name: Setup Android Debug Keystore
+    - name: Save Android Debug Keystore
       uses: akiojin/decode-base64-github-action@v0.1.0
       with:
         base64: ${{ secrets.ANDROID_DEBUG_KEYSTORE }}
         output-path: debug.keystore
+    - name: Setup Android Debug Keystore
+      run: |
+        echo "GODOT_ANDROID_KEYSTORE_DEBUG_PATH=debug.keystore" >> $GITHUB_ENV
+        echo "GODOT_ANDROID_KEYSTORE_DEBUG_USER=${{ secrets.ANDROID_DEBUG_KEYSTORE_USER }}" >> $GITHUB_ENV
+        echo "GODOT_ANDROID_KEYSTORE_DEBUG_PASSWORD=${{ secrets.ANDROID_DEBUG_KEYSTORE_PASSWORD }}" >> $GITHUB_ENV
     - name: Export Game
       id: export
       uses: firebelley/godot-export@v5.2.0
@@ -50,7 +55,7 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: windows
-        path: ${{ steps.export.outputs.archive_directory }}/"Windows Desktop.zip"
+        path: ${{ steps.export.outputs.archive_directory }}/Windows Desktop.zip
     - name: Upload Android Artifact
       uses: actions/upload-artifact@v3
       with:
