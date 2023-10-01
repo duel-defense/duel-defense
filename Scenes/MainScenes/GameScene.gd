@@ -91,7 +91,7 @@ func _ready():
 	get_tree().get_root().size_changed.connect(on_window_resized)
 	
 func _physics_process(_delta):
-	if Input.is_action_just_pressed("ui_accept"):
+	if Input.is_action_just_pressed("ui_accept") and not DisplayServer.is_touchscreen_available():
 		if build_mode:
 			verify_and_build()
 	
@@ -134,11 +134,13 @@ func _unhandled_input(event):
 		if (movement):
 			controller_mouse_movement += movement
 			update_tower_preview(controller_mouse_movement)
-	elif build_mode and event is InputEventScreenTouch:
+	elif build_mode and event is InputEventScreenDrag:
 		update_tower_preview(event.position)
-		
-		if event.double_tap:
+	elif build_mode and event is InputEventScreenTouch and not event.pressed:
+		if build_mode:
 			verify_and_build()
+		if upgrade_mode:
+			cancel_upgrade_mode()
 		
 ### build functions
 
@@ -332,8 +334,6 @@ func action_requested(tower_data):
 		change_money(current_tower_cost)
 		
 		var current_tile = map_node.get_node("TowerExclusion").local_to_map(upgrade_node.position)
-		var tile_position = map_node.get_node("TowerExclusion").map_to_local(current_tile)
-		
 		map_node.get_node("TowerExclusion").erase_cell(0, current_tile)
 		upgrade_node.free()
 		
