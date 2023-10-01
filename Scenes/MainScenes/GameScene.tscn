@@ -256,7 +256,7 @@ offset_bottom = 40.0
 texture = ExtResource("10_4xo34")
 expand_mode = 1
 script = ExtResource("7_onet4")
-path = "ui_cancel"
+path = "ui_menu"
 
 [node name="PausePlay" type="Button" parent="UI/HUD/InfoBar/M/H/GameControls"]
 process_mode = 3

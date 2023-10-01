@@ -134,13 +134,13 @@ func _unhandled_input(event):
 		if (movement):
 			controller_mouse_movement += movement
 			update_tower_preview(controller_mouse_movement)
+	elif build_mode and event is InputEventScreenDrag:
+		update_tower_preview(event.position)
 	elif build_mode and event is InputEventScreenTouch:
 		if build_mode:
 			verify_and_build()
 		if upgrade_mode:
 			cancel_upgrade_mode()
-	elif build_mode and event is InputEventScreenDrag:
-		update_tower_preview(event.position)
 		
 ### build functions
 
