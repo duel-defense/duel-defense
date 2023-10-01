@@ -11,6 +11,18 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v3
+    - name: Setup JDK
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+    - name: Setup Android SDK
+      uses: android-actions/setup-android@v3
+    - name: Setup wine
+      id: wine_install
+      run: |
+        sudo apt install wine64
+        echo "WINE_PATH=$(which wine64)" >> $GITHUB_OUTPUT
     - name: Export Game
       id: export
       uses: firebelley/godot-export@v5.2.0
@@ -21,6 +33,7 @@ jobs:
         archive_output: true
         export_debug: true
         cache: true
+        wine_path: ${{ steps.wine_install.outputs.WINE_PATH }}
     - name: Create Release
       uses: ncipollo/release-action@v1.13.0
       with:
@@ -43,3 +56,12 @@ jobs:
       env:
         BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
       run: ./butler push ${{ steps.export.outputs.archive_directory }}/Web.zip d10sfan/duel-defense:html5 --userversion ${{ github.ref_name }}
+    - name: Publish Windows
+      env:
+        BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
+      run: ./butler push ${{ steps.export.outputs.archive_directory }}/Windows.zip d10sfan/duel-defense:win --userversion ${{ github.ref_name }}
+    - name: Publish Android
+      env:
+        BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
+      run: ./butler push ${{ steps.export.outputs.archive_directory }}/Android.zip d10sfan/duel-defense:android --userversion ${{ github.ref_name }}
+
