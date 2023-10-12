@@ -2,7 +2,12 @@
 
 Tower defense game made in Godot 4.
 
+![image](https://github.com/d10sfan/duel-defense/assets/4337981/5c5bfcb8-26a5-4d83-b5e5-9a6690edbed7)
+
+
 ## Development Information
+
+CI is setup to build artifacts for Linux, Windows, Web, and Android. The game is built with GDScript and JSON config files. Contributions, including code and assets, are welcome! Please look over the pull request template. As well, feature ideas or bugs found are also welcome to be reported.
 
 ### Android
 
