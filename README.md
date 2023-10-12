@@ -2,7 +2,8 @@
 
 Tower defense game made in Godot 4.
 
-![image](https://github.com/d10sfan/duel-defense/assets/4337981/5c5bfcb8-26a5-4d83-b5e5-9a6690edbed7)
+![image](https://github.com/d10sfan/duel-defense/assets/4337981/2c003788-2647-4034-a5b9-a1c13b3ffa77)
+
 
 
 ## Development Information
