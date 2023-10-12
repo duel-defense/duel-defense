@@ -1,6 +1,6 @@
 # Duel Defense
 
-Tower defense game made in Godot 4.
+Tower defense game made in Godot 4. https://d10sfan.itch.io/duel-defense
 
 ![image](https://github.com/d10sfan/duel-defense/assets/4337981/2c003788-2647-4034-a5b9-a1c13b3ffa77)
 
