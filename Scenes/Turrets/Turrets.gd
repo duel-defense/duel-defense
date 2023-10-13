@@ -13,6 +13,7 @@ var enemy
 var turret_ready = true
 var from_upgrade
 var icon_mode
+var tile_pos
 
 var timer
 var waiting_for_anim = false

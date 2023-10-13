@@ -315,6 +315,20 @@ expand_mode = 1
 script = ExtResource("7_onet4")
 path = "ui_fastforward"
 
+[node name="Cursor" type="Label" parent="UI/HUD"]
+visible = false
+layout_mode = 0
+offset_right = 64.0
+offset_bottom = 67.0
+theme_override_constants/line_spacing = 0
+theme_override_fonts/font = ExtResource("3_7q1i4")
+theme_override_font_sizes/font_size = 128
+text = "󰄱"
+justification_flags = 0
+script = ExtResource("9_qcndx")
+icon_name = "checkbox-blank-outline"
+icon_size = 128
+
 [node name="DebugMessage" type="Label" parent="UI"]
 visible = false
 anchors_preset = 12
