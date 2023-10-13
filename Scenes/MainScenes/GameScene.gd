@@ -49,6 +49,7 @@ var auto_turrets_timer
 var fired_missile = preload("res://Scenes/SupportScenes/FiredMissile.tscn")
 
 var controller_mouse_movement
+var controller_upgrade_pos
 
 func handle_main_menu():
 	hud.hide()
@@ -90,10 +91,25 @@ func _ready():
 	
 	get_tree().get_root().size_changed.connect(on_window_resized)
 	
+	if ControllerIcons._last_input_type != ControllerIcons.InputType.KEYBOARD_MOUSE:
+		ui.get_node("HUD/Cursor").visible = true
+		
+	ControllerIcons.input_type_changed.connect(_on_input_type_changed)
+	
+func _on_input_type_changed(input_type):
+	match input_type:
+		ControllerIcons.InputType.KEYBOARD_MOUSE:
+			ui.get_node("HUD/Cursor").visible = false
+		ControllerIcons.InputType.CONTROLLER:
+			if not build_mode and not upgrade_mode:
+				ui.get_node("HUD/Cursor").visible = true
+
 func _physics_process(_delta):
 	if Input.is_action_just_pressed("ui_accept") and not DisplayServer.is_touchscreen_available():
 		if build_mode:
 			verify_and_build()
+		if controller_upgrade_pos:
+			controller_upgrade(controller_upgrade_pos)
 	
 	if not wave_timer.is_stopped():
 		var time_between_waves = GameData.config.settings.time_between_waves
@@ -134,6 +150,23 @@ func _unhandled_input(event):
 		if (movement):
 			controller_mouse_movement += movement
 			update_tower_preview(controller_mouse_movement)
+	elif not build_mode and not upgrade_mode and event is InputEventJoypadMotion:
+		var direction : Vector2
+		var movement : Vector2
+		
+		direction.x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
+		direction.y = Input.get_action_strength("ui_down") - Input.get_action_strength("ui_up")
+		
+		if abs(direction.x) == 1 and abs(direction.y) == 1:
+			direction = direction.normalized()
+		
+		movement = 10 * direction
+		
+		if not controller_mouse_movement:
+			controller_mouse_movement = get_viewport().get_mouse_position()
+		if (movement):
+			controller_mouse_movement += movement
+			update_cursor(controller_mouse_movement)
 	elif build_mode and event is InputEventScreenDrag:
 		update_tower_preview(event.position)
 	elif build_mode and event is InputEventScreenTouch and not event.pressed:
@@ -144,12 +177,20 @@ func _unhandled_input(event):
 		
 ### build functions
 
+func controller_upgrade(pos):
+	controller_upgrade_pos = null
+	for turret in map_node.get_node("Turrets").get_children():
+		if turret.tile_pos == pos:
+			initiate_upgrade_mode(turret)
+			break
+
 func initiate_build_mode(tower_type):
 	if upgrade_mode:
 		cancel_upgrade_mode()
 	if build_mode:
 		cancel_build_mode()
-		
+	
+	ui.get_node("HUD/Cursor").visible = false
 	ui.ui_bar_focus_toggle(true)
 
 	var cost = GameData.config.tower_data[tower_type].cost
@@ -167,6 +208,19 @@ func initiate_build_mode(tower_type):
 	update_tower_preview(mouse_pos)
 	ui.info_bar.visible = false
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
+	
+func update_cursor(cursor_position):
+	var current_tile = map_node.get_node("TowerExclusion").local_to_map(cursor_position)
+	var tile_position = map_node.get_node("TowerExclusion").map_to_local(current_tile)
+	ui.get_node("HUD/Cursor").position = Vector2(tile_position.x - 64, tile_position.y - 96)
+	
+	var tower_at_loc = map_node.get_node("TowerExclusion").get_cell_source_id(0, current_tile) == 6
+	if tower_at_loc:
+		ui.get_node("HUD/Cursor").set("theme_override_colors/font_color", Color.GREEN)
+		controller_upgrade_pos = current_tile
+	else:
+		ui.get_node("HUD/Cursor").set("theme_override_colors/font_color", Color.WHITE)
+		controller_upgrade_pos = null
 	
 func update_tower_preview(mouse_position = get_global_mouse_position()):
 	var current_tile = map_node.get_node("TowerExclusion").local_to_map(mouse_position)
@@ -217,6 +271,7 @@ func update_tower_preview_scene(new_position, color):
 		get_node("TowerPreview/RangeTexture").modulate = Color(color, 0.4)
 
 func cancel_build_mode():
+	ui.get_node("HUD/Cursor").set("theme_override_colors/font_color", Color.WHITE)
 	build_mode = false
 	build_valid = false
 	var tower_preview = get_node_or_null("TowerPreview")
@@ -226,6 +281,10 @@ func cancel_build_mode():
 	controller_mouse_movement = null
 	if ControllerIcons._last_input_type == ControllerIcons.InputType.KEYBOARD_MOUSE:
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	else:
+		ui.get_node("HUD/Cursor").visible = true
+	
+	controller_upgrade_pos = null
 	
 func verify_and_build():
 	if build_valid:
@@ -233,6 +292,7 @@ func verify_and_build():
 		new_tower.position = build_location
 		new_tower.built = true
 		new_tower.type = build_type
+		new_tower.tile_pos = build_tile
 		if upgrade_mode:
 			new_tower.from_upgrade = true
 		new_tower.category = GameData.config.tower_data[build_type]["category"]
@@ -268,6 +328,7 @@ func initiate_upgrade_mode(tower):
 	if upgrade_mode:
 		cancel_upgrade_mode()
 		
+	ui.get_node("HUD/Cursor").visible = false
 	GameData.play_button_sound(interface_effects)
 		
 	upgrade_node = tower
@@ -292,6 +353,7 @@ func initiate_upgrade_mode(tower):
 		ui.hide_upgrade_bar()
 	
 func cancel_upgrade_mode(_tower = null):
+	ui.get_node("HUD/Cursor").set("theme_override_colors/font_color", Color.WHITE)
 	if upgrade_node and is_instance_valid(upgrade_node) and upgrade_node.get_node_or_null("RangeTexture"):
 		upgrade_node.get_node_or_null("RangeTexture").queue_free()
 	
@@ -300,6 +362,8 @@ func cancel_upgrade_mode(_tower = null):
 	ui.hide_upgrade_bar()
 	ui.info_bar.visible = true
 	controller_mouse_movement = null
+	if ControllerIcons._last_input_type != ControllerIcons.InputType.KEYBOARD_MOUSE:
+		ui.get_node("HUD/Cursor").visible = true
 	
 func upgrade_requested(upgrade_name):
 	var tower_data = GameData.config.tower_data[upgrade_name]
