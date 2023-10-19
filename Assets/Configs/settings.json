@@ -9,5 +9,6 @@
 	"background_volume": 50,
 	"interface_volume": 40,
 	"sound_volume": 100,
-	"ambience_volume": 80
+	"ambience_volume": 80,
+	"full_screen": false
 }
