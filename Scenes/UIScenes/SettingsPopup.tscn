@@ -1,9 +1,15 @@
-[gd_scene load_steps=5 format=3 uid="uid://c7sq5e5ujjkt"]
+[gd_scene load_steps=6 format=3 uid="uid://c7sq5e5ujjkt"]
 
 [ext_resource type="Script" path="res://Scenes/UIScenes/SettingsPopup.gd" id="1"]
 [ext_resource type="Theme" uid="uid://yove688wbh0t" path="res://Resources/Themes/MainTheme.tres" id="2"]
 [ext_resource type="FontFile" uid="uid://c0tncv8pnqgq4" path="res://addons/material-design-icons/fonts/material_design_icons.ttf" id="3_n5els"]
 [ext_resource type="Script" path="res://addons/material-design-icons/nodes/MaterialButton.gd" id="4_p73nn"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_h0gnw"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
 
 [node name="SettingsPopup" type="Window" node_paths=PackedStringArray("content_container")]
 title = "Settings"
@@ -26,6 +32,7 @@ grow_vertical = 2
 layout_mode = 2
 size_flags_vertical = 3
 focus_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_h0gnw")
 follow_focus = true
 
 [node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/ScrollContainer"]

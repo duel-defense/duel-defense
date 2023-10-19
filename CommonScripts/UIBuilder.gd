@@ -2,6 +2,8 @@ extends Node
 
 var parent_node
 
+@export var font_size = 18
+
 func _init(given_parent_node):
 	parent_node = given_parent_node
 	
@@ -17,6 +19,8 @@ func build_ui(data, map):
 			var label = Label.new()
 			label.text = map_data.label
 			label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+			label.horizontal_alignment = HorizontalAlignment.HORIZONTAL_ALIGNMENT_CENTER
+			label.set("theme_override_font_sizes/font_size", font_size)
 			add_ui_to_node(label)
 			
 			if map_data.type == "slider":
@@ -24,6 +28,7 @@ func build_ui(data, map):
 				slider_label.text = str(data_value)
 				slider_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 				slider_label.horizontal_alignment = HorizontalAlignment.HORIZONTAL_ALIGNMENT_CENTER
+				slider_label.set("theme_override_font_sizes/font_size", font_size)
 				
 				var slider = HSlider.new()
 				slider.min_value = map_data.min
@@ -68,6 +73,9 @@ func build_ui(data, map):
 				line_edit.text = str(data_value)
 				line_edit.connect("text_changed", Callable(parent_node, "value_changed").bind(key))
 				add_ui_to_node(line_edit)
+				
+			var separator = HSeparator.new()
+			add_ui_to_node(separator)
 
 func dropdown_changed(index, key, options):
 	var loop_idx = 0
