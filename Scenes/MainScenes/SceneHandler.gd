@@ -9,6 +9,7 @@ func _ready():
 	link_main_menu()
 	link_setting_change()
 	check_fps_monitor()
+	check_full_screen()
 	process_audio_settings()
 	
 	Console.add_command("open_editor", on_open_editor)
@@ -45,11 +46,20 @@ func check_fps_monitor():
 	else:
 		DebugMenu.style = DebugMenu.Style.HIDDEN
 		
+func check_full_screen():
+	if GameData.config.settings.full_screen:
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
+	else:
+		if DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_FULLSCREEN:
+			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_MAXIMIZED)
+		
 func setting_change(setting_key, _value):
 	get_node("ConfigurationManager").write_config('settings')
 		
 	if setting_key == "show_fps_monitor":
 		check_fps_monitor()
+	elif setting_key == "full_screen":
+		check_full_screen()
 	elif setting_key in GameData.config.settings_map and 'audio_bus' in GameData.config.settings_map[setting_key]:
 		process_audio_bus_change(setting_key)
 		
