@@ -232,8 +232,82 @@
 			}
 		],
 		"starting_money": 1000,
-		"next_map": "Map2",
+		"next_map": "Map1c",
 		"scene_name": "Map1"
+	},
+	"Map1c": {
+		"starting_money": 1000,
+		"scene_name": "Map1",
+		"next_map": "Map2",
+		"waves": [
+			{
+				"enemies": [
+					{"base": "Tank", "category": "NormalTank", "delay": 1.5},
+					{"base": "Tank", "category": "FastTank", "delay": 1.5},
+					{"base": "Tank", "category": "FastTank", "delay": 1.5},
+					{"base": "Tank", "category": "NormalTank", "delay": 1.5},
+					{"base": "Tank", "category": "FastTank", "delay": 1.5},
+					{"base": "Tank", "category": "NormalTank", "delay": 1.5}
+				],
+				"cost": 300
+			},
+			{
+				"enemies": [
+					{"base": "Tank", "category": "FastTank", "delay": 1.5},
+					{"base": "Tank", "category": "FastTank", "delay": 1.5},
+					{"base": "Tank", "category": "NormalTank", "delay": 1.5},
+					{"base": "Tank", "category": "NormalTank", "delay": 1.5},
+					{"base": "Tank", "category": "FastTank", "delay": 1.5},
+					{"base": "Tank", "category": "NormalTank", "delay": 1.5}
+				],
+				"cost": 300
+			},
+			{
+				"enemies": [
+					{"base": "Tank", "category": "FastTank", "delay": 1.5},
+					{"base": "Tank", "category": "NormalTank", "delay": 1.5},
+					{"base": "Tank", "category": "NormalTank", "delay": 1.5},
+					{"base": "Tank", "category": "NormalTank", "delay": 1.5},
+					{"base": "Tank", "category": "FastTank", "delay": 1.5},
+					{"base": "Tank", "category": "NormalTank", "delay": 1.5}
+				],
+				"cost": 300
+			},
+			{
+				"enemies": [
+					{"base": "Tank", "category": "NormalTank", "delay": 1.5},
+					{"base": "Tank", "category": "FastTank", "delay": 1.5},
+					{"base": "Tank", "category": "NormalTank", "delay": 1.5},
+					{"base": "Tank", "category": "NormalTank", "delay": 1.5},
+					{"base": "Tank", "category": "FastTank", "delay": 1.5},
+					{"base": "Tank", "category": "NormalTank", "delay": 1.5}
+				],
+				"cost": 300
+			},
+			{
+				"enemies": [
+					{"base": "Tank", "category": "NormalTank", "delay": 1.5},
+					{"base": "Tank", "category": "FastTank", "delay": 1.5},
+					{"base": "Tank", "category": "NormalTank", "delay": 1.5},
+					{"base": "Tank", "category": "NormalTank", "delay": 1.5},
+					{"base": "Tank", "category": "FastTank", "delay": 1.5},
+					{"base": "Tank", "category": "NormalTank", "delay": 1.5}
+				],
+				"cost": 300
+			},
+			{
+				"enemies": [
+					{"base": "Tank", "category": "BossTank", "delay": 1.5},
+					{"base": "Tank", "category": "NormalTank", "delay": 1.5},
+					{"base": "Tank", "category": "FastTank", "delay": 1.5},
+					{"base": "Tank", "category": "FastTank", "delay": 1.5},
+					{"base": "Tank", "category": "NormalTank", "delay": 1.5},
+					{"base": "Tank", "category": "NormalTank", "delay": 1.5}
+				],
+				"cost": 300,
+				"boss_wave": true
+			}
+		]
 	},
 	"Map2": {
 		"waves": [
