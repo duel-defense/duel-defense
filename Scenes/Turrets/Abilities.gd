@@ -10,6 +10,7 @@ var built
 var built_detected
 var enemy_array = []
 var icon_mode
+var tile_pos
 
 @onready var collision_2d = get_node("Range/CollisionShape2D")
 @export var sprite: Node2D
