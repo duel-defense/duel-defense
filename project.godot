@@ -24,6 +24,7 @@ Console="*res://addons/console/Console.gd"
 MaterialIconsDB="*res://addons/material-design-icons/icons/icons.gd"
 GodotLogger="*res://addons/logger/logger.gd"
 ControllerIcons="*res://addons/controller_icons/ControllerIcons.gd"
+SoundManager="*res://addons/sound_manager/sound_manager.gd"
 
 [display]
 
@@ -38,7 +39,7 @@ export/convert_text_resources_to_binary=false
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/console/plugin.cfg", "res://addons/controller_icons/plugin.cfg", "res://addons/debug_menu/plugin.cfg", "res://addons/logger/plugin.cfg", "res://addons/material-design-icons/plugin.cfg")
+enabled=PackedStringArray("res://addons/console/plugin.cfg", "res://addons/controller_icons/plugin.cfg", "res://addons/debug_menu/plugin.cfg", "res://addons/logger/plugin.cfg", "res://addons/material-design-icons/plugin.cfg", "res://addons/sound_manager/plugin.cfg")
 
 [global]
 

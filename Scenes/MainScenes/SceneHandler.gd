@@ -2,10 +2,14 @@ extends Node
 
 var last_map_name
 var current_map
-var interface_effects
 var in_game_for_menu = false
 
 func _ready():
+	SoundManager.set_default_music_bus("BackgroundMusic")
+	SoundManager.set_default_ui_sound_bus("InterfaceEffects")
+	SoundManager.set_default_sound_bus("SoundEffects")
+	ControllerIcons.input_type_changed.connect(_on_input_type_changed)
+	
 	link_main_menu()
 	link_setting_change()
 	check_fps_monitor()
@@ -23,6 +27,13 @@ func check_autoexec():
 		for line in autoexecArray:
 			if line:
 				Console.on_text_entered(line)
+				
+func _on_input_type_changed(input_type):
+	match input_type:
+		ControllerIcons.InputType.KEYBOARD_MOUSE:
+			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+		ControllerIcons.InputType.CONTROLLER:
+			Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 	
 func _input(event):
 	if event.is_action_pressed("ui_menu"):
@@ -123,15 +134,11 @@ func link_main_menu():
 	get_node("MainMenu/Container/VBoxContainer/Quit").connect("pressed", Callable(self, "on_quit_pressed"))
 	# warning-ignore:return_value_discarded
 	get_node("MainMenu/Container/VBoxContainer/MainMenu").connect("pressed", Callable(self, "on_main_menu_pressed"))
-	interface_effects = get_node("MainMenu/InterfaceEffects")
 	
 	if in_game_for_menu:
 		get_node("MainMenu/Container/TitleContainer").visible = false
 		get_node("MainMenu/Container/VBoxContainer/ResumeGame").visible = true
 		get_node("MainMenu/Container/VBoxContainer/MainMenu").visible = true
-		get_node("MainMenu/BackgroundMusic").autoplay = false
-		get_node("MainMenu/BackgroundMusic").playing = false
-		get_node("MainMenu/BackgroundMusic").volume_db = -100
 		get_node("MainMenu/Container/VBoxContainer/ResumeGame").grab_focus()
 	else:
 		var map_name = GameData.config.settings.main_menu_map
@@ -152,33 +159,33 @@ func on_main_menu_pressed():
 
 func on_new_game_pressed():
 	get_node("GameScene").free()
-	GameData.play_button_sound(interface_effects)
+	GameData.play_button_sound()
 	last_map_name = null
 	get_node("MainMenu").queue_free()
 	load_game_scene()
 	in_game_for_menu = false
 	
 func on_resume_game_pressed():
-	GameData.play_button_sound(interface_effects)
+	GameData.play_button_sound()
 	get_node("MainMenu").queue_free()
 	in_game_for_menu = false
 	get_tree().paused = false
 	
 func on_settings_pressed():
-	GameData.play_button_sound(interface_effects)
+	GameData.play_button_sound()
 	get_node("SettingsPopup").open_popup()
 	
 func on_editor_pressed(disable_sound = false):
 	if not disable_sound:
-		GameData.play_button_sound(interface_effects)
+		GameData.play_button_sound()
 	get_node("EditorPopup").open_popup()
 	
 func on_about_pressed():
-	GameData.play_button_sound(interface_effects)
+	GameData.play_button_sound()
 	get_node("AboutPopup").open_popup()
 	
 func on_continue_pressed():
-	GameData.play_button_sound(interface_effects)
+	GameData.play_button_sound()
 	var last_map_data = GameData.config.maps[last_map_name]
 	if "next_map" in last_map_data:
 		get_node("CongratsMenu").queue_free()
@@ -203,10 +210,9 @@ func load_game_scene(map_name = null):
 	game_scene.set_name("GameScene")
 	add_child(game_scene)
 	current_map = map_name
-	interface_effects = get_node("GameScene/InterfaceEffects")
 	
 func on_quit_pressed():
-	GameData.play_button_sound(interface_effects)
+	GameData.play_button_sound()
 	get_tree().quit()
 
 func unload_game(result, map_name, skip_load = false):

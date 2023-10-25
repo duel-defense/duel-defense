@@ -13,7 +13,7 @@ dest_files=["res://.godot/imported/engine_heavy_average_loop.ogg-8a04cc8814cd355
 [params]
 
 loop=true
-loop_offset=0
-bpm=0
+loop_offset=0.0
+bpm=0.0
 beat_count=0
 bar_beats=4
