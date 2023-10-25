@@ -93,5 +93,3 @@ text = "Quit"
 stream = ExtResource("6")
 autoplay = true
 bus = &"BackgroundMusic"
-
-[node name="InterfaceEffects" type="AudioStreamPlayer" parent="."]

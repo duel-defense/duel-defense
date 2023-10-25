@@ -13,11 +13,11 @@ var timer
 
 @onready var health_bar = get_node("Sprite2D/HealthBar")
 @onready var impact_area = get_node("Impact")
-@onready var sound_effects = get_node("CharacterBody2D/SoundEffects")
 @onready var sprite = get_node("Sprite2D")
 var projectile_impact = preload("res://Scenes/Effects/ProjectileImpact.tscn")
 var explosion = preload("res://Scenes/Effects/Explosion.tscn")
 var impact_sound = preload("res://Assets/Audio/Sounds/impactMining_000.ogg")
+var sound_manager
 
 func _ready():
 	timer = Timer.new()
@@ -55,7 +55,8 @@ func _ready():
 	if hide_hp_bar:
 		health_bar.visible = false
 	
-	sound_effects.stream = load("res://Assets/Audio/Sounds/engine_heavy_" + tmp_enemy_data.move_sound + "_loop.ogg")
+	sound_manager = SoundManager.play_sound(load("res://Assets/Audio/Sounds/engine_heavy_" + tmp_enemy_data.move_sound + "_loop.ogg"))
+	sound_manager.set_volume_db(linear_to_db(0.2))
 
 func set_trail_property(property_name, value):
 	for child in get_children():
@@ -95,19 +96,7 @@ func impact(has_sound):
 	if has_sound:
 		var k_body = get_node_or_null("CharacterBody2D//ImpactEffects")
 		if k_body:
-			var children_count = k_body.get_children().size()
-			if children_count <= 3:
-				var tmp_stream = AudioStreamPlayer2D.new()
-				tmp_stream.stream = impact_sound
-				tmp_stream.stream.loop = false
-				tmp_stream.volume_db = 4
-				tmp_stream.bus = "SoundEffects"
-				tmp_stream.connect('finished', Callable(self, 'impact_stream_finished').bind(tmp_stream))
-				k_body.add_child(tmp_stream)
-				tmp_stream.play()
-		
-func impact_stream_finished(node):
-	node.queue_free()
+			SoundManager.play_sound(impact_sound)
 		
 func on_destroy():
 	var k_body = get_node_or_null("CharacterBody2D")
@@ -130,6 +119,8 @@ func on_destroy():
 		new_explosion.connect('animation_finished', Callable(self, 'destroy_complete'))
 		new_explosion.connect('hide_sprite', Callable(self, 'hide_sprite'))
 		impact_area.add_child(new_explosion)
+		
+		sound_manager.stop()
 	
 func destroy_complete():
 	if not destroyed:
@@ -139,3 +130,7 @@ func destroy_complete():
 		
 func hide_sprite():
 	sprite.visible = false
+	
+func _exit_tree():
+	if sound_manager:
+		sound_manager.stop()

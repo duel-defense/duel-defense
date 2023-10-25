@@ -1,20 +1,18 @@
-[gd_scene load_steps=18 format=3 uid="uid://qbeqdmnh41d0"]
+[gd_scene load_steps=16 format=3 uid="uid://qbeqdmnh41d0"]
 
 [ext_resource type="FontFile" uid="uid://c0tncv8pnqgq4" path="res://addons/material-design-icons/fonts/material_design_icons.ttf" id="3_7q1i4"]
 [ext_resource type="FontFile" uid="uid://yj0t3tghbpke" path="res://Assets/UI/OperationNapalm-Regular.ttf" id="3_m0p65"]
 [ext_resource type="Script" path="res://Scenes/MainScenes/GameScene.gd" id="5"]
 [ext_resource type="Script" path="res://Scenes/MainScenes/UI.gd" id="6"]
 [ext_resource type="PackedScene" uid="uid://3ojeng56mfwk" path="res://Scenes/SupportScenes/ProgressCircle.tscn" id="6_6k1du"]
-[ext_resource type="Texture2D" uid="uid://coqj2fcsaxvcn" path="res://addons/controller_icons/assets/key/space.png" id="6_kwhu7"]
 [ext_resource type="Script" path="res://addons/material-design-icons/nodes/MaterialButton.gd" id="6_rf8we"]
+[ext_resource type="Texture2D" uid="uid://bva4iswwvta5d" path="res://addons/controller_icons/assets/xbox360/y.png" id="7_oh17e"]
 [ext_resource type="Script" path="res://addons/controller_icons/objects/TextureRect.gd" id="7_onet4"]
-[ext_resource type="Texture2D" uid="uid://c8t6nj5nejist" path="res://addons/controller_icons/assets/key/p.png" id="9_ih3gp"]
 [ext_resource type="Script" path="res://addons/material-design-icons/nodes/MaterialIcon.gd" id="9_qcndx"]
-[ext_resource type="Texture2D" uid="uid://cnghdqiitl0fu" path="res://addons/controller_icons/assets/key/esc.png" id="10_4xo34"]
-[ext_resource type="Texture2D" uid="uid://broeuieppu0ni" path="res://addons/controller_icons/assets/key/f.png" id="10_xq5fe"]
+[ext_resource type="Texture2D" uid="uid://coxp4sapp4g8n" path="res://addons/controller_icons/assets/xbox360/start.png" id="10_6cwio"]
+[ext_resource type="Texture2D" uid="uid://bamrmda3in3qq" path="res://addons/controller_icons/assets/xbox360/lb.png" id="11_1ip31"]
+[ext_resource type="Texture2D" uid="uid://cw2jo5xbteqdu" path="res://addons/controller_icons/assets/xbox360/rb.png" id="12_2yvu8"]
 [ext_resource type="Script" path="res://Scenes/MainScenes/Camera.gd" id="12_3nie2"]
-[ext_resource type="AudioStream" uid="uid://1mgkinft07ww" path="res://Assets/Audio/Music/Tactical Pursuit.mp3" id="16"]
-[ext_resource type="AudioStream" uid="uid://b80ay3f50p8he" path="res://Assets/Audio/Music/2 Part Invention in B Minor.mp3" id="17"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_e1lhj"]
 
@@ -160,7 +158,7 @@ mouse_filter = 2
 [node name="ControllerTextureRect" type="TextureRect" parent="UI/HUD/InfoBar/M/H"]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
-texture = ExtResource("6_kwhu7")
+texture = ExtResource("7_oh17e")
 expand_mode = 1
 stretch_mode = 5
 script = ExtResource("7_onet4")
@@ -253,7 +251,7 @@ custom_minimum_size = Vector2(40, 40)
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
-texture = ExtResource("10_4xo34")
+texture = ExtResource("10_6cwio")
 expand_mode = 1
 script = ExtResource("7_onet4")
 path = "ui_menu"
@@ -282,7 +280,7 @@ custom_minimum_size = Vector2(40, 40)
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
-texture = ExtResource("9_ih3gp")
+texture = ExtResource("11_1ip31")
 expand_mode = 1
 script = ExtResource("7_onet4")
 path = "ui_play"
@@ -310,7 +308,7 @@ layout_mode = 0
 offset_left = -12.0
 offset_right = 28.0
 offset_bottom = 40.0
-texture = ExtResource("10_xq5fe")
+texture = ExtResource("12_2yvu8")
 expand_mode = 1
 script = ExtResource("7_onet4")
 path = "ui_fastforward"
@@ -347,19 +345,6 @@ autowrap_mode = 1
 [node name="Camera" type="Camera2D" parent="."]
 anchor_mode = 0
 script = ExtResource("12_3nie2")
-
-[node name="InterfaceEffects" type="AudioStreamPlayer" parent="."]
-bus = &"InterfaceEffects"
-
-[node name="BackgroundMusicUpbeat" type="AudioStreamPlayer" parent="."]
-process_mode = 3
-stream = ExtResource("16")
-bus = &"BackgroundMusic"
-
-[node name="BackgroundMusicIdle" type="AudioStreamPlayer" parent="."]
-process_mode = 3
-stream = ExtResource("17")
-bus = &"BackgroundMusic"
 
 [connection signal="pressed" from="UI/HUD/InfoBar/M/H/BuildBarSmall/StartBuildMode" to="UI" method="_on_start_build_mode_pressed"]
 [connection signal="pressed" from="UI/HUD/InfoBar/M/H/GameControls/Menu" to="UI" method="_on_menu_pressed"]

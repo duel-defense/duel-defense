@@ -12,8 +12,8 @@ dest_files=["res://.godot/imported/impactMining_000.ogg-4faa3801e6f5e0e67c3aa2ff
 
 [params]
 
-loop=true
-loop_offset=0
-bpm=0
+loop=false
+loop_offset=0.0
+bpm=0.0
 beat_count=0
 bar_beats=4

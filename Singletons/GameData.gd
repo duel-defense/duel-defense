@@ -11,8 +11,6 @@ func _ready():
 	Console.add_command("get_setting", on_get_setting, 1)
 	Console.add_command("set_setting", on_set_setting, 2)
 	Console.add_command("list_settings", on_list_settings)
-	
-	ControllerIcons.input_type_changed.connect(_on_input_type_changed)
 
 func update_setting(setting_key, value):
 	config.settings[setting_key] = value
@@ -21,35 +19,17 @@ func update_setting(setting_key, value):
 func update_config(key):
 	emit_signal('config_updated', key)
 
-
-## move to import?
-
-func _on_input_type_changed(input_type):
-	match input_type:
-		ControllerIcons.InputType.KEYBOARD_MOUSE:
-			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-		ControllerIcons.InputType.CONTROLLER:
-			Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
-
-func play_button_sound(node):
-	node.stream = load("res://Assets/Audio/Sounds/click_003.ogg")
-	node.stream.loop = false
-	node.play()
+func play_button_sound():
+	SoundManager.play_ui_sound(load("res://Assets/Audio/Sounds/click_003.ogg"))
 	
-func play_error_sound(node):
-	node.stream = load("res://Assets/Audio/Sounds/error_007.ogg")
-	node.stream.loop = false
-	node.play()
+func play_error_sound():
+	SoundManager.play_ui_sound(load("res://Assets/Audio/Sounds/error_007.ogg"))
 	
-func play_confirm_sound(node):
-	node.stream = load("res://Assets/Audio/Sounds/confirmation_001.ogg")
-	node.stream.loop = false
-	node.play()
+func play_confirm_sound():
+	SoundManager.play_ui_sound(load("res://Assets/Audio/Sounds/confirmation_001.ogg"))
 
-func play_upgrade_sound(node):
-	node.stream = load("res://Assets/Audio/Sounds/confirmation_002.ogg")
-	node.stream.loop = false
-	node.play()
+func play_upgrade_sound():
+	SoundManager.play_ui_sound(load("res://Assets/Audio/Sounds/confirmation_002.ogg"))
 
 # Console commands related to GameData
 

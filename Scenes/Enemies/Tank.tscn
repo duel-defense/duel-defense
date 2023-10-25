@@ -1,8 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://off0mut66bi2"]
+[gd_scene load_steps=7 format=3 uid="uid://off0mut66bi2"]
 
 [ext_resource type="Script" path="res://Scenes/Enemies/Tank.gd" id="1"]
 [ext_resource type="Texture2D" uid="uid://ijbogj0vfj1x" path="res://Assets/Enemies/tank_normal.png" id="3_ao31g"]
-[ext_resource type="AudioStream" uid="uid://cv35ws8q6phim" path="res://Assets/Audio/Sounds/engine_heavy_average_loop.ogg" id="4"]
 [ext_resource type="Texture2D" uid="uid://ngufxmb135gv" path="res://Assets/Enemies/turret_01_mk1.png" id="4_smqi3"]
 [ext_resource type="Texture2D" uid="uid://cxrq6wncjn55f" path="res://Assets/UI/progress_bar.svg" id="5_mxfde"]
 [ext_resource type="Script" path="res://Scenes/SupportScenes/Trail.gd" id="6_8jb6s"]
@@ -18,13 +17,6 @@ script = ExtResource("1")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
 shape = SubResource("1")
-
-[node name="SoundEffects" type="AudioStreamPlayer2D" parent="CharacterBody2D"]
-stream = ExtResource("4")
-volume_db = 0.1
-autoplay = true
-max_distance = 1000.0
-bus = &"Ambience"
 
 [node name="ImpactEffects" type="Node" parent="CharacterBody2D"]
 

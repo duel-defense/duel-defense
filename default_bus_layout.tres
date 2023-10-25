@@ -1,4 +1,10 @@
-[gd_resource type="AudioBusLayout" load_steps=2 format=3 uid="uid://yiud3vuyatjh"]
+[gd_resource type="AudioBusLayout" load_steps=4 format=3 uid="uid://yiud3vuyatjh"]
+
+[sub_resource type="AudioEffectCompressor" id="AudioEffectCompressor_noj7l"]
+resource_name = "Compressor"
+
+[sub_resource type="AudioEffectCompressor" id="AudioEffectCompressor_er21w"]
+resource_name = "Compressor"
 
 [sub_resource type="AudioEffectCompressor" id="1"]
 resource_name = "Compressor"
@@ -17,12 +23,16 @@ bus/2/mute = false
 bus/2/bypass_fx = false
 bus/2/volume_db = -7.27252
 bus/2/send = &"Master"
+bus/2/effect/0/effect = SubResource("AudioEffectCompressor_noj7l")
+bus/2/effect/0/enabled = true
 bus/3/name = &"SoundEffects"
 bus/3/solo = false
 bus/3/mute = false
 bus/3/bypass_fx = false
 bus/3/volume_db = 3.44026
 bus/3/send = &"Master"
+bus/3/effect/0/effect = SubResource("AudioEffectCompressor_er21w")
+bus/3/effect/0/enabled = true
 bus/4/name = &"Ambience"
 bus/4/solo = false
 bus/4/mute = false

@@ -25,19 +25,12 @@ var debug_resolution = false
 var base_health = GameData.config.settings.starting_base_health
 var current_money
 
-@onready var interface_effects = get_node("InterfaceEffects")
 @onready var debug_message = get_node("UI/DebugMessage")
 @onready var hud = get_node("UI//HUD")
 @onready var ui = get_node("UI")
 
-## music handler helper function class?
-@onready var background_music_upbeat = get_node("BackgroundMusicUpbeat")
-@onready var background_music_idle = get_node("BackgroundMusicIdle")
 var normal_upbeat_music_track = true
-var tween_needs_processing = false
 
-var last_upbeat_position = 0
-var last_idle_position = 0
 var main_menu_mode = false
 var skip_auto_turrets = false
 var use_auto_turrets_not_in_menu = false
@@ -75,7 +68,7 @@ func _ready():
 	if main_menu_mode:
 		handle_main_menu()
 	else:
-		get_node("BackgroundMusicIdle").play()
+		SoundManager.play_music(load("res://Assets/Audio/Music/2 Part Invention in B Minor.mp3"), 1, "BackgroundMusic")
 		map_node.get_node("Base").update_health_bar(base_health)
 		ui.setup_build_buttons(GameData.config.tower_data, get_node("UI/HUD/InfoBar/M/H/BuildBar"))
 	
@@ -196,10 +189,10 @@ func initiate_build_mode(tower_type):
 	var cost = GameData.config.tower_data[tower_type].cost
 	if (current_money - cost) < 0:
 		GodotLogger.info("initiate_build_mode, not enough money")
-		GameData.play_error_sound(interface_effects)
+		GameData.play_error_sound()
 		return
 
-	GameData.play_button_sound(interface_effects)
+	GameData.play_button_sound()
 		
 	build_type = tower_type
 	build_mode = true
@@ -312,11 +305,11 @@ func verify_and_build():
 		if upgrade_mode:
 			change_money(-(GameData.config.tower_data[build_type].upgrade_cost))
 			if not main_menu_mode:
-				GameData.play_upgrade_sound(interface_effects)
+				GameData.play_upgrade_sound()
 		else:
 			change_money(-(GameData.config.tower_data[build_type].cost))
 			if GameData.config.tower_data[build_type].category != "Ability" and not main_menu_mode:
-				GameData.play_confirm_sound(interface_effects)
+				GameData.play_confirm_sound()
 			
 		cancel_build_mode()
 		cancel_upgrade_mode()
@@ -329,7 +322,7 @@ func initiate_upgrade_mode(tower):
 		cancel_upgrade_mode()
 		
 	ui.get_node("HUD/Cursor").visible = false
-	GameData.play_button_sound(interface_effects)
+	GameData.play_button_sound()
 		
 	upgrade_node = tower
 	
@@ -372,7 +365,7 @@ func upgrade_requested(upgrade_name):
 	var cost = tower_data.upgrade_cost
 	if (current_money - cost) < 0:
 		GodotLogger.info("upgrade_requested, not enough money")
-		GameData.play_error_sound(interface_effects)
+		GameData.play_error_sound()
 		return
 	
 	build_type = upgrade_name
@@ -557,54 +550,21 @@ func play_music(music_name):
 	GodotLogger.debug("play_music = %s" % music_name)
 	if music_name == 'upbeat':
 		if game_ended:
-			last_upbeat_position = 0
 			normal_upbeat_music_track = false
-			background_music_upbeat.stream = load("res://Assets/Audio/Music/Zander Noriega - School of Quirks.mp3")
+			SoundManager.play_music(load("res://Assets/Audio/Music/Zander Noriega - School of Quirks.mp3"), 2)
 		elif boss_wave:
-			last_upbeat_position = 0
 			normal_upbeat_music_track = false
-			background_music_upbeat.stream = load("res://Assets/Audio/Music/Orbital Colossus.mp3")
+			SoundManager.play_music(load("res://Assets/Audio/Music/Orbital Colossus.mp3"), 1)
 		elif base_health <= 50 and normal_upbeat_music_track:
 			normal_upbeat_music_track = false
-			background_music_upbeat.stream = load("res://Assets/Audio/Music/n-Dimensions (Main Theme).mp3")
-			last_upbeat_position = 0
+			SoundManager.play_music(load("res://Assets/Audio/Music/n-Dimensions (Main Theme).mp3"), 1)
 		elif base_health > 50 and not normal_upbeat_music_track:
 			normal_upbeat_music_track = true
-			background_music_upbeat.stream = load("res://Assets/Audio/Music/Tactical Pursuit.mp3")
-			last_upbeat_position = 0
-		
-		last_idle_position = background_music_idle.get_playback_position()
-		tween_needs_processing = true
-		var tween = get_tree().create_tween()
-		tween.tween_property(background_music_idle, 'volume_db', -100, 2)
-		tween.tween_callback(_on_bgmusicidle_tween_completed)
+			SoundManager.play_music(load("res://Assets/Audio/Music/Tactical Pursuit.mp3"), 1)
+		else:
+			SoundManager.play_music(load("res://Assets/Audio/Music/Tactical Pursuit.mp3"), 1)
 	elif music_name == 'idle':
-		last_upbeat_position = background_music_upbeat.get_playback_position()
-		tween_needs_processing = true
-		var tween = get_tree().create_tween()
-		tween.tween_property(background_music_upbeat, 'volume_db', -100, 2)
-		tween.tween_callback(_on_bgmusicupbeat_tween_completed)
-
-func _on_bgmusicidle_tween_completed():
-	if tween_needs_processing:
-		tween_needs_processing = false
-		background_music_idle.stop()
-		background_music_upbeat.volume_db = -100
-		background_music_upbeat.play(last_upbeat_position)
-		
-		var tween = get_tree().create_tween()
-		tween.tween_property(background_music_upbeat, 'volume_db', 1, 0.5)
-		tween.tween_callback(_on_bgmusicupbeat_tween_completed)
-		
-func _on_bgmusicupbeat_tween_completed():
-	if tween_needs_processing:
-		tween_needs_processing = false
-		background_music_upbeat.stop()
-		background_music_idle.volume_db = -100
-		background_music_idle.play(last_idle_position)
-
-		var tween = get_tree().create_tween()
-		tween.tween_property(background_music_idle, 'volume_db', 1, 0.5)
+		SoundManager.play_music(load("res://Assets/Audio/Music/2 Part Invention in B Minor.mp3"), 1)
 
 func setup_timers():
 	timer = Timer.new()
