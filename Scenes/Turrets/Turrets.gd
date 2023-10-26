@@ -22,8 +22,8 @@ var missile_reloading_timer
 
 var fired_missile = preload("res://Scenes/SupportScenes/FiredMissile.tscn")
 
-@onready var turret = get_node("Turret")
-@onready var collision_2d = get_node("Range/CollisionShape2D")
+@onready var turret = $Turret
+@onready var collision_2d = $Range/CollisionShape2D
 
 func _ready():
 	if type:
@@ -34,7 +34,7 @@ func _ready():
 			var sprite_size = Vector2(turret_data.sprite_size_width, turret_data.sprite_size_height)
 			var fps = turret_data.fps
 			var sprite_frames = SpriteManager.convert_sprite_sheet_to_sprite_frames(spritesheet_path, sprite_size, fps)
-			get_node("Turret").sprite_frames = sprite_frames
+			turret.sprite_frames = sprite_frames
 	
 	if icon_mode:
 		return

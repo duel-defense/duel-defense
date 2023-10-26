@@ -4,6 +4,9 @@ var last_map_name
 var current_map
 var in_game_for_menu = false
 
+@onready var main_menu = $MainMenu
+@onready var configuration_manager = $ConfigurationManager
+
 func _ready():
 	SoundManager.set_default_music_bus("BackgroundMusic")
 	SoundManager.set_default_ui_sound_bus("InterfaceEffects")
@@ -39,7 +42,7 @@ func _input(event):
 	if event.is_action_pressed("ui_menu"):
 		var game_scene = get_node_or_null("GameScene")
 		if !game_scene.main_menu_mode:
-			if get_node_or_null("MainMenu"):
+			if main_menu.visible:
 				on_resume_game_pressed()			
 			else:
 				load_main_menu(true)
@@ -65,7 +68,7 @@ func check_full_screen():
 			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_MAXIMIZED)
 		
 func setting_change(setting_key, _value):
-	get_node("ConfigurationManager").write_config('settings')
+	configuration_manager.write_config('settings')
 		
 	if setting_key == "show_fps_monitor":
 		check_fps_monitor()
@@ -90,16 +93,15 @@ func process_audio_bus_change(setting_key):
 		AudioServer.set_bus_volume_db(bus_index, linear_to_db(value))
 		
 func config_element_update(key):
-	get_node("ConfigurationManager").write_config(key)
+	configuration_manager.write_config(key)
 	
 func load_main_menu(in_game = false):
 	var congrats_menu = get_node_or_null("CongratsMenu")
 	if congrats_menu and is_instance_valid(congrats_menu):
 		congrats_menu.queue_free()
-	var main_menu = load("res://Scenes/UIScenes/MainMenu.tscn").instantiate()
 	in_game_for_menu = in_game
-	add_child(main_menu)
-	link_main_menu()
+	main_menu.visible = true
+	update_menu_items()
 	
 func load_congrats_menu(result):
 	var congrats_menu = load("res://Scenes/UIScenes/CongratsMenu.tscn").instantiate()
@@ -135,6 +137,9 @@ func link_main_menu():
 	# warning-ignore:return_value_discarded
 	get_node("MainMenu/Container/VBoxContainer/MainMenu").connect("pressed", Callable(self, "on_main_menu_pressed"))
 	
+	update_menu_items()
+	
+func update_menu_items():
 	if in_game_for_menu:
 		get_node("MainMenu/Container/TitleContainer").visible = false
 		get_node("MainMenu/Container/VBoxContainer/ResumeGame").visible = true
@@ -148,44 +153,45 @@ func link_main_menu():
 		game_scene.process_mode = Node.PROCESS_MODE_PAUSABLE
 		add_child(game_scene)
 		move_child(game_scene, 0)
+		
+		get_node("MainMenu/Container/TitleContainer").visible = true
+		get_node("MainMenu/Container/VBoxContainer/ResumeGame").visible = false
+		get_node("MainMenu/Container/VBoxContainer/MainMenu").visible = false
 		get_node("MainMenu/Container/VBoxContainer/NewGame").grab_focus()
 		
 func on_main_menu_pressed():
-	var main_menu = get_node_or_null("MainMenu")
-	if main_menu:
-		get_node("GameScene").free()
-		main_menu.free()
 	on_congrats_main_menu()
+	get_tree().paused = false
 
 func on_new_game_pressed():
 	get_node("GameScene").free()
-	GameData.play_button_sound()
+	Helpers.play_button_sound()
 	last_map_name = null
-	get_node("MainMenu").queue_free()
+	main_menu.visible = false
 	load_game_scene()
 	in_game_for_menu = false
 	
 func on_resume_game_pressed():
-	GameData.play_button_sound()
-	get_node("MainMenu").queue_free()
+	Helpers.play_button_sound()
+	main_menu.visible = false
 	in_game_for_menu = false
 	get_tree().paused = false
 	
 func on_settings_pressed():
-	GameData.play_button_sound()
+	Helpers.play_button_sound()
 	get_node("SettingsPopup").open_popup()
 	
 func on_editor_pressed(disable_sound = false):
 	if not disable_sound:
-		GameData.play_button_sound()
+		Helpers.play_button_sound()
 	get_node("EditorPopup").open_popup()
 	
 func on_about_pressed():
-	GameData.play_button_sound()
+	Helpers.play_button_sound()
 	get_node("AboutPopup").open_popup()
 	
 func on_continue_pressed():
-	GameData.play_button_sound()
+	Helpers.play_button_sound()
 	var last_map_data = GameData.config.maps[last_map_name]
 	if "next_map" in last_map_data:
 		get_node("CongratsMenu").queue_free()
@@ -212,7 +218,7 @@ func load_game_scene(map_name = null):
 	current_map = map_name
 	
 func on_quit_pressed():
-	GameData.play_button_sound()
+	Helpers.play_button_sound()
 	get_tree().quit()
 
 func unload_game(result, map_name, skip_load = false):
@@ -223,7 +229,7 @@ func unload_game(result, map_name, skip_load = false):
 	current_map = null
 	
 	var game_scene = get_node_or_null("GameScene")
-	if game_scene:
+	if game_scene and is_instance_valid(game_scene):
 		game_scene.free()
 	
 	if not skip_load:
@@ -241,10 +247,11 @@ func on_load_map(map_name):
 		Console.print_line("map <map_name>")
 		return
 		
-	var main_menu = get_node_or_null("MainMenu")
-	if main_menu:
-		get_node("GameScene").free()
-		main_menu.free()
+	var game_scene = get_node_or_null("GameScene")
+	if game_scene:
+		game_scene.free()
+		
+	main_menu.visible = false
 	
 	if current_map:
 		unload_game(null, current_map, true)

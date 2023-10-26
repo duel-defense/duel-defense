@@ -2,6 +2,8 @@ extends WindowPopup
 
 var edit_icon = preload("res://Assets/UI/gear.png")
 
+@onready var turrets_tree = $VBoxContainer/TabContainer/Turrets/VBoxContainer/Tree
+
 func _ready():
 	process_editor()
 	
@@ -10,11 +12,9 @@ func process_editor():
 	process_enemies()
 	
 func process_turrets():
-	var turrets_tree = get_node("VBoxContainer/TabContainer/Turrets/VBoxContainer/Tree")
 	create_tree(turrets_tree, GameData.config, 'tower_data')
 	
 func process_enemies():
-	var turrets_tree = get_node("VBoxContainer/TabContainer/Enemies/VBoxContainer/Tree")
 	create_tree(turrets_tree, GameData.config, 'enemy_data')
 		
 func create_tree(tree, data_wrapper, data_key):

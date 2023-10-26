@@ -25,9 +25,9 @@ var debug_resolution = false
 var base_health = GameData.config.settings.starting_base_health
 var current_money
 
-@onready var debug_message = get_node("UI/DebugMessage")
-@onready var hud = get_node("UI//HUD")
-@onready var ui = get_node("UI")
+@onready var debug_message = $UI/DebugMessage
+@onready var hud = $UI/HUD
+@onready var ui = $UI
 
 var normal_upbeat_music_track = true
 
@@ -189,10 +189,10 @@ func initiate_build_mode(tower_type):
 	var cost = GameData.config.tower_data[tower_type].cost
 	if (current_money - cost) < 0:
 		GodotLogger.info("initiate_build_mode, not enough money")
-		GameData.play_error_sound()
+		Helpers.play_error_sound()
 		return
 
-	GameData.play_button_sound()
+	Helpers.play_button_sound()
 		
 	build_type = tower_type
 	build_mode = true
@@ -305,11 +305,11 @@ func verify_and_build():
 		if upgrade_mode:
 			change_money(-(GameData.config.tower_data[build_type].upgrade_cost))
 			if not main_menu_mode:
-				GameData.play_upgrade_sound()
+				Helpers.play_upgrade_sound()
 		else:
 			change_money(-(GameData.config.tower_data[build_type].cost))
 			if GameData.config.tower_data[build_type].category != "Ability" and not main_menu_mode:
-				GameData.play_confirm_sound()
+				Helpers.play_confirm_sound()
 			
 		cancel_build_mode()
 		cancel_upgrade_mode()
@@ -322,7 +322,7 @@ func initiate_upgrade_mode(tower):
 		cancel_upgrade_mode()
 		
 	ui.get_node("HUD/Cursor").visible = false
-	GameData.play_button_sound()
+	Helpers.play_button_sound()
 		
 	upgrade_node = tower
 	
@@ -365,7 +365,7 @@ func upgrade_requested(upgrade_name):
 	var cost = tower_data.upgrade_cost
 	if (current_money - cost) < 0:
 		GodotLogger.info("upgrade_requested, not enough money")
-		GameData.play_error_sound()
+		Helpers.play_error_sound()
 		return
 	
 	build_type = upgrade_name

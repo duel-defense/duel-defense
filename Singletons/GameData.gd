@@ -19,18 +19,6 @@ func update_setting(setting_key, value):
 func update_config(key):
 	emit_signal('config_updated', key)
 
-func play_button_sound():
-	SoundManager.play_ui_sound(load("res://Assets/Audio/Sounds/click_003.ogg"))
-	
-func play_error_sound():
-	SoundManager.play_ui_sound(load("res://Assets/Audio/Sounds/error_007.ogg"))
-	
-func play_confirm_sound():
-	SoundManager.play_ui_sound(load("res://Assets/Audio/Sounds/confirmation_001.ogg"))
-
-func play_upgrade_sound():
-	SoundManager.play_ui_sound(load("res://Assets/Audio/Sounds/confirmation_002.ogg"))
-
 # Console commands related to GameData
 
 func on_log_requested(msg):

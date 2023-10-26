@@ -1,19 +1,19 @@
 extends CanvasLayer
 
-@onready var money = get_node("HUD/InfoBar/M/H/Money")
+@onready var money = $HUD/InfoBar/M/H/Money
 
-@onready var wave_wrapper = get_node("HUD/WaveContainer")
-@onready var wave = get_node("HUD/WaveContainer/WaveWrapper/Wave")
-@onready var wave_label = get_node("HUD/WaveContainer/WaveWrapper/WaveLabel")
-@onready var remaining = get_node("HUD/WaveContainer/WaveWrapper/Remaining")
-@onready var next_wave = get_node("HUD/WaveContainer/WaveWrapper/NextWave")
+@onready var wave_wrapper = $HUD/WaveContainer
+@onready var wave = $HUD/WaveContainer/WaveWrapper/Wave
+@onready var wave_label = $HUD/WaveContainer/WaveWrapper/WaveLabel
+@onready var remaining = $HUD/WaveContainer/WaveWrapper/Remaining
+@onready var next_wave = $HUD/WaveContainer/WaveWrapper/NextWave
 
-@onready var info_bar = get_node("HUD/InfoBar")
-@onready var build_bar = get_node("HUD/InfoBar/M/H/BuildBar")
-@onready var upgrade_bar = get_node("HUD/InfoBar/M/H/UpgradeBar")
+@onready var info_bar = $HUD/InfoBar
+@onready var build_bar = $HUD/InfoBar/M/H/BuildBar
+@onready var upgrade_bar = $HUD/InfoBar/M/H/UpgradeBar
 
-@onready var pause_play_button = get_node("HUD/InfoBar/M/H/GameControls/PausePlay")
-@onready var speed_up_button = get_node("HUD/InfoBar/M/H/GameControls/SpeedUp")
+@onready var pause_play_button = $HUD/InfoBar/M/H/GameControls/PausePlay
+@onready var speed_up_button = $HUD/InfoBar/M/H/GameControls/SpeedUp
 
 var money_number = 0
 var remaining_number
@@ -97,7 +97,7 @@ func _on_start_build_mode_pressed():
 ### game control functions
 
 func _on_PausePlay_pressed():
-	GameData.play_button_sound()
+	Helpers.play_button_sound()
 	if get_parent().build_mode:
 		get_parent().cancel_build_mode()
 	if get_tree().is_paused():
@@ -115,7 +115,7 @@ func _on_PausePlay_pressed():
 
 
 func _on_SpeedUp_pressed():
-	GameData.play_button_sound()
+	Helpers.play_button_sound()
 	if get_parent().build_mode:
 		get_parent().cancel_build_mode()
 	if Engine.get_time_scale() != 1.0:

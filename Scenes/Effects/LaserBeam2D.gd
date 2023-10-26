@@ -25,7 +25,7 @@ var tween
 
 @onready var line_width: float = fill.width
 
-@onready var sound_effects = get_node("SoundEffects")
+@onready var sound_effects = $SoundEffects
 
 func fire():
 	set_is_casting(true)
@@ -109,4 +109,4 @@ func disappear() -> void:
 
 
 func _on_soundeffect_tween_completed(_object, _key):
-	get_node("SoundEffects").stop()
+	sound_effects.stop()

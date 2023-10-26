@@ -12,7 +12,9 @@ var enemy_array = []
 var icon_mode
 var tile_pos
 
-@onready var collision_2d = get_node("Range/CollisionShape2D")
+@onready var collision_2d = $Range/CollisionShape2D
+@onready var animated_sprite_2d = $Range/AnimatedSprite2D
+
 @export var sprite: Node2D
 @export var animated_sprite: Node2D
 
@@ -36,7 +38,7 @@ func _on_AudioStreamPlayer2D_finished():
 	queue_free()
 
 func _on_AnimatedSprite_animation_finished():
-	get_node("Range/AnimatedSprite2D").visible = false
+	animated_sprite_2d.visible = false
 	emit_signal('ability_complete', enemy_array, type)
 
 func _on_Range_body_entered(body):
