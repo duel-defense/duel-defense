@@ -2,8 +2,8 @@ extends Control
 
 @export var result = {}
 
-@onready var congrats_text = get_node("Container/VBoxContainer/CongratsText")
-@onready var continue_button = get_node("Container/VBoxContainer/Continue")
+@onready var congrats_text = $Container/VBoxContainer/CongratsText
+@onready var continue_button = $Container/VBoxContainer/Continue
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

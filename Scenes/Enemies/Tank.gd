@@ -11,9 +11,10 @@ var destroyed
 var hide_hp_bar = false
 var timer
 
-@onready var health_bar = get_node("Sprite2D/HealthBar")
-@onready var impact_area = get_node("Impact")
-@onready var sprite = get_node("Sprite2D")
+@onready var health_bar = $Sprite2D/HealthBar
+@onready var impact_area = $Impact
+@onready var sprite = $Sprite2D
+@onready var sprite_turret = $Sprite2D/Turret
 var projectile_impact = preload("res://Scenes/Effects/ProjectileImpact.tscn")
 var explosion = preload("res://Scenes/Effects/Explosion.tscn")
 var impact_sound = preload("res://Assets/Audio/Sounds/impactMining_000.ogg")
@@ -37,7 +38,7 @@ func _ready():
 	
 	if "turret_sprite_path" in tmp_enemy_data:
 		var turret_texture = load(tmp_enemy_data.turret_sprite_path)
-		sprite.get_node("Turret").texture = turret_texture
+		sprite_turret.texture = turret_texture
 		
 	if "engine_trail_x" in tmp_enemy_data:
 		set_trail_property("position_x", tmp_enemy_data.engine_trail_x)

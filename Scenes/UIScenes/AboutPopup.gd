@@ -4,7 +4,7 @@ const FS = preload("res://CommonScripts/FS.gd")
 @onready var fs = FS.new()
 var licenses_path = "res://Assets/AssetLicenses/"
 
-@onready var scroll_container = get_node("ScrollContainer")
+@onready var scroll_container = $ScrollContainer
 
 func _ready():
 	process_license_files()

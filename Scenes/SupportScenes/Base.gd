@@ -1,9 +1,9 @@
 extends Node2D
 
-@onready var hp_bar = get_node("HealthBar")
-@onready var sprite = get_node("Sprite")
-@onready var impact_area = get_node("Impact")
-@onready var clickable_area = get_node("ClickableArea")
+@onready var hp_bar = $HealthBar
+@onready var sprite = $Sprite
+@onready var impact_area = $Impact
+@onready var clickable_area = $ClickableArea
 
 var explosion = preload("res://Scenes/Effects/Explosion.tscn")
 
