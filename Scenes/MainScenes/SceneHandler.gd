@@ -6,6 +6,7 @@ var in_game_for_menu = false
 
 @onready var main_menu = $MainMenu
 @onready var configuration_manager = $ConfigurationManager
+@onready var level_select = $LevelSelect
 
 func _ready():
 	SoundManager.set_default_music_bus("BackgroundMusic")
@@ -164,12 +165,8 @@ func on_main_menu_pressed():
 	get_tree().paused = false
 
 func on_new_game_pressed():
-	get_node("GameScene").free()
 	Helpers.play_button_sound()
-	last_map_name = null
-	main_menu.visible = false
-	load_game_scene()
-	in_game_for_menu = false
+	level_select.open()
 	
 func on_resume_game_pressed():
 	Helpers.play_button_sound()
@@ -257,3 +254,14 @@ func on_load_map(map_name):
 		unload_game(null, current_map, true)
 	
 	load_game_scene(map_name)
+
+func _on_level_select_level_requested(map_key):
+	GodotLogger.info("_on_level_select_level_requested %s" % map_key)
+	level_select.visible = false
+	main_menu.visible = false
+	var game_scene = get_node_or_null("GameScene")
+	if game_scene:
+		game_scene.free()
+	in_game_for_menu = false
+	last_map_name = null
+	load_game_scene(map_key)

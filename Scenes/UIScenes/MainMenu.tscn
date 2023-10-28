@@ -60,7 +60,7 @@ text = "Main Menu
 custom_minimum_size = Vector2(350, 75)
 layout_mode = 2
 size_flags_horizontal = 4
-text = "New Game"
+text = "Level Select"
 
 [node name="Settings" type="Button" parent="Container/VBoxContainer"]
 custom_minimum_size = Vector2(350, 75)
