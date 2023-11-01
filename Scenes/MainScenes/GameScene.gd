@@ -423,7 +423,11 @@ func start_next_wave():
 			custom_path = wave_data.custom_path
 		spawn_enemies(wave_data.enemies, custom_path)
 	else:
-		var result = {"ended": true}
+		var health_percentage = base_health / 100
+		var num_stars = (health_percentage * 100) / 20
+		if num_stars < 1:
+			num_stars = 1
+		var result = {"ended": true, "num_stars": num_stars}
 		on_game_finished(result)
 		
 		

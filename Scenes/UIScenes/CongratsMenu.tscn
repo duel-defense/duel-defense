@@ -60,6 +60,11 @@ text = "Level complete!
 "
 horizontal_alignment = 1
 
+[node name="StarsContainer" type="HBoxContainer" parent="Container/VBoxContainer"]
+visible = false
+layout_mode = 2
+alignment = 1
+
 [node name="Continue" type="Button" parent="Container/VBoxContainer"]
 custom_minimum_size = Vector2(350, 75)
 layout_mode = 2

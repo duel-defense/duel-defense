@@ -105,6 +105,10 @@ func load_main_menu(in_game = false):
 	update_menu_items()
 	
 func load_congrats_menu(result):
+	if result and "ended" in result and result.ended:
+		GameData.config.maps_user_data[result.map_name] = result
+		configuration_manager.write_config("maps_user_data")
+	
 	var congrats_menu = load("res://Scenes/UIScenes/CongratsMenu.tscn").instantiate()
 	congrats_menu.result = result
 	add_child(congrats_menu)
@@ -220,6 +224,7 @@ func on_quit_pressed():
 
 func unload_game(result, map_name, skip_load = false):
 	if result:
+		result.map_name = map_name
 		return load_congrats_menu(result)
 	
 	last_map_name = map_name
