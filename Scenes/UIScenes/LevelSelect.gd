@@ -20,13 +20,15 @@ func populate_levels():
 	var maps = GameData.config.maps
 	for map_key in maps:
 		var map = maps[map_key]
+		if "friendly_name" not in map:
+			continue
 		
 		var maps_user_data = {}
 		if map_key in GameData.config.maps_user_data:
 			maps_user_data = GameData.config.maps_user_data[map_key]
 			
 		var new_level_scene = level_scene.instantiate()
-		new_level_scene.level_name = map_key
+		new_level_scene.level_name = map.friendly_name
 		if "num_stars" in maps_user_data:
 			new_level_scene.num_stars = maps_user_data.num_stars
 		level_container.add_child(new_level_scene)

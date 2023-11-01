@@ -120,7 +120,8 @@
 		],
 		"starting_money": 1000,
 		"next_map": "Map1b",
-		"scene_name": "Map1"
+		"scene_name": "Map1",
+		"friendly_name": "Map 1"
 	},
 	"Map1b": {
 		"waves": [
@@ -233,12 +234,14 @@
 		],
 		"starting_money": 1000,
 		"next_map": "Map1c",
-		"scene_name": "Map1"
+		"scene_name": "Map1",
+		"friendly_name": "Map 1b"
 	},
 	"Map1c": {
 		"starting_money": 1000,
 		"scene_name": "Map1",
 		"next_map": "Map2",
+		"friendly_name": "Map 1c",
 		"waves": [
 			{
 				"enemies": [
@@ -348,7 +351,8 @@
 			}
 		],
 		"starting_money": 1500,
-		"scene_name": "Map2"
+		"scene_name": "Map2",
+		"friendly_name": "Map 2"
 	},
 	"MainMenuMap": {
 		"waves": [
