@@ -1,0 +1,39 @@
+[gd_scene load_steps=2 format=3 uid="uid://bt02vvg82rini"]
+
+[ext_resource type="Script" path="res://Scenes/UIScenes/LevelSelect.gd" id="1_mlvnn"]
+
+[node name="LevelSelect" type="Window" node_paths=PackedStringArray("content_container")]
+title = "Levels"
+initial_position = 1
+size = Vector2i(500, 300)
+exclusive = true
+theme_override_colors/title_color = Color(0.878431, 0.878431, 0.878431, 1)
+theme_override_constants/title_height = 32
+script = ExtResource("1_mlvnn")
+content_container = NodePath("MarginContainer/ScrollContainer/FlowContainer")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="FlowContainer" type="FlowContainer" parent="MarginContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/h_separation = 16
+theme_override_constants/v_separation = 16
+alignment = 1
+
+[connection signal="close_requested" from="." to="." method="_on_close_requested"]
