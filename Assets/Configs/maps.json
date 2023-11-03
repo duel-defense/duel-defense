@@ -241,7 +241,10 @@
 		"starting_money": 1000,
 		"scene_name": "Map1",
 		"next_map": "Map2",
-		"friendly_name": "Map 1c",
+		"friendly_name": "Stormy Night",
+		"weather_effect": true,
+		"sonar_mode": true,
+		"modulate": "#656565",
 		"waves": [
 			{
 				"enemies": [
@@ -352,7 +355,7 @@
 		],
 		"starting_money": 1500,
 		"scene_name": "Map2",
-		"friendly_name": "Map 2"
+		"friendly_name": "Winter Freeze"
 	},
 	"MainMenuMap": {
 		"waves": [

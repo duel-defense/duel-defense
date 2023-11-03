@@ -14,6 +14,7 @@ var turret_ready = true
 var from_upgrade
 var icon_mode
 var tile_pos
+var sonar_mode = false
 
 var timer
 var waiting_for_anim = false
@@ -24,6 +25,7 @@ var fired_missile = preload("res://Scenes/SupportScenes/FiredMissile.tscn")
 
 @onready var turret = $Turret
 @onready var collision_2d = $Range/CollisionShape2D
+@onready var sonar = $Sonar
 
 func _ready():
 	if type:
@@ -39,6 +41,12 @@ func _ready():
 	if icon_mode:
 		return
 	setup_timers()
+	
+	if built and sonar_mode:
+		sonar.visible = true
+		var tower_range = GameData.config.tower_data[type].range
+		sonar.size = Vector2(tower_range, tower_range)
+		sonar.set_anchors_and_offsets_preset(Control.LayoutPreset.PRESET_CENTER, Control.LayoutPresetMode.PRESET_MODE_KEEP_SIZE)
 	
 	if type:
 		collision_2d.get_shape().radius = 0.5 * GameData.config.tower_data[type]["range"]
@@ -78,6 +86,8 @@ func select_enemy():
 		var max_offset = enemy_progress_array.max() #close to path
 		var enemy_index = enemy_progress_array.find(max_offset)
 		enemy = enemy_array[enemy_index]
+		if sonar_mode:
+			enemy.seen()
 		
 func fire():
 	if not timer.is_stopped():
@@ -160,11 +170,17 @@ func missile_impacted(impact_enemy):
 
 func _on_Range_body_entered(body):
 	if built:
-		enemy_array.append(body.get_parent())
+		var found_enemy = body.get_parent()
+		enemy_array.append(found_enemy)
+		if sonar_mode:
+			found_enemy.seen()
 
 func _on_Range_body_exited(body):
 	if built:
-		enemy_array.erase(body.get_parent())
+		var found_enemy = body.get_parent()
+		enemy_array.erase(found_enemy)
+		if sonar_mode:
+			found_enemy.not_seen()
 		
 func _on_Fire_collided(fire_enemy):
 	if not is_instance_valid(fire_enemy):

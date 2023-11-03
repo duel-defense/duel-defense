@@ -49,7 +49,8 @@ func handle_main_menu():
 	start_next_wave()
 
 func _ready():
-	var scene_name = GameData.config.maps[map_name].scene_name
+	var map_data = GameData.config.maps[map_name]
+	var scene_name = map_data.scene_name
 	var map_path = "res://Scenes/Maps/" + scene_name + ".tscn"
 	if not FileAccess.file_exists(map_path):
 		GodotLogger.error("GameScene error loading map at %s" % map_path)
@@ -62,6 +63,15 @@ func _ready():
 	var map_instance = load(map_path).instantiate()
 	add_child(map_instance)
 	map_node = get_node(NodePath(map_instance.name))
+	
+	if "weather_effect" in map_data and map_data.weather_effect:
+		var weather_effect_node = map_node.get_node_or_null("WeatherEffect")
+		if weather_effect_node:
+			GodotLogger.info("GameScene turning on weather effect")
+			weather_effect_node.visible = true
+			
+	if "modulate" in map_data:
+		map_node.modulate = map_data.modulate
 	
 	current_money = GameData.config.maps[map_name].starting_money + GameData.config.settings.money_change
 	
@@ -286,6 +296,10 @@ func verify_and_build():
 		new_tower.built = true
 		new_tower.type = build_type
 		new_tower.tile_pos = build_tile
+		
+		var map_data = GameData.config.maps[map_name]
+		if "sonar_mode" in map_data and map_data.sonar_mode:
+			new_tower.sonar_mode = true
 		if upgrade_mode:
 			new_tower.from_upgrade = true
 		new_tower.category = GameData.config.tower_data[build_type]["category"]
@@ -474,10 +488,13 @@ func retrieve_wave_data():
 	
 func spawn_enemies(wave_data, path_name):
 	GodotLogger.info("spawn_enemies, path_name = %s" % path_name)
+	var map_data = GameData.config.maps[map_name]
 	for i in wave_data:
 		var new_enemy = load("res://Scenes/Enemies/" + i.base + ".tscn").instantiate()
 		new_enemy.category = i.category
 		new_enemy.hide_hp_bar = main_menu_mode
+		if "sonar_mode" in map_data and map_data.sonar_mode:
+			new_enemy.visible = false
 		new_enemy.connect("on_base_damage", Callable(self, 'on_base_damage'))
 		new_enemy.connect("on_destroyed", Callable(self, 'on_enemy_destroyed'))
 		

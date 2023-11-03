@@ -63,4 +63,6 @@ func missile_impacted(impact_enemy):
 		return
 
 	if impact_enemy:
+		if sonar_mode:
+			impact_enemy.seen()
 		impact_enemy.on_hit(GameData.config.tower_data[tower_type]["damage"], GameData.config.tower_data[tower_type]["sound"])
