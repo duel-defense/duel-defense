@@ -16,9 +16,9 @@ func _ready():
 			
 		for star in num_stars:
 			var icon_script = load("res://addons/material-design-icons/nodes/MaterialIcon.gd")
-			var icon = Label.new()
-			icon.set_script(icon_script)
-			icon.icon_name = "star"
-			stars_container_node.add_child(icon)
+			var star_icon = Label.new()
+			star_icon.set_script(icon_script)
+			star_icon.icon_name = "star"
+			stars_container_node.add_child(star_icon)
 		
 		stars_container_node.visible = true

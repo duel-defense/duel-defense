@@ -1,9 +1,10 @@
-[gd_scene load_steps=18 format=3 uid="uid://dau086gl8yi6p"]
+[gd_scene load_steps=20 format=3 uid="uid://dau086gl8yi6p"]
 
 [ext_resource type="Script" path="res://Scenes/Turrets/Gun.gd" id="1_1fjci"]
 [ext_resource type="Texture2D" uid="uid://dk1gfb3fpqq5o" path="res://Assets/Towers/towers_walls_blank.png" id="2_hbngj"]
 [ext_resource type="Texture2D" uid="uid://cl10lnarem5jt" path="res://Assets/Towers/turret_01_mk1.png" id="3_1oxed"]
 [ext_resource type="Script" path="res://Scenes/Turrets/ClickableArea.gd" id="4_h6mvw"]
+[ext_resource type="Shader" path="res://Assets/Shaders/Sonar.gdshader" id="5_02n4l"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8inr4"]
 atlas = ExtResource("2_hbngj")
@@ -90,6 +91,13 @@ radius = 175.0
 [sub_resource type="RectangleShape2D" id="3"]
 size = Vector2(60, 54)
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dxbyr"]
+shader = ExtResource("5_02n4l")
+shader_parameter/scrollSpeed = -4.0
+shader_parameter/sweepColor = Color(0.3, 1, 0.6, 1)
+shader_parameter/alphaMod = 1.0
+shader_parameter/sonarWidth = 0.8
+
 [node name="Gun" type="Node2D"]
 script = ExtResource("1_1fjci")
 
@@ -111,6 +119,14 @@ script = ExtResource("4_h6mvw")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ClickableArea"]
 position = Vector2(1, -1)
 shape = SubResource("3")
+
+[node name="Sonar" type="ColorRect" parent="."]
+visible = false
+material = SubResource("ShaderMaterial_dxbyr")
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 2
+color = Color(1, 1, 1, 0)
 
 [connection signal="animation_finished" from="Turret" to="." method="_on_turret_animation_finished"]
 [connection signal="body_entered" from="Range" to="." method="_on_Range_body_entered"]

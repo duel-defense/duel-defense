@@ -8,8 +8,10 @@ var speed
 var hp
 var base_damage
 var destroyed
+var on_destroy_called
 var hide_hp_bar = false
 var timer
+var seen_count = 0
 
 @onready var health_bar = $Sprite2D/HealthBar
 @onready var impact_area = $Impact
@@ -71,6 +73,8 @@ func _physics_process(delta):
 	if progress_ratio == 1.0:
 		emit_signal("on_base_damage", base_damage)
 		queue_free()
+	if progress_ratio == 0.8:
+		visible = true
 	move(delta)
 	
 func move(delta):
@@ -85,6 +89,7 @@ func on_hit(damage, has_sound):
 		on_destroy()
 		
 func impact(has_sound):
+	visible = true
 	randomize()
 	var x_pos = randi() % 31
 	randomize()
@@ -100,6 +105,8 @@ func impact(has_sound):
 			SoundManager.play_sound(impact_sound)
 		
 func on_destroy():
+	visible = true
+	on_destroy_called = true
 	var k_body = get_node_or_null("CharacterBody2D")
 	if k_body:
 		k_body.queue_free()
@@ -135,3 +142,17 @@ func hide_sprite():
 func _exit_tree():
 	if sound_manager:
 		sound_manager.stop()
+
+func seen():
+	visible = true
+	seen_count += 1
+	
+func not_seen():
+	if destroyed or on_destroy_called:
+		return
+	if seen_count >= 0:
+		visible = false
+		seen_count = 0
+		return
+	seen_count -= 1
+	

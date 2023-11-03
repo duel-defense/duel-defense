@@ -11,6 +11,7 @@ var built_detected
 var enemy_array = []
 var icon_mode
 var tile_pos
+var sonar_mode
 
 @onready var collision_2d = $Range/CollisionShape2D
 @onready var animated_sprite_2d = $Range/AnimatedSprite2D
@@ -43,7 +44,10 @@ func _on_AnimatedSprite_animation_finished():
 
 func _on_Range_body_entered(body):
 	if built:
-		enemy_array.append(body.get_parent())
+		var enemy = body.get_parent()
+		enemy_array.append(enemy)
+		if sonar_mode:
+			enemy.seen()
 
 func _on_Range_body_exited(body):
 	if built:

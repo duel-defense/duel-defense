@@ -1,9 +1,10 @@
-[gd_scene load_steps=15 format=3 uid="uid://bgaqgeg64j0s8"]
+[gd_scene load_steps=17 format=3 uid="uid://bgaqgeg64j0s8"]
 
 [ext_resource type="Texture2D" uid="uid://nj38e377y22n" path="res://Assets/Environment/Tilesets/terrain.png" id="1_4w16m"]
 [ext_resource type="Texture2D" uid="uid://ci06tuegjqwia" path="res://Assets/Environment/Props/PalmSmall_0024.png" id="2_vsqih"]
 [ext_resource type="Texture2D" uid="uid://b0jturmjj4iff" path="res://Assets/Environment/Props/Ribbon_0001.png" id="3_jfran"]
 [ext_resource type="Texture2D" uid="uid://cr3qxkbcljdb2" path="res://Assets/Environment/Tilesets/Obstructed.png" id="6"]
+[ext_resource type="Shader" path="res://Assets/Shaders/Rain.gdshader" id="6_pi7f1"]
 [ext_resource type="PackedScene" uid="uid://b1c3s5smf4185" path="res://Scenes/SupportScenes/Base.tscn" id="7_xpcd8"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_7xp7w"]
@@ -212,6 +213,20 @@ _data = {
 }
 point_count = 7
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ub7no"]
+shader = ExtResource("6_pi7f1")
+shader_parameter/rain_amount = 200.0
+shader_parameter/near_rain_length = 0.2
+shader_parameter/far_rain_length = 0.1
+shader_parameter/near_rain_width = 0.5
+shader_parameter/far_rain_width = 0.5
+shader_parameter/near_rain_transparency = 1.0
+shader_parameter/far_rain_transparency = 0.5
+shader_parameter/rain_color = Color(0.8, 0.8, 0.8, 1)
+shader_parameter/base_rain_speed = 0.5
+shader_parameter/additional_rain_speed = 0.369
+shader_parameter/slant = 0.2
+
 [node name="Map1" type="Node2D"]
 
 [node name="Ground" type="TileMap" parent="."]
@@ -249,5 +264,18 @@ position = Vector2(1805, 153)
 position = Vector2(87, 798)
 show_health_bar = false
 enemy_base = true
+
+[node name="WeatherEffect" type="ColorRect" parent="."]
+visible = false
+material = SubResource("ShaderMaterial_ub7no")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1920.0
+offset_bottom = 1080.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(1, 1, 1, 0)
 
 [node name="Turrets" type="Node2D" parent="."]
