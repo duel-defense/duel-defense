@@ -1,6 +1,8 @@
-[gd_scene load_steps=12 format=3 uid="uid://ces0vdfqlho18"]
+[gd_scene load_steps=16 format=3 uid="uid://ces0vdfqlho18"]
 
 [ext_resource type="Texture2D" uid="uid://nj38e377y22n" path="res://Assets/Environment/Tilesets/terrain.png" id="1_7mrub"]
+[ext_resource type="Texture2D" uid="uid://ci06tuegjqwia" path="res://Assets/Environment/Props/PalmSmall_0024.png" id="3_7v2ji"]
+[ext_resource type="Texture2D" uid="uid://b0jturmjj4iff" path="res://Assets/Environment/Props/Ribbon_0001.png" id="3_o8tjy"]
 [ext_resource type="Texture2D" uid="uid://cr3qxkbcljdb2" path="res://Assets/Environment/Tilesets/Obstructed.png" id="6"]
 [ext_resource type="PackedScene" uid="uid://b1c3s5smf4185" path="res://Scenes/SupportScenes/Base.tscn" id="7_scnjd"]
 
@@ -78,6 +80,16 @@ terrain_set_0/terrain_1/color = Color(0.5, 0.4375, 0.25, 1)
 sources/0 = SubResource("TileSetAtlasSource_myyfe")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_mambe"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_qsxld"]
+texture = ExtResource("3_o8tjy")
+texture_region_size = Vector2i(128, 128)
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_w6dyw"]
+texture = ExtResource("3_7v2ji")
+texture_region_size = Vector2i(256, 256)
+0:0/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_pjhxs"]
 texture = ExtResource("6")
@@ -175,6 +187,8 @@ sources/0 = SubResource("TileSetAtlasSource_mambe")
 sources/5 = SubResource("TileSetAtlasSource_pjhxs")
 sources/6 = SubResource("TileSetAtlasSource_dxrni")
 sources/7 = SubResource("TileSetAtlasSource_spnqu")
+sources/3 = SubResource("TileSetAtlasSource_qsxld")
+sources/4 = SubResource("TileSetAtlasSource_w6dyw")
 
 [sub_resource type="Curve2D" id="3"]
 _data = {
@@ -203,7 +217,7 @@ position = Vector2(1, -1)
 tile_set = SubResource("2")
 cell_quadrant_size = 64
 format = 2
-layer_0/tile_data = PackedInt32Array(524295, 6, 0, 458759, 6, 0, 393219, 131079, 3, 262146, 131079, 3, 131076, 131079, 3, 458753, 131079, 3, 131073, 131079, 3)
+layer_0/tile_data = PackedInt32Array(524295, 6, 0, 458759, 6, 0, 131074, 3, 0, 262145, 4, 0, 393219, 4, 0, 458753, 4, 0, 131075, 3, 0, 65539, 3, 0, 327683, 3, 0)
 
 [node name="Path3D" type="Path2D" parent="."]
 curve = SubResource("3")

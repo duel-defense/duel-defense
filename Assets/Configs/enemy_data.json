@@ -15,6 +15,30 @@
 		"cost": 50,
 		"move_sound": "fast"
 	},
+	"LongTank": {
+		"speed": 100,
+		"hp": 250,
+		"damage": 25,
+		"sprite_path": "res://Assets/Enemies/Hull_03.png",
+		"turret_sprite_path": "res://Assets/Enemies/Gun_03.png",
+		"cost": 300,
+		"move_sound": "slow",
+		"engine_trail_x": -60,
+		"engine_trail_width": 3,
+		"engine_trail_max_points": 10
+	},
+	"EnergyTank": {
+		"speed": 110,
+		"hp": 75,
+		"damage": 8,
+		"sprite_path": "res://Assets/Enemies/Hull_04.png",
+		"turret_sprite_path": "res://Assets/Enemies/Gun_08.png",
+		"cost": 100,
+		"move_sound": "fast",
+		"engine_trail_x": -40,
+		"engine_trail_width": 3,
+		"engine_trail_max_points": 8
+	},
 	"BossTank": {
 		"speed": 70,
 		"hp": 500,
@@ -26,5 +50,12 @@
 		"engine_trail_x": -60,
 		"engine_trail_width": 3,
 		"engine_trail_max_points": 10
+	},
+	"NormalMech": {
+		"speed": 80,
+		"hp": 400,
+		"damage": 30,
+		"cost": 600,
+		"move_sound": "slow"
 	}
 }

@@ -245,12 +245,11 @@
 		"waves": [
 			{
 				"enemies": [
-					{"base": "Tank", "category": "NormalTank", "delay": 1.5},
-					{"base": "Tank", "category": "FastTank", "delay": 1.5},
-					{"base": "Tank", "category": "FastTank", "delay": 1.5},
-					{"base": "Tank", "category": "NormalTank", "delay": 1.5},
-					{"base": "Tank", "category": "FastTank", "delay": 1.5},
-					{"base": "Tank", "category": "NormalTank", "delay": 1.5}
+					{"base": "Tank", "category": "EnergyTank", "delay": 1.5},
+					{"base": "Tank", "category": "LongTank", "delay": 1.5},
+					{"base": "Mech", "category": "NormalMech", "delay": 1.5},
+					{"base": "Mech", "category": "NormalMech", "delay": 1.8},
+					{"base": "Mech", "category": "NormalMech", "delay": 2.2}
 				],
 				"cost": 300
 			},
@@ -305,7 +304,8 @@
 					{"base": "Tank", "category": "FastTank", "delay": 1.5},
 					{"base": "Tank", "category": "FastTank", "delay": 1.5},
 					{"base": "Tank", "category": "NormalTank", "delay": 1.5},
-					{"base": "Tank", "category": "NormalTank", "delay": 1.5}
+					{"base": "Tank", "category": "NormalTank", "delay": 1.5},
+					{"base": "Mech", "category": "NormalMech", "delay": 1.5}
 				],
 				"cost": 300,
 				"boss_wave": true
