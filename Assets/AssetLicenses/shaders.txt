@@ -1,0 +1,5 @@
+Rain and Snow shader by Brian Smith (steampunkdemon.itch.io) - MIT licence
+
+Shield Shader (CC0)
+
+Sonar Shader (CC0) - https://godotshaders.com/shader/2d-sonar/
