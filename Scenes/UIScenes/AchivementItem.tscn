@@ -1,0 +1,47 @@
+[gd_scene load_steps=4 format=3 uid="uid://dnty3d21j0q81"]
+
+[ext_resource type="FontFile" uid="uid://c0tncv8pnqgq4" path="res://addons/material-design-icons/fonts/material_design_icons.ttf" id="1_khfm6"]
+[ext_resource type="Script" path="res://Scenes/UIScenes/AchivementItem.gd" id="1_tn7cw"]
+[ext_resource type="Script" path="res://addons/material-design-icons/nodes/MaterialIcon.gd" id="2_l8pvp"]
+
+[node name="AchivementItem" type="VBoxContainer"]
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+size_flags_horizontal = 3
+script = ExtResource("1_tn7cw")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Locked" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.686275, 0.192157, 0.235294, 1)
+theme_override_fonts/font = ExtResource("1_khfm6")
+theme_override_font_sizes/font_size = 32
+text = "󰌾"
+script = ExtResource("2_l8pvp")
+icon_name = "lock"
+icon_size = 32
+
+[node name="Unlocked" type="Label" parent="HBoxContainer"]
+visible = false
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_khfm6")
+theme_override_font_sizes/font_size = 32
+text = "󰌿"
+script = ExtResource("2_l8pvp")
+icon_name = "lock-open"
+icon_size = 32
+
+[node name="Label" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_font_sizes/font_size = 24
+text = "Complete a level"
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="HSeparator" type="HSeparator" parent="."]
+layout_mode = 2

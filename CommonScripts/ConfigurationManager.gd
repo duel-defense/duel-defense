@@ -52,10 +52,7 @@ func parse_json(path, filename):
 		var test_json_conv = JSON.new()
 		test_json_conv.parse(file_str)
 		var config_data = test_json_conv.get_data()
-		if config_data and len(config_data.keys()) != 0:
-			config_container[config_key] = config_data
-		else:
-			GodotLogger.warn("Malformed file for " + filename + ", ignorning")
+		config_container[config_key] = config_data
 		
 func parse_cfg(path, filename):
 	var config_key = filename.split(".cfg")[0]
