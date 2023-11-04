@@ -1,7 +1,7 @@
 extends PathFollow2D
 
 signal on_base_damage(damage)
-signal on_destroyed()
+signal on_destroyed(category, on_destroyed)
 
 var category
 var speed
@@ -81,12 +81,12 @@ func move(delta):
 	set_progress(get_progress() + speed * delta)
 	health_bar.set_position(position - Vector2(30, 30))
 
-func on_hit(damage, has_sound):
+func on_hit(damage, has_sound, tower_type):
 	impact(has_sound)
 	hp -= damage
 	health_bar.value = hp
 	if hp <= 0:
-		on_destroy()
+		on_destroy(tower_type)
 		
 func impact(has_sound):
 	visible = true
@@ -104,7 +104,7 @@ func impact(has_sound):
 		if k_body:
 			SoundManager.play_sound(impact_sound)
 		
-func on_destroy():
+func on_destroy(tower_type):
 	visible = true
 	on_destroy_called = true
 	var k_body = get_node_or_null("CharacterBody2D")
@@ -124,16 +124,16 @@ func on_destroy():
 		for child in get_children():
 			if child.is_in_group("trail"):
 				child.visible = false
-		new_explosion.connect('animation_finished', Callable(self, 'destroy_complete'))
+		new_explosion.connect('animation_finished', Callable(self, 'destroy_complete').bind(tower_type))
 		new_explosion.connect('hide_sprite', Callable(self, 'hide_sprite'))
 		impact_area.add_child(new_explosion)
 		
 		sound_manager.stop()
 	
-func destroy_complete():
+func destroy_complete(tower_type):
 	if not destroyed:
 		destroyed = true
-		emit_signal("on_destroyed", category)
+		emit_signal("on_destroyed", category, tower_type)
 		self.queue_free()
 		
 func hide_sprite():

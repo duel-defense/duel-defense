@@ -1,0 +1,42 @@
+[
+	{
+		"key": "map_complete",
+		"label": "Complete a level"
+	},
+	{
+		"key": "map_complete_radar",
+		"label": "Complete a level in radar mode"
+	},
+	{
+		"key": "finish_money_little",
+		"label": "Complete a level with under $300 left"
+	},
+	{
+		"key": "finish_money_lots",
+		"label": "Complete a level with over $2000 left"
+	},
+	{
+		"key": "finish_all_health",
+		"label": "Complete a level with the base undamaged"
+	},
+	{
+		"key": "upgrade_tower",
+		"label": "Upgrade your first turret"
+	},
+	{
+		"key": "destroy_gun",
+		"label": "Destroy an enemy with a gun turret"
+	},
+	{
+		"key": "destroy_laser",
+		"label": "Destroy an enemy with a laser turret"
+	},
+	{
+		"key": "destroy_missile",
+		"label": "Destroy an enemy with a missile"
+	},
+	{
+		"key": "destroy_ability",
+		"label": "Destroy an enemy with an ability"
+	}
+]

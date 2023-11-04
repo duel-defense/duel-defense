@@ -1,0 +1,40 @@
+[gd_scene load_steps=3 format=3 uid="uid://cass4lmn3tgrq"]
+
+[ext_resource type="Script" path="res://Scenes/UIScenes/Achivements.gd" id="1_0ynce"]
+[ext_resource type="PackedScene" uid="uid://dnty3d21j0q81" path="res://Scenes/UIScenes/AchivementItem.tscn" id="2_l8qgo"]
+
+[node name="Achivements" type="Window" node_paths=PackedStringArray("content_container")]
+title = "Achivements"
+initial_position = 1
+size = Vector2i(600, 300)
+exclusive = true
+theme_override_colors/title_color = Color(0.878431, 0.878431, 0.878431, 1)
+theme_override_constants/title_height = 32
+script = ExtResource("1_0ynce")
+content_container = NodePath("MarginContainer/ScrollContainer/VBoxContainer")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="AchivementItem" parent="MarginContainer/ScrollContainer/VBoxContainer" instance=ExtResource("2_l8qgo")]
+layout_mode = 2
+
+[connection signal="close_requested" from="." to="." method="_on_close_requested"]

@@ -116,7 +116,7 @@ func fire_gun():
 	else:
 		get_node("AnimationPlayer").play("Fire")
 	if enemy:
-		enemy.on_hit(GameData.config.tower_data[type]["damage"], GameData.config.tower_data[type]["sound"])
+		enemy.on_hit(GameData.config.tower_data[type]["damage"], GameData.config.tower_data[type]["sound"], type)
 	
 func fire_gun_finished():
 	waiting_for_anim = false
@@ -166,7 +166,7 @@ func missile_impacted(impact_enemy):
 		return
 
 	if impact_enemy:
-		impact_enemy.on_hit(GameData.config.tower_data[type]["damage"], GameData.config.tower_data[type]["sound"])
+		impact_enemy.on_hit(GameData.config.tower_data[type]["damage"], GameData.config.tower_data[type]["sound"], type)
 
 func _on_Range_body_entered(body):
 	if built:
@@ -185,7 +185,7 @@ func _on_Range_body_exited(body):
 func _on_Fire_collided(fire_enemy):
 	if not is_instance_valid(fire_enemy):
 		return
-	fire_enemy.on_hit(GameData.config.tower_data[type]["damage"], GameData.config.tower_data[type]["sound"])
+	fire_enemy.on_hit(GameData.config.tower_data[type]["damage"], GameData.config.tower_data[type]["sound"], type)
 
 func accept_clicked():
 	if built:

@@ -7,6 +7,7 @@ var in_game_for_menu = false
 @onready var main_menu = $MainMenu
 @onready var configuration_manager = $ConfigurationManager
 @onready var level_select = $LevelSelect
+@onready var achivements = $Achivements
 
 func _ready():
 	SoundManager.set_default_music_bus("BackgroundMusic")
@@ -96,6 +97,17 @@ func process_audio_bus_change(setting_key):
 func config_element_update(key):
 	configuration_manager.write_config(key)
 	
+func complete_achivement(key):
+	var game_scene = get_node_or_null("GameScene")
+	if game_scene.main_menu_mode:
+		GodotLogger.info("ignoring achivement completed because of main menu mode = %s" % key)
+		return
+	GodotLogger.info("achivement completed = %s" % key)
+	if key in GameData.config.user_achivements and GameData.config.user_achivements[key]:
+		return
+	GameData.config.user_achivements[key] = true
+	configuration_manager.write_config("user_achivements")
+	
 func load_main_menu(in_game = false):
 	var congrats_menu = get_node_or_null("CongratsMenu")
 	if congrats_menu and is_instance_valid(congrats_menu):
@@ -108,6 +120,17 @@ func load_congrats_menu(result):
 	if result and "ended" in result and result.ended:
 		GameData.config.maps_user_data[result.map_name] = result
 		configuration_manager.write_config("maps_user_data")
+		
+		# checking for achivements
+		complete_achivement("map_complete")
+		if "base_health" in result and result.base_health >= 100:
+			complete_achivement("finish_all_health")
+		if "current_money" in result and result.current_money <= 300:
+			complete_achivement("finish_money_little")
+		if "current_money" in result and result.current_money >= 2000:
+			complete_achivement("finish_money_lots")
+		if "radar_mode" in result and result.radar_mode:
+			complete_achivement("map_complete_radar")
 	
 	var congrats_menu = load("res://Scenes/UIScenes/CongratsMenu.tscn").instantiate()
 	congrats_menu.result = result
@@ -141,6 +164,8 @@ func link_main_menu():
 	get_node("MainMenu/Container/VBoxContainer/Quit").connect("pressed", Callable(self, "on_quit_pressed"))
 	# warning-ignore:return_value_discarded
 	get_node("MainMenu/Container/VBoxContainer/MainMenu").connect("pressed", Callable(self, "on_main_menu_pressed"))
+	# warning-ignore:return_value_discarded
+	get_node("MainMenu/Container/VBoxContainer/Achivements").connect("pressed", Callable(self, "on_achivements_pressed"))
 	
 	update_menu_items()
 	
@@ -167,6 +192,9 @@ func update_menu_items():
 func on_main_menu_pressed():
 	on_congrats_main_menu()
 	get_tree().paused = false
+	
+func on_achivements_pressed():
+	achivements.open()
 
 func on_new_game_pressed():
 	Helpers.play_button_sound()
@@ -213,6 +241,7 @@ func load_game_scene(map_name = null):
 	var game_scene = load("res://Scenes/MainScenes/GameScene.tscn").instantiate()
 	game_scene.map_name = map_name
 	game_scene.connect("game_finished", Callable(self, 'unload_game'))
+	game_scene.connect("complete_achivement", Callable(self, 'complete_achivement'))
 	game_scene.process_mode = Node.PROCESS_MODE_PAUSABLE
 	game_scene.set_name("GameScene")
 	add_child(game_scene)

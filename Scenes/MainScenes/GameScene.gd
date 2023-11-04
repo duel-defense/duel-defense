@@ -1,6 +1,7 @@
 extends Node2D
 
 signal game_finished(result)
+signal complete_achivement(key)
 
 var map_name = "Map1"
 var map_node
@@ -320,6 +321,7 @@ func verify_and_build():
 			change_money(-(GameData.config.tower_data[build_type].upgrade_cost))
 			if not main_menu_mode:
 				Helpers.play_upgrade_sound()
+				emit_signal("complete_achivement", "upgrade_tower")
 		else:
 			change_money(-(GameData.config.tower_data[build_type].cost))
 			if GameData.config.tower_data[build_type].category != "Ability" and not main_menu_mode:
@@ -441,7 +443,10 @@ func start_next_wave():
 		var num_stars = (health_percentage * 100) / 20
 		if num_stars < 1:
 			num_stars = 1
-		var result = {"ended": true, "num_stars": num_stars}
+			
+		var map_data = GameData.config.maps[map_name]
+		var radar_mode = "sonar_mode" in map_data and map_data.sonar_mode
+		var result = {"ended": true, "num_stars": num_stars, "base_health": base_health, "current_money": current_money, "radar_mode": radar_mode}
 		on_game_finished(result)
 		
 		
@@ -532,11 +537,22 @@ func on_base_damage(damage):
 	else:
 		map_node.get_node("Base").update_health_bar(base_health)
 		
-func on_enemy_destroyed(category):
-	GodotLogger.debug("on_enemy_destroyed = %s" % category)
+func on_enemy_destroyed(category, tower_type):
+	GodotLogger.debug("on_enemy_destroyed = %s, tower type = %s" % [category, tower_type])
 	var cost = GameData.config.enemy_data[category].cost
 	change_money(cost)
 	update_wave_data()
+	
+	# updating achivements
+	var tower_data = GameData.config.tower_data[tower_type]
+	if tower_data.category == "Missile":
+		emit_signal("complete_achivement", "destroy_missile")
+	elif tower_data.category == "Ability":
+		emit_signal("complete_achivement", "destroy_ability")
+	elif tower_data.category == "Projectile":
+		emit_signal("complete_achivement", "destroy_gun")
+	elif "Laser" in tower_type:
+		emit_signal("complete_achivement", "destroy_laser")
 	
 ## ability functions
 
@@ -546,7 +562,7 @@ func on_ability_complete(enemies, type):
 		change_money(GameData.config.tower_data[type].cost / 2)
 	else:
 		for enemy in enemies:
-			enemy.on_hit(GameData.config.tower_data[type]["damage"], GameData.config.tower_data[type]["sound"])
+			enemy.on_hit(GameData.config.tower_data[type]["damage"], GameData.config.tower_data[type]["sound"], type)
 	
 ## hud functions
 	
@@ -711,4 +727,4 @@ func missile_impacted(impact_enemy):
 
 	if impact_enemy:
 		var type = "MissileT1"
-		impact_enemy.on_hit(GameData.config.tower_data[type]["damage"], GameData.config.tower_data[type]["sound"])
+		impact_enemy.on_hit(GameData.config.tower_data[type]["damage"], GameData.config.tower_data[type]["sound"], type)
