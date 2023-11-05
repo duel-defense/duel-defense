@@ -127,6 +127,8 @@ func fire_custom():
 			i.get_node_or_null("Fire").fire()
 			
 func cease_fire_custom():
+	if not turret:
+		return
 	for i in turret.get_children():
 		if i.get_node_or_null("Fire"):
 			i.get_node_or_null("Fire").cease_fire()

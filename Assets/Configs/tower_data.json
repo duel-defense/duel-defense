@@ -119,5 +119,18 @@
 		"action": "sell",
 		"icon": "currency-usd",
 		"label": "Sell"
+	},
+	"ActionRepair": {
+		"in_build_menu": false,
+		"category": "Action",
+		"action": "repair",
+		"icon": "pipe-wrench",
+		"label": "Repair"
+	},
+	"Base": {
+		"in_build_menu": false,
+		"category": "Base",
+		"upgrades": ["ActionRepair"],
+		"cost": 1000
 	}
 }
