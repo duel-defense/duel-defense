@@ -1,5 +1,8 @@
 extends Node2D
 
+signal accept_click()
+signal cancel_click()
+
 @onready var hp_bar = $HealthBar
 @onready var sprite = $Sprite
 @onready var impact_area = $Impact
@@ -10,6 +13,8 @@ var explosion = preload("res://Scenes/Effects/Explosion.tscn")
 @export var show_health_bar = true
 @export var enemy_base = false
 @export var current_health = 100
+
+var type = "Base"
 
 func _ready():
 	if not show_health_bar:
@@ -47,7 +52,9 @@ func explosion_animation(new_health):
 	impact_area.add_child(new_explosion)
 	
 func accept_clicked():
-	pass
+	if not enemy_base:
+		emit_signal('accept_click')
 	
 func cancel_clicked():
-	pass
+	if not enemy_base:
+		emit_signal('cancel_click')
