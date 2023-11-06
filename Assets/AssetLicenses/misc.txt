@@ -38,3 +38,5 @@ Some assets by Starlight Furnace - https://starlight-furnace.itch.io/isometric-m
 Jet from https://morozota.itch.io/fighters-21-century
 
 Fire animations from https://limofeus.itch.io/pixel-simulations, CC0 license
+
+Various music from pixabay

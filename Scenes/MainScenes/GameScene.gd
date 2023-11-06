@@ -35,6 +35,7 @@ var normal_upbeat_music_track = true
 var main_menu_mode = false
 var skip_auto_turrets = false
 var use_auto_turrets_not_in_menu = false
+var ambience_player
 
 var timer
 var wave_timer
@@ -48,6 +49,10 @@ var controller_upgrade_pos
 func handle_main_menu():
 	hud.hide()
 	start_next_wave()
+	
+func _exit_tree():
+	SoundManager.stop_music(1)
+	stop_ambience()
 
 func _ready():
 	var map_data = GameData.config.maps[map_name]
@@ -87,6 +92,7 @@ func _ready():
 		SoundManager.play_music(load("res://Assets/Audio/Music/2 Part Invention in B Minor.mp3"), 1, "BackgroundMusic")
 		map_node.get_node("Base").update_health_bar(base_health)
 		ui.setup_build_buttons(GameData.config.tower_data, get_node("UI/HUD/InfoBar/M/H/BuildBar"))
+		setup_ambience()
 	
 	ui.update_money(current_money, true)
 	
@@ -105,6 +111,17 @@ func _ready():
 		
 	ControllerIcons.input_type_changed.connect(_on_input_type_changed)
 	
+func setup_ambience():
+	var map_data = GameData.config.maps[map_name]
+	if "ambience" in map_data:
+		var ambience = map_data.ambience
+		GodotLogger.info("setting up ambience %s" % ambience)
+		ambience_player = SoundManager.play_sound(load(ambience), "Ambience")
+	
+func stop_ambience():
+	if ambience_player:
+		ambience_player.stop()
+
 func _on_input_type_changed(input_type):
 	match input_type:
 		ControllerIcons.InputType.KEYBOARD_MOUSE:
