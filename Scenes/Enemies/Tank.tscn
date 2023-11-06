@@ -1,13 +1,17 @@
-[gd_scene load_steps=7 format=3 uid="uid://off0mut66bi2"]
+[gd_scene load_steps=9 format=3 uid="uid://off0mut66bi2"]
 
 [ext_resource type="Script" path="res://Scenes/Enemies/Tank.gd" id="1"]
 [ext_resource type="Texture2D" uid="uid://ijbogj0vfj1x" path="res://Assets/Enemies/tank_normal.png" id="3_ao31g"]
 [ext_resource type="Texture2D" uid="uid://ngufxmb135gv" path="res://Assets/Enemies/turret_01_mk1.png" id="4_smqi3"]
 [ext_resource type="Texture2D" uid="uid://cxrq6wncjn55f" path="res://Assets/UI/progress_bar.svg" id="5_mxfde"]
+[ext_resource type="PackedScene" uid="uid://vj7m38plioo3" path="res://Scenes/Effects/LaserBeam2D.tscn" id="5_thsr1"]
 [ext_resource type="Script" path="res://Scenes/SupportScenes/Trail.gd" id="6_8jb6s"]
 
 [sub_resource type="RectangleShape2D" id="1"]
 size = Vector2(24, 16)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_kpirn"]
+radius = 96.13
 
 [node name="Tank" type="PathFollow2D" groups=["enemy"]]
 loop = false
@@ -37,6 +41,11 @@ texture = ExtResource("3_ao31g")
 position = Vector2(5, -1)
 texture = ExtResource("4_smqi3")
 
+[node name="Muzzle1" type="Marker2D" parent="Sprite2D/Turret"]
+position = Vector2(50, 1)
+
+[node name="Fire" parent="Sprite2D/Turret/Muzzle1" instance=ExtResource("5_thsr1")]
+
 [node name="HealthBar" type="TextureProgressBar" parent="Sprite2D"]
 offset_left = -30.0
 offset_top = -30.0
@@ -51,3 +60,14 @@ tint_progress = Color(0.219608, 0.988235, 0.0117647, 1)
 
 [node name="Impact" type="Marker2D" parent="."]
 position = Vector2(-15, -15)
+
+[node name="Range" type="Area2D" parent="."]
+position = Vector2(50, -2)
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Range"]
+shape = SubResource("CircleShape2D_kpirn")
+
+[connection signal="body_entered" from="Range" to="." method="_on_range_body_entered"]
+[connection signal="body_exited" from="Range" to="." method="_on_range_body_exited"]

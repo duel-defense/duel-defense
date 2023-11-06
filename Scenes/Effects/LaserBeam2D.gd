@@ -42,16 +42,17 @@ func _physics_process(delta: float) -> void:
 	target_position = (target_position + Vector2.RIGHT * cast_speed * delta).limit_length(max_length)
 	cast_beam()
 
-
 func set_is_casting(cast: bool) -> void:
 	if cast and not is_casting:
 		sound_effects.volume_db = 1
 		sound_effects.play()
-		get_parent().get_parent().play()
+		if "play" in get_parent().get_parent():
+			get_parent().get_parent().play()
 	elif not cast and is_casting:
 		var sound_tween = get_tree().create_tween()
 		sound_tween.tween_property(sound_effects, 'volume_db', -100, 1.5)
-		get_parent().get_parent().stop()
+		if "stop" in get_parent().get_parent():
+			get_parent().get_parent().stop()
 	
 	is_casting = cast
 

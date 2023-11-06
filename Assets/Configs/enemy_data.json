@@ -5,7 +5,8 @@
 		"damage": 21,
 		"sprite_path": "res://Assets/Enemies/tank_normal.png",
 		"cost": 100,
-		"move_sound": "average"
+		"move_sound": "average",
+		"fire_damage": 0.1
 	},
 	"FastTank": {
 		"speed": 150,
@@ -13,7 +14,8 @@
 		"damage": 5,
 		"sprite_path": "res://Assets/Enemies/tank_medium.png",
 		"cost": 50,
-		"move_sound": "fast"
+		"move_sound": "fast",
+		"fire_damage": 0.05
 	},
 	"LongTank": {
 		"speed": 100,
@@ -25,7 +27,8 @@
 		"move_sound": "slow",
 		"engine_trail_x": -60,
 		"engine_trail_width": 3,
-		"engine_trail_max_points": 10
+		"engine_trail_max_points": 10,
+		"fire_damage": 0.25
 	},
 	"EnergyTank": {
 		"speed": 110,
@@ -37,7 +40,8 @@
 		"move_sound": "fast",
 		"engine_trail_x": -40,
 		"engine_trail_width": 3,
-		"engine_trail_max_points": 8
+		"engine_trail_max_points": 8,
+		"fire_damage": 0.5
 	},
 	"BossTank": {
 		"speed": 70,
@@ -49,13 +53,15 @@
 		"move_sound": "slow",
 		"engine_trail_x": -60,
 		"engine_trail_width": 3,
-		"engine_trail_max_points": 10
+		"engine_trail_max_points": 10,
+		"fire_damage": 0.75
 	},
 	"NormalMech": {
 		"speed": 80,
 		"hp": 400,
 		"damage": 30,
 		"cost": 600,
-		"move_sound": "slow"
+		"move_sound": "slow",
+		"disable_fire": true
 	}
 }
