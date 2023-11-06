@@ -5,6 +5,7 @@ var current_map
 var in_game_for_menu = false
 
 @onready var main_menu = $MainMenu
+@onready var main_menu_music = $MainMenu/BackgroundMusic
 @onready var configuration_manager = $ConfigurationManager
 @onready var level_select = $LevelSelect
 @onready var achivements = $Achivements
@@ -115,6 +116,8 @@ func load_main_menu(in_game = false):
 	in_game_for_menu = in_game
 	main_menu.visible = true
 	update_menu_items()
+	if not in_game:
+		main_menu_music.play()
 	
 func load_congrats_menu(result):
 	if result and "ended" in result and result.ended:
@@ -246,6 +249,7 @@ func load_game_scene(map_name = null):
 	game_scene.set_name("GameScene")
 	add_child(game_scene)
 	current_map = map_name
+	main_menu_music.stop()
 	
 func on_quit_pressed():
 	Helpers.play_button_sound()

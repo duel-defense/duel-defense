@@ -245,6 +245,7 @@
 		"weather_effect": true,
 		"sonar_mode": true,
 		"modulate": "#656565",
+		"ambience": "res://Assets/Audio/Ambience/rain-and-thunder-nature-sounds-7803.mp3",
 		"waves": [
 			{
 				"enemies": [
