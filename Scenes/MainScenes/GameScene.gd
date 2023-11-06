@@ -327,6 +327,8 @@ func verify_and_build():
 		var map_data = GameData.config.maps[map_name]
 		if "sonar_mode" in map_data and map_data.sonar_mode:
 			new_tower.sonar_mode = true
+		if "enemy_fire" in map_data and map_data.enemy_fire:
+			new_tower.enemy_fire = true
 		if upgrade_mode:
 			new_tower.from_upgrade = true
 		new_tower.category = GameData.config.tower_data[build_type]["category"]

@@ -60,7 +60,7 @@
 		"sound": true,
 		"in_build_menu": true,
 		"scene_name": "Laser",
-		"hp": 300
+		"hp": 500
 	},
 	"LaserT2": {
 		"damage": 1.5,
@@ -78,7 +78,7 @@
 		"fps": 30,
 		"sprite_size_width": 64,
 		"sprite_size_height": 64,
-		"hp": 500
+		"hp": 800
 	},
 	"MissileT1": {
 		"damage": 100,

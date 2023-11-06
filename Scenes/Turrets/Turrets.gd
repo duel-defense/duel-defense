@@ -18,6 +18,7 @@ var sonar_mode = false
 var hp
 var destroyed
 var destroy_called
+var enemy_fire
 
 var timer
 var waiting_for_anim = false
@@ -58,6 +59,11 @@ func _ready():
 		var tower_range = GameData.config.tower_data[type].range
 		sonar.size = Vector2(tower_range, tower_range)
 		sonar.set_anchors_and_offsets_preset(Control.LayoutPreset.PRESET_CENTER, Control.LayoutPresetMode.PRESET_MODE_KEEP_SIZE)
+	
+	if type and built and enemy_fire:
+		var shield = get_node_or_null("Shield")
+		if shield:
+			shield.visible = true
 	
 	if type:
 		collision_2d.get_shape().radius = 0.5 * GameData.config.tower_data[type]["range"]
