@@ -70,6 +70,11 @@ func _ready():
 	add_child(map_instance)
 	map_node = get_node(NodePath(map_instance.name))
 	
+	var base = map_node.get_node_or_null("Base")
+	if base:
+		base.connect("accept_click", Callable(self, "initiate_upgrade_mode").bind(base))
+		base.connect("cancel_click", Callable(self, "cancel_upgrade_mode").bind(base))
+	
 	if "weather_effect" in map_data and map_data.weather_effect:
 		var weather_effect_node = map_node.get_node_or_null("WeatherEffect")
 		if weather_effect_node:
@@ -203,7 +208,11 @@ func controller_upgrade(pos):
 	for turret in map_node.get_node("Turrets").get_children():
 		if turret.tile_pos == pos:
 			initiate_upgrade_mode(turret)
-			break
+			return
+			
+	var base_node = map_node.get_node_or_null("Base")
+	if base_node:
+		initiate_upgrade_mode(base_node)
 
 func initiate_build_mode(tower_type):
 	if upgrade_mode:
@@ -359,7 +368,7 @@ func initiate_upgrade_mode(tower):
 		
 	upgrade_node = tower
 	
-	if not tower.get_node_or_null("RangeTexture"):
+	if tower.type != "Base" and not tower.get_node_or_null("RangeTexture"):
 		var range_texture = Sprite2D.new()
 		range_texture.set_name("RangeTexture")
 		range_texture.position = Vector2(0,0)
@@ -426,6 +435,17 @@ func action_requested(tower_data):
 		var current_tile = map_node.get_node("TowerExclusion").local_to_map(upgrade_node.position)
 		map_node.get_node("TowerExclusion").erase_cell(0, current_tile)
 		upgrade_node.free()
+	elif tower_data.action == "repair":
+		if current_tower_type == "Base":
+			if base_health < 100:
+				var base_health_percentage = base_health / 100
+				var repair_cost = current_tower_cost * base_health_percentage
+				change_money(-repair_cost)
+				base_health = GameData.config.settings.starting_base_health
+				map_node.get_node("Base").update_health_bar(base_health)
+		else:
+			# future work for repairing towers
+			pass
 		
 		
 	cancel_upgrade_mode()
