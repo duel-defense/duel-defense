@@ -6,10 +6,11 @@
 		"category": "Projectile",
 		"cost": 200,
 		"build_anywhere": false,
-		"upgrades": ["GunT2", "Laser", "ActionSell"],
+		"upgrades": ["GunT2", "Laser", "ActionSell", "ActionRepair"],
 		"sound": true,
 		"in_build_menu": true,
-		"scene_name": "Gun"
+		"scene_name": "Gun",
+		"hp": 200
 	},
 	"GunT2": {
 		"damage": 80,
@@ -19,14 +20,15 @@
 		"cost": 500,
 		"build_anywhere": false,
 		"upgrade_cost": 300,
-		"upgrades": ["GunT3", "ActionSell"],
+		"upgrades": ["GunT3", "ActionSell", "ActionRepair"],
 		"sound": true,
 		"in_build_menu": false,
 		"scene_name": "Gun",
 		"spritesheet_path": "res://Assets/Towers/turret_01_mk2.png",
 		"fps": 30,
 		"sprite_size_width": 128,
-		"sprite_size_height": 128
+		"sprite_size_height": 128,
+		"hp": 300
 	},
 	"GunT3": {
 		"damage": 110,
@@ -36,14 +38,15 @@
 		"cost": 1000,
 		"build_anywhere": false,
 		"upgrade_cost": 500,
-		"upgrades": ["ActionSell"],
+		"upgrades": ["ActionSell", "ActionRepair"],
 		"sound": true,
 		"in_build_menu": false,
 		"scene_name": "Gun",
 		"spritesheet_path": "res://Assets/Towers/turret_01_mk4.png",
 		"fps": 30,
 		"sprite_size_width": 128,
-		"sprite_size_height": 128
+		"sprite_size_height": 128,
+		"hp": 400
 	},
 	"Laser": {
 		"damage": 2,
@@ -53,10 +56,11 @@
 		"cost": 400,
 		"build_anywhere": false,
 		"upgrade_cost": 200,
-		"upgrades": ["LaserT2", "ActionSell"],
+		"upgrades": ["LaserT2", "ActionSell", "ActionRepair"],
 		"sound": true,
 		"in_build_menu": true,
-		"scene_name": "Laser"
+		"scene_name": "Laser",
+		"hp": 500
 	},
 	"LaserT2": {
 		"damage": 1.5,
@@ -66,14 +70,15 @@
 		"cost": 600,
 		"build_anywhere": false,
 		"upgrade_cost": 200,
-		"upgrades": ["ActionSell"],
+		"upgrades": ["ActionSell", "ActionRepair"],
 		"sound": true,
 		"in_build_menu": false,
 		"scene_name": "Laser",
 		"spritesheet_path": "res://Assets/Towers/turret_04_mk3.png",
 		"fps": 30,
 		"sprite_size_width": 64,
-		"sprite_size_height": 64
+		"sprite_size_height": 64,
+		"hp": 800
 	},
 	"MissileT1": {
 		"damage": 100,
@@ -82,10 +87,11 @@
 		"category": "Missile",
 		"cost": 500,
 		"build_anywhere": false,
-		"upgrades": ["ActionSell"],
+		"upgrades": ["ActionSell", "ActionRepair"],
 		"sound": true,
 		"in_build_menu": true,
-		"scene_name": "Missile"
+		"scene_name": "Missile",
+		"hp": 400
 	},
 	"AbilityBombT1": {
 		"damage": 250,

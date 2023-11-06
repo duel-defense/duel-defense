@@ -1,10 +1,14 @@
-[gd_scene load_steps=20 format=3 uid="uid://dau086gl8yi6p"]
+[gd_scene load_steps=22 format=3 uid="uid://dau086gl8yi6p"]
 
 [ext_resource type="Script" path="res://Scenes/Turrets/Gun.gd" id="1_1fjci"]
 [ext_resource type="Texture2D" uid="uid://dk1gfb3fpqq5o" path="res://Assets/Towers/towers_walls_blank.png" id="2_hbngj"]
 [ext_resource type="Texture2D" uid="uid://cl10lnarem5jt" path="res://Assets/Towers/turret_01_mk1.png" id="3_1oxed"]
 [ext_resource type="Script" path="res://Scenes/Turrets/ClickableArea.gd" id="4_h6mvw"]
+[ext_resource type="Texture2D" uid="uid://cxrq6wncjn55f" path="res://Assets/UI/progress_bar.svg" id="4_pbht1"]
 [ext_resource type="Shader" path="res://Assets/Shaders/Sonar.gdshader" id="5_02n4l"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ne6hf"]
+size = Vector2(81, 81)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8inr4"]
 atlas = ExtResource("2_hbngj")
@@ -101,8 +105,29 @@ shader_parameter/sonarWidth = 0.8
 [node name="Gun" type="Node2D"]
 script = ExtResource("1_1fjci")
 
+[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+position = Vector2(0.5, -0.5)
+shape = SubResource("RectangleShape2D_ne6hf")
+
 [node name="Base" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_6s4tv")
+
+[node name="HealthBar" type="TextureProgressBar" parent="Base"]
+visible = false
+offset_left = -30.0
+offset_top = -30.0
+offset_right = 30.0
+offset_bottom = -24.0
+value = 50.0
+nine_patch_stretch = true
+texture_under = ExtResource("4_pbht1")
+texture_progress = ExtResource("4_pbht1")
+tint_under = Color(0.160784, 0.156863, 0.156863, 1)
+tint_progress = Color(0.219608, 0.988235, 0.0117647, 1)
 
 [node name="Turret" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_ol582")
@@ -127,6 +152,9 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 mouse_filter = 2
 color = Color(1, 1, 1, 0)
+
+[node name="Impact" type="Marker2D" parent="."]
+position = Vector2(-15, -15)
 
 [connection signal="animation_finished" from="Turret" to="." method="_on_turret_animation_finished"]
 [connection signal="body_entered" from="Range" to="." method="_on_Range_body_entered"]

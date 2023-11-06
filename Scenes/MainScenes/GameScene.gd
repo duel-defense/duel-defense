@@ -327,6 +327,8 @@ func verify_and_build():
 		var map_data = GameData.config.maps[map_name]
 		if "sonar_mode" in map_data and map_data.sonar_mode:
 			new_tower.sonar_mode = true
+		if "enemy_fire" in map_data and map_data.enemy_fire:
+			new_tower.enemy_fire = true
 		if upgrade_mode:
 			new_tower.from_upgrade = true
 		new_tower.category = GameData.config.tower_data[build_type]["category"]
@@ -444,8 +446,13 @@ func action_requested(tower_data):
 				base_health = GameData.config.settings.starting_base_health
 				map_node.get_node("Base").update_health_bar(base_health)
 		else:
-			# future work for repairing towers
-			pass
+			var current_health = upgrade_node.hp
+			var full_tower_hp = GameData.config.tower_data[current_tower_type].hp
+			if current_health < full_tower_hp:
+				var health_percentage = current_health / full_tower_hp
+				var repair_cost = current_tower_cost * health_percentage
+				change_money(-repair_cost)
+				upgrade_node.set_health(full_tower_hp)
 		
 		
 	cancel_upgrade_mode()
@@ -537,6 +544,8 @@ func spawn_enemies(wave_data, path_name):
 		new_enemy.hide_hp_bar = main_menu_mode
 		if "sonar_mode" in map_data and map_data.sonar_mode:
 			new_enemy.visible = false
+		if "enemy_fire" in map_data and map_data.enemy_fire:
+			new_enemy.fire_mode = true
 		new_enemy.connect("on_base_damage", Callable(self, 'on_base_damage'))
 		new_enemy.connect("on_destroyed", Callable(self, 'on_enemy_destroyed'))
 		

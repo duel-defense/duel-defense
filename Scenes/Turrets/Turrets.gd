@@ -15,6 +15,10 @@ var from_upgrade
 var icon_mode
 var tile_pos
 var sonar_mode = false
+var hp
+var destroyed
+var destroy_called
+var enemy_fire
 
 var timer
 var waiting_for_anim = false
@@ -22,14 +26,22 @@ var missile_timer
 var missile_reloading_timer
 
 var fired_missile = preload("res://Scenes/SupportScenes/FiredMissile.tscn")
+var projectile_impact = preload("res://Scenes/Effects/ProjectileImpact.tscn")
+var explosion = preload("res://Scenes/Effects/Explosion.tscn")
+var impact_sound = preload("res://Assets/Audio/Sounds/impactMining_000.ogg")
 
 @onready var turret = $Turret
 @onready var collision_2d = $Range/CollisionShape2D
 @onready var sonar = $Sonar
+@onready var impact_area = $Impact
+@onready var health_bar = $Base/HealthBar
 
 func _ready():
 	if type:
 		var turret_data = GameData.config.tower_data[type]
+		hp = turret_data.hp
+		health_bar.max_value = hp
+		health_bar.value = hp
 		
 		if "spritesheet_path" in turret_data:
 			var spritesheet_path = turret_data.spritesheet_path
@@ -48,8 +60,17 @@ func _ready():
 		sonar.size = Vector2(tower_range, tower_range)
 		sonar.set_anchors_and_offsets_preset(Control.LayoutPreset.PRESET_CENTER, Control.LayoutPresetMode.PRESET_MODE_KEEP_SIZE)
 	
+	if type and built and enemy_fire:
+		var shield = get_node_or_null("Shield")
+		if shield:
+			shield.visible = true
+	
 	if type:
 		collision_2d.get_shape().radius = 0.5 * GameData.config.tower_data[type]["range"]
+
+func set_health(new_health):
+	hp = new_health
+	health_bar.value = hp
 
 func _physics_process(_delta):
 	if icon_mode:
@@ -118,6 +139,59 @@ func fire_gun():
 	if enemy:
 		enemy.on_hit(GameData.config.tower_data[type]["damage"], GameData.config.tower_data[type]["sound"], type)
 	
+func on_hit(damage, has_sound, tower_type):
+	impact(has_sound)
+	hp -= damage
+	health_bar.value = hp
+	health_bar.visible = true
+	if hp <= 0 and not destroy_called:
+		on_destroy(tower_type)
+		
+func on_destroy(tower_type):
+	destroy_called = true
+	var k_body = get_node_or_null("CharacterBody2D")
+	if k_body:
+		k_body.queue_free()
+		timer.start(0.2); await timer.timeout
+		
+		randomize()
+		var x_pos = randi() % 31
+		randomize()
+		var y_pos = randi() % 31
+		var explosion_location = Vector2(x_pos, y_pos)
+		
+		var new_explosion = explosion.instantiate()
+		new_explosion.position = explosion_location
+		health_bar.visible = false
+		new_explosion.connect('animation_finished', Callable(self, 'destroy_complete').bind(tower_type))
+		new_explosion.connect('hide_sprite', Callable(self, 'hide_sprite'))
+		impact_area.add_child(new_explosion)
+		
+func destroy_complete(tower_type):
+	if not destroyed:
+		destroyed = true
+		emit_signal("on_destroyed", category, tower_type)
+		self.queue_free()
+		
+func hide_sprite():
+	$Base.visible = false
+	$Turret.visible = false
+	sonar.visible = false
+		
+func impact(has_sound):
+	if impact_area.get_child_count() > 3:
+		return
+	randomize()
+	var x_pos = randi() % 31
+	randomize()
+	var y_pos = randi() % 31
+	var impact_location = Vector2(x_pos, y_pos)
+	var new_impact = projectile_impact.instantiate()
+	new_impact.position = impact_location
+	impact_area.add_child(new_impact)
+	if has_sound:
+		SoundManager.play_sound(impact_sound)
+
 func fire_gun_finished():
 	waiting_for_anim = false
 	

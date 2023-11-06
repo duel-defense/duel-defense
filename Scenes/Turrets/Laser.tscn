@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://dyfq7386knnmd"]
+[gd_scene load_steps=30 format=3 uid="uid://dyfq7386knnmd"]
 
 [ext_resource type="Texture2D" uid="uid://dk1gfb3fpqq5o" path="res://Assets/Towers/towers_walls_blank.png" id="2_qtm66"]
 [ext_resource type="Script" path="res://Scenes/Turrets/Laser.gd" id="3"]
@@ -6,7 +6,11 @@
 [ext_resource type="PackedScene" uid="uid://vj7m38plioo3" path="res://Scenes/Effects/LaserBeam2D.tscn" id="4"]
 [ext_resource type="Script" path="res://Scenes/Turrets/ClickableArea.gd" id="5"]
 [ext_resource type="Shader" path="res://Assets/Shaders/Shield.gdshader" id="5_4mpeu"]
+[ext_resource type="Texture2D" uid="uid://cxrq6wncjn55f" path="res://Assets/UI/progress_bar.svg" id="5_36rtf"]
 [ext_resource type="Shader" path="res://Assets/Shaders/Sonar.gdshader" id="7_8iixg"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_n4niu"]
+size = Vector2(81, 81)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_nhnxx"]
 atlas = ExtResource("2_qtm66")
@@ -143,8 +147,29 @@ shader_parameter/sonarWidth = 0.8
 [node name="Laser" type="Node2D"]
 script = ExtResource("3")
 
+[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+position = Vector2(0.5, -0.5)
+shape = SubResource("RectangleShape2D_n4niu")
+
 [node name="Base" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_yqlh5")
+
+[node name="HealthBar" type="TextureProgressBar" parent="Base"]
+visible = false
+offset_left = -30.0
+offset_top = -30.0
+offset_right = 30.0
+offset_bottom = -24.0
+value = 50.0
+nine_patch_stretch = true
+texture_under = ExtResource("5_36rtf")
+texture_progress = ExtResource("5_36rtf")
+tint_under = Color(0.160784, 0.156863, 0.156863, 1)
+tint_progress = Color(0.219608, 0.988235, 0.0117647, 1)
 
 [node name="Turret" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_gavj4")
@@ -185,6 +210,9 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 mouse_filter = 2
 color = Color(1, 1, 1, 0)
+
+[node name="Impact" type="Marker2D" parent="."]
+position = Vector2(-15, -15)
 
 [connection signal="collided" from="Turret/Muzzle1/Fire" to="." method="_on_Fire_collided"]
 [connection signal="body_entered" from="Range" to="." method="_on_Range_body_entered"]

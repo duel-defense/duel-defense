@@ -121,7 +121,7 @@
 		"starting_money": 1000,
 		"next_map": "Map1b",
 		"scene_name": "Map1",
-		"friendly_name": "Map 1"
+		"friendly_name": "Nice Sunny Day"
 	},
 	"Map1b": {
 		"waves": [
@@ -235,7 +235,7 @@
 		"starting_money": 1000,
 		"next_map": "Map1c",
 		"scene_name": "Map1",
-		"friendly_name": "Map 1b"
+		"friendly_name": "Tanks A Lot"
 	},
 	"Map1c": {
 		"starting_money": 1000,
@@ -320,43 +320,53 @@
 		"waves": [
 			{
 				"enemies": [
-					{
-						"base": "Tank",
-						"category": "NormalTank",
-						"delay": 0.9
-					},
-					{
-						"base": "Tank",
-						"category": "NormalTank",
-						"delay": 2
-					},
-					{
-						"base": "Tank",
-						"category": "BossTank",
-						"delay": 3
-					},
-					{
-						"base": "Tank",
-						"category": "BossTank",
-						"delay": 3
-					},
-					{
-						"base": "Tank",
-						"category": "BossTank",
-						"delay": 3
-					},
-					{
-						"base": "Tank",
-						"category": "BossTank",
-						"delay": 3
-					}
+					{"base": "Tank", "category": "EnergyTank", "delay": 1.5},
+					{"base": "Tank", "category": "LongTank", "delay": 1.5},
+					{"base": "Tank", "category": "EnergyTank", "delay": 1.5},
+					{"base": "Tank", "category": "LongTank", "delay": 1.5},
+					{"base": "Tank", "category": "EnergyTank", "delay": 1.5},
+					{"base": "Tank", "category": "LongTank", "delay": 1.5}
+				],
+				"cost": 300
+			},
+			{
+				"enemies": [
+					{"base": "Tank", "category": "EnergyTank", "delay": 1.5},
+					{"base": "Tank", "category": "LongTank", "delay": 1.5},
+					{"base": "Tank", "category": "EnergyTank", "delay": 1.5},
+					{"base": "Tank", "category": "LongTank", "delay": 1.5},
+					{"base": "Tank", "category": "EnergyTank", "delay": 1.5},
+					{"base": "Tank", "category": "LongTank", "delay": 1.5}
+				],
+				"cost": 300
+			},
+			{
+				"enemies": [
+					{"base": "Tank", "category": "EnergyTank", "delay": 1.5},
+					{"base": "Tank", "category": "LongTank", "delay": 1.5},
+					{"base": "Tank", "category": "EnergyTank", "delay": 1.5},
+					{"base": "Tank", "category": "LongTank", "delay": 1.5},
+					{"base": "Tank", "category": "EnergyTank", "delay": 1.5},
+					{"base": "Tank", "category": "LongTank", "delay": 1.5}
+				],
+				"cost": 300
+			},
+			{
+				"enemies": [
+					{"base": "Tank", "category": "EnergyTank", "delay": 1.5},
+					{"base": "Tank", "category": "LongTank", "delay": 1.5},
+					{"base": "Tank", "category": "EnergyTank", "delay": 1.5},
+					{"base": "Tank", "category": "LongTank", "delay": 1.5},
+					{"base": "Tank", "category": "EnergyTank", "delay": 1.5},
+					{"base": "Tank", "category": "LongTank", "delay": 1.5}
 				],
 				"cost": 300
 			}
 		],
+		"enemy_fire": true,
 		"starting_money": 1500,
 		"scene_name": "Map2",
-		"friendly_name": "Winter Freeze"
+		"friendly_name": "Tanks Fighting Back"
 	},
 	"MainMenuMap": {
 		"waves": [

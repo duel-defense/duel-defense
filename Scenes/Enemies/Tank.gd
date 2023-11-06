@@ -3,6 +3,7 @@ extends PathFollow2D
 signal on_base_damage(damage)
 signal on_destroyed(category, on_destroyed)
 
+var enemy_data
 var category
 var speed
 var hp
@@ -12,6 +13,10 @@ var on_destroy_called
 var hide_hp_bar = false
 var timer
 var seen_count = 0
+var fire_mode = false
+
+var enemy
+var enemy_array = []
 
 @onready var health_bar = $Sprite2D/HealthBar
 @onready var impact_area = $Impact
@@ -29,9 +34,13 @@ func _ready():
 	add_child(timer)
 	
 	var tmp_enemy_data = GameData.config.enemy_data[category]
+	enemy_data = GameData.config.enemy_data[category]
 	speed = tmp_enemy_data.speed
 	hp = tmp_enemy_data.hp
 	base_damage = tmp_enemy_data.damage
+	
+	if "disable_fire" in enemy_data and enemy_data.disable_fire:
+		fire_mode = false
 	
 	if "sprite_path" in tmp_enemy_data:
 		var sprite_path = tmp_enemy_data.sprite_path
@@ -75,7 +84,44 @@ func _physics_process(delta):
 		queue_free()
 	if progress_ratio == 0.8:
 		visible = true
+		
+	if enemy_array.size() != 0:
+		select_enemy()
+		turn()
+	else:
+		cease_fire_custom()
+		enemy = null
+	
 	move(delta)
+		
+func turn():
+	if not is_instance_valid(enemy):
+		enemy = null
+		return
+	
+	sprite_turret.look_at(enemy.position)
+
+func select_enemy():
+	for i in enemy_array:
+		if not is_instance_valid(i):
+			enemy_array.erase(i)
+			continue
+		enemy = enemy_array[0]
+		fire()
+	
+func fire():
+	for i in sprite_turret.get_children():
+		if i.get_node_or_null("Fire"):
+			i.get_node_or_null("Fire").fire()
+	if enemy:
+		enemy.on_hit(enemy_data.fire_damage, true, "Tank")
+	
+func cease_fire_custom():
+	if not sprite_turret:
+		return
+	for i in sprite_turret.get_children():
+		if i.get_node_or_null("Fire"):
+			i.get_node_or_null("Fire").cease_fire()
 	
 func move(delta):
 	set_progress(get_progress() + speed * delta)
@@ -155,4 +201,17 @@ func not_seen():
 		seen_count = 0
 		return
 	seen_count -= 1
-	
+
+func _on_range_body_exited(body):
+	if not fire_mode:
+		return
+	var found_enemy = body.get_parent()
+	if found_enemy and found_enemy.built:
+		enemy_array.erase(found_enemy)
+
+func _on_range_body_entered(body):
+	if not fire_mode:
+		return
+	var found_enemy = body.get_parent()
+	if found_enemy and found_enemy.built:
+		enemy_array.append(found_enemy)
