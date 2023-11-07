@@ -133,10 +133,18 @@
 		"icon": "pipe-wrench",
 		"label": "Repair"
 	},
+	"ActionSpawnTank": {
+		"in_build_menu": false,
+		"category": "Action",
+		"action": "spawn_tank",
+		"icon": "tank",
+		"label": "Tank",
+		"spawn_tank_mode": true
+	},
 	"Base": {
 		"in_build_menu": false,
 		"category": "Base",
-		"upgrades": ["ActionRepair"],
+		"upgrades": ["ActionRepair", "ActionSpawnTank"],
 		"cost": 1000
 	}
 }

@@ -24,6 +24,7 @@ var debug_tile_coords = false
 var debug_resolution = false
 
 var base_health = GameData.config.settings.starting_base_health
+var enemy_base_health = 100
 var current_money
 
 @onready var debug_message = $UI/DebugMessage
@@ -83,6 +84,11 @@ func _ready():
 			
 	if "modulate" in map_data:
 		map_node.modulate = map_data.modulate
+		
+	if "spawn_tank_mode" in map_data and map_data.spawn_tank_mode:
+		var enemy_base = map_node.get_node_or_null("EnemyBase")
+		if enemy_base:
+			enemy_base.start_health_bar()
 	
 	current_money = GameData.config.maps[map_name].starting_money + GameData.config.settings.money_change
 	
@@ -385,7 +391,8 @@ func initiate_upgrade_mode(tower):
 	if upgrades and upgrades.size():
 		GodotLogger.info("Showing upgrades for tower type %s, upgrades = %s" % [tower.type, upgrades])
 		upgrade_mode = true
-		ui.show_upgrade_bar(upgrades)
+		var map_data = GameData.config.maps[map_name]
+		ui.show_upgrade_bar(upgrades, map_data)
 	else:
 		ui.hide_upgrade_bar()
 	
@@ -442,18 +449,36 @@ func action_requested(tower_data):
 			if base_health < 100:
 				var base_health_percentage = base_health / 100
 				var repair_cost = current_tower_cost * base_health_percentage
-				change_money(-repair_cost)
-				base_health = GameData.config.settings.starting_base_health
-				map_node.get_node("Base").update_health_bar(base_health)
+				
+				if current_money >= repair_cost:
+					change_money(-repair_cost)
+					base_health = GameData.config.settings.starting_base_health
+					map_node.get_node("Base").update_health_bar(base_health)
+				else:
+					GodotLogger.info("repair, not enough money")
+					Helpers.play_error_sound()
 		else:
 			var current_health = upgrade_node.hp
 			var full_tower_hp = GameData.config.tower_data[current_tower_type].hp
 			if current_health < full_tower_hp:
 				var health_percentage = current_health / full_tower_hp
 				var repair_cost = current_tower_cost * health_percentage
-				change_money(-repair_cost)
-				upgrade_node.set_health(full_tower_hp)
-		
+				if current_money >= repair_cost:
+					change_money(-repair_cost)
+					upgrade_node.set_health(full_tower_hp)
+				else:
+					GodotLogger.info("repair, not enough money")
+					Helpers.play_error_sound()
+	elif tower_data.action == "spawn_tank":
+		var map_data = GameData.config.maps[map_name]
+		var spawn_tanks = map_data.spawn_tank
+		var cost = map_data.spawn_tanks_cost
+		if current_money >= cost:
+			spawn_enemies(spawn_tanks, "BaseTankPath")
+			change_money(-cost)
+		else:
+			GodotLogger.info("spawn tank, not enough money")
+			Helpers.play_error_sound()
 		
 	cancel_upgrade_mode()
 
@@ -483,16 +508,18 @@ func start_next_wave():
 			custom_path = wave_data.custom_path
 		spawn_enemies(wave_data.enemies, custom_path)
 	else:
-		var health_percentage = base_health / 100
-		var num_stars = (health_percentage * 100) / 20
-		if num_stars < 1:
-			num_stars = 1
-			
-		var map_data = GameData.config.maps[map_name]
-		var radar_mode = "sonar_mode" in map_data and map_data.sonar_mode
-		var result = {"ended": true, "num_stars": num_stars, "base_health": base_health, "current_money": current_money, "radar_mode": radar_mode}
-		on_game_finished(result)
+		game_passed()
 		
+func game_passed():
+	var health_percentage = base_health / 100
+	var num_stars = (health_percentage * 100) / 20
+	if num_stars < 1:
+		num_stars = 1
+			
+	var map_data = GameData.config.maps[map_name]
+	var radar_mode = "sonar_mode" in map_data and map_data.sonar_mode
+	var result = {"ended": true, "num_stars": num_stars, "base_health": base_health, "current_money": current_money, "radar_mode": radar_mode}
+	on_game_finished(result)
 		
 func on_game_finished(result):
 	game_ended = true
@@ -542,6 +569,8 @@ func spawn_enemies(wave_data, path_name):
 		var new_enemy = load("res://Scenes/Enemies/" + i.base + ".tscn").instantiate()
 		new_enemy.category = i.category
 		new_enemy.hide_hp_bar = main_menu_mode
+		if "base_tank" in i and i.base_tank:
+			new_enemy.base_tank = true
 		if "sonar_mode" in map_data and map_data.sonar_mode:
 			new_enemy.visible = false
 		if "enemy_fire" in map_data and map_data.enemy_fire:
@@ -569,13 +598,20 @@ func wave_completed():
 
 ## enemy functions
 
-func on_base_damage(damage):
-	GodotLogger.debug("on_base_damage = %s" % damage)
-	base_health -= damage
-	update_wave_data()
+func on_base_damage(damage, is_from_base_tank):
+	GodotLogger.debug("on_base_damage = %s base_tank = %s" % [damage, is_from_base_tank])
+	if not is_from_base_tank:
+		base_health -= damage
+		update_wave_data()
+	else:
+		enemy_base_health -= damage
+		map_node.get_node("EnemyBase").update_health_bar(enemy_base_health)
 	
 	if game_ended:
 		return
+		
+	if is_from_base_tank and enemy_base_health <= 0 and not main_menu_mode:
+		game_passed()
 	
 	if base_health <= 0 and not main_menu_mode:
 		var result = {"failed": true}
@@ -746,7 +782,7 @@ func on_set_base_damage(base_damage):
 		Console.print_line("set_base_damage <float>")
 		return
 	
-	on_base_damage(float(base_damage))	
+	on_base_damage(float(base_damage), false)	
 	
 func on_spawn_missiles(missile_count_str):
 	if not missile_count_str:

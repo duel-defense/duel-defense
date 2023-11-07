@@ -243,9 +243,9 @@ sources/8 = SubResource("TileSetAtlasSource_uxfep")
 
 [sub_resource type="Curve2D" id="Curve2D_30aoy"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, 81, 833, 0, 0, 0, 0, 1139, 837, 0, 0, 0, 0, 1211, 787, 0, 0, 0, 0, 1215, 603, 0, 0, 0, 0, 1219, 447, 0, 0, 0, 0, 1221, 203, 0, 0, 0, 0, 1749, 197, 0, 0, 0, 0, 1763, 195, 0, 0, 0, 0, 1759, 197, 0, 0, 0, 0, 1753, 197)
+"points": PackedVector2Array(0, 0, 0, 0, 81, 833, 0, 0, 0, 0, 1139, 837, 0, 0, 0, 0, 1211, 787, 0, 0, 0, 0, 1215, 603, 0, 0, 0, 0, 1219, 447, 0, 0, 0, 0, 1221, 203, 0, 0, 0, 0, 1553, 198, 0, 0, 0, 0, 1780, 195)
 }
-point_count = 10
+point_count = 8
 
 [node name="Map2" type="Node2D"]
 

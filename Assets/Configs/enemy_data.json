@@ -30,6 +30,19 @@
 		"engine_trail_max_points": 10,
 		"fire_damage": 0.25
 	},
+	"FromBaseTank": {
+		"speed": 100,
+		"hp": 250,
+		"damage": 25,
+		"sprite_path": "res://Assets/Enemies/Red_Hull_04.png",
+		"turret_sprite_path": "res://Assets/Enemies/Red_Gun_03.png",
+		"cost": 300,
+		"move_sound": "slow",
+		"engine_trail_x": -40,
+		"engine_trail_width": 3,
+		"engine_trail_max_points": 10,
+		"fire_damage": 0.25
+	},
 	"EnergyTank": {
 		"speed": 110,
 		"hp": 75,

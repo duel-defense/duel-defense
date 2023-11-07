@@ -368,6 +368,112 @@
 		"scene_name": "Map2",
 		"friendly_name": "Tanks Fighting Back"
 	},
+	"Map3": {
+		"waves": [
+			{
+				"turrets": [
+					{
+						"type": "GunT1",
+						"coords": {
+							"x": 2,
+							"y": 5
+						},
+						"delay": 0.5
+					},
+					{
+						"type": "GunT1",
+						"coords": {
+							"x": 2,
+							"y": 7
+						},
+						"delay": 0.5
+					},
+					{
+						"type": "MissileT1",
+						"coords": {
+							"x": 4,
+							"y": 5
+						},
+						"delay": 0.5
+					}
+				],
+				"enemies": [
+					{
+						"base": "Tank",
+						"category": "NormalTank",
+						"delay": 0.9
+					},
+					{
+						"base": "Tank",
+						"category": "NormalTank",
+						"delay": 1
+					},
+					{
+						"base": "Tank",
+						"category": "NormalTank",
+						"delay": 0.9
+					},
+					{
+						"base": "Tank",
+						"category": "NormalTank",
+						"delay": 1
+					}
+				],
+				"cost": 300,
+				"boss_wave": false
+			},
+			{
+				"turrets": [
+					{
+						"type": "Laser",
+						"coords": {
+							"x": 2,
+							"y": 5
+						},
+						"delay": 0.5,
+						"upgrade": true
+					}
+				],
+				"enemies": [
+					{
+						"base": "Tank",
+						"category": "FastTank",
+						"delay": 0.9
+					},
+					{
+						"base": "Tank",
+						"category": "FastTank",
+						"delay": 0.5
+					},
+					{
+						"base": "Tank",
+						"category": "NormalTank",
+						"delay": 0.9
+					},
+					{
+						"base": "Tank",
+						"category": "NormalTank",
+						"delay": 1
+					},
+					{
+						"base": "Tank",
+						"category": "BossTank",
+						"delay": 2
+					}
+				],
+				"cost": 500,
+				"boss_wave": true
+			}
+		],
+		"starting_money": 1000,
+		"scene_name": "Map3",
+		"spawn_tank_mode": true,
+		"spawn_tank": [
+			{"base": "Tank", "category": "FromBaseTank", "delay": 0, "base_tank": true}
+		],
+		"spawn_tanks_cost": 300,
+		"friendly_name": "Swords at Dawn"
+	},
 	"MainMenuMap": {
 		"waves": [
 			{
