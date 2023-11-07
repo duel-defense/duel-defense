@@ -12,6 +12,7 @@ var enemy_array = []
 var icon_mode
 var tile_pos
 var sonar_mode
+var enemy_fire
 
 @onready var collision_2d = $Range/CollisionShape2D
 @onready var animated_sprite_2d = $Range/AnimatedSprite2D
