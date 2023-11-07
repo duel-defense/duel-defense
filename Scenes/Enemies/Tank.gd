@@ -1,6 +1,6 @@
 extends PathFollow2D
 
-signal on_base_damage(damage)
+signal on_base_damage(damage, is_from_base_tank, category)
 signal on_destroyed(category, on_destroyed)
 
 var enemy_data
@@ -17,6 +17,7 @@ var fire_mode = false
 
 var enemy
 var enemy_array = []
+var base_tank
 
 @onready var health_bar = $Sprite2D/HealthBar
 @onready var impact_area = $Impact
@@ -80,7 +81,7 @@ func set_trail_property(property_name, value):
 
 func _physics_process(delta):
 	if progress_ratio == 1.0:
-		emit_signal("on_base_damage", base_damage)
+		emit_signal("on_base_damage", base_damage, base_tank, category)
 		queue_free()
 	if progress_ratio == 0.8:
 		visible = true

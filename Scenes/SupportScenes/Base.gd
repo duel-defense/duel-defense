@@ -23,6 +23,10 @@ func _ready():
 		var texture = load("res://Assets/Environment/Props/Cylindrical Tank A - Size 1 - Gray.png")
 		sprite.texture = texture
 		clickable_area.visible = false
+		
+func start_health_bar():
+	hp_bar.visible = true
+	show_health_bar = true
 
 func update_health_bar(base_health):
 	var tween = get_tree().create_tween()

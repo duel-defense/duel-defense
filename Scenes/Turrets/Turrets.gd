@@ -247,6 +247,8 @@ func missile_impacted(impact_enemy):
 func _on_Range_body_entered(body):
 	if built:
 		var found_enemy = body.get_parent()
+		if found_enemy.base_tank:
+			return
 		enemy_array.append(found_enemy)
 		if sonar_mode:
 			found_enemy.seen()
@@ -254,6 +256,8 @@ func _on_Range_body_entered(body):
 func _on_Range_body_exited(body):
 	if built:
 		var found_enemy = body.get_parent()
+		if found_enemy.base_tank:
+			return
 		enemy_array.erase(found_enemy)
 		if sonar_mode:
 			found_enemy.not_seen()

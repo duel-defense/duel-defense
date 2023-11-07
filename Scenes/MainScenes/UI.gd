@@ -165,12 +165,15 @@ func wave_completed():
 func update_next_wave_progress(progress):
 	next_wave.value = progress
 	
-func show_upgrade_bar(upgrades):
+func show_upgrade_bar(upgrades, map_data):
 	build_bar.visible = false
 	upgrade_bar.visible = true
 	var new_tower_data = {}
 	for upgrade_name in upgrades:
-		new_tower_data[upgrade_name] = GameData.config.tower_data[upgrade_name]
+		var upgrade_data = GameData.config.tower_data[upgrade_name]
+		if "spawn_tank_mode" in upgrade_data and upgrade_data.spawn_tank_mode and ("spawn_tank_mode" not in map_data or not map_data.spawn_tank_mode):
+			continue
+		new_tower_data[upgrade_name] = upgrade_data
 	setup_build_buttons(new_tower_data, upgrade_bar, true, "upgrade_requested")
 	bar_focus = false
 	ui_bar_focus_toggle(false, upgrade_bar)
