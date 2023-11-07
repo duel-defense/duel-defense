@@ -598,7 +598,7 @@ func wave_completed():
 
 ## enemy functions
 
-func on_base_damage(damage, is_from_base_tank):
+func on_base_damage(damage, is_from_base_tank, category):
 	GodotLogger.debug("on_base_damage = %s base_tank = %s" % [damage, is_from_base_tank])
 	if not is_from_base_tank:
 		base_health -= damage
@@ -606,6 +606,8 @@ func on_base_damage(damage, is_from_base_tank):
 	else:
 		enemy_base_health -= damage
 		map_node.get_node("EnemyBase").update_health_bar(enemy_base_health)
+		var cost = GameData.config.enemy_data[category].cost
+		change_money(cost)
 	
 	if game_ended:
 		return
@@ -782,7 +784,7 @@ func on_set_base_damage(base_damage):
 		Console.print_line("set_base_damage <float>")
 		return
 	
-	on_base_damage(float(base_damage), false)	
+	on_base_damage(float(base_damage), false, null)	
 	
 func on_spawn_missiles(missile_count_str):
 	if not missile_count_str:

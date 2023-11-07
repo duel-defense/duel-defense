@@ -36,7 +36,7 @@
 		"damage": 25,
 		"sprite_path": "res://Assets/Enemies/Red_Hull_04.png",
 		"turret_sprite_path": "res://Assets/Enemies/Red_Gun_03.png",
-		"cost": 300,
+		"cost": 150,
 		"move_sound": "slow",
 		"engine_trail_x": -40,
 		"engine_trail_width": 3,
