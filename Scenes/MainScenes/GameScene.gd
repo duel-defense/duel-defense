@@ -6,6 +6,7 @@ signal complete_achivement(key)
 var map_name = "Map1"
 var map_node
 var game_ended
+var from_mod = false
 
 var build_mode = false
 var build_valid = false
@@ -43,6 +44,7 @@ var wave_timer
 var auto_turrets_timer
 
 var fired_missile = preload("res://Scenes/SupportScenes/FiredMissile.tscn")
+var fresh_base = preload("res://Scenes/SupportScenes/Base.tscn")
 
 var controller_mouse_movement
 var controller_upgrade_pos
@@ -59,7 +61,14 @@ func _ready():
 	var map_data = GameData.config.maps[map_name]
 	var scene_name = map_data.scene_name
 	var map_path = "res://Scenes/Maps/" + scene_name + ".tscn"
-	if not FileAccess.file_exists(map_path):
+	if "from_mod" in map_data:
+		from_mod = map_data.from_mod
+	
+	if "custom_scene_start_path" in map_data:
+		var custom_scene_start_path = map_data.custom_scene_start_path
+		map_path = custom_scene_start_path + "/Scenes/Maps/" + scene_name + ".tscn"
+	
+	if not from_mod and not FileAccess.file_exists(map_path):
 		GodotLogger.error("GameScene error loading map at %s" % map_path)
 		queue_free()
 		return
@@ -72,6 +81,29 @@ func _ready():
 	map_node = get_node(NodePath(map_instance.name))
 	
 	var base = map_node.get_node_or_null("Base")
+	
+	if not base and from_mod:
+		var base_placeholder = map_node.get_node_or_null("BasePlaceholder")
+		if base_placeholder:
+			var new_base = fresh_base.instantiate()
+			new_base.position = base_placeholder.position
+			new_base.rotation = base_placeholder.rotation
+			new_base.name = "Base"
+			map_node.add_child(new_base)
+			base = new_base
+			
+	var enemy_base_check = map_node.get_node_or_null("EnemyBase")
+	if not enemy_base_check and from_mod:
+		var base_placeholder = map_node.get_node_or_null("EnemyBasePlaceholder")
+		if base_placeholder:
+			var new_base = fresh_base.instantiate()
+			new_base.position = base_placeholder.position
+			new_base.rotation = base_placeholder.rotation
+			new_base.enemy_base = true
+			new_base.show_health_bar = false
+			new_base.name = "EnemyBase"
+			map_node.add_child(new_base)
+	
 	if base:
 		base.connect("accept_click", Callable(self, "initiate_upgrade_mode").bind(base))
 		base.connect("cancel_click", Callable(self, "cancel_upgrade_mode").bind(base))
