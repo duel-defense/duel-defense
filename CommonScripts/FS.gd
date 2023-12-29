@@ -25,6 +25,8 @@ func list_files_in_directory(path):
 	
 func read_file(path):
 	var file = FileAccess.open(path, FileAccess.READ)
+	if not file:
+		return null
 	var content = file.get_as_text()
 	file.close()
 	return content

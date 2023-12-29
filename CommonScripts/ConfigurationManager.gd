@@ -3,6 +3,9 @@ extends Node
 const FS = preload("res://CommonScripts/FS.gd")
 var fs = FS.new()
 
+const ModManager = preload("res://CommonScripts/ModManager.gd")
+var mod_manager = ModManager.new()
+
 var default_config_path = "res://Assets/Configs/"
 var user_config_path = "user://configs/"
 
@@ -12,7 +15,11 @@ var write_requests_timer = null
 
 func _init():
 	config_container = GameData.config
+	mod_manager.fs = fs
+	mod_manager.configuration_manager = self
+	
 	read_configs()
+	mod_manager.init_mods()
 	
 func _ready():
 	write_requests_timer = Timer.new()
