@@ -19,7 +19,6 @@ func populate_levels():
 	
 	var maps = GameData.config.maps
 	for map_key in maps:
-		print(map_key)
 		var map = maps[map_key]
 		if "friendly_name" not in map:
 			continue

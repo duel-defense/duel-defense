@@ -35,3 +35,21 @@ func write_file(path, contents):
 	var file = FileAccess.open(path, FileAccess.WRITE)
 	file.store_string(contents)
 	file.close()
+	
+func write_file_buffer(path, contents):
+	var file = FileAccess.open(path, FileAccess.WRITE)
+	file.store_buffer(contents)
+	file.close()
+	
+func extract_zip(path, extract_path):
+	var reader := ZIPReader.new()
+	var err := reader.open(path)
+	if err != OK:
+		GodotLogger.error("extract zip error: %s" % err)
+		return
+		
+	for file in reader.get_files():
+		GodotLogger.info("extract zip, extracting: %s" % file)
+		write_file_buffer(extract_path + file, reader.read_file(file))
+		
+	reader.close()

@@ -1,0 +1,42 @@
+[gd_scene load_steps=4 format=3 uid="uid://hnejr2q716np"]
+
+[ext_resource type="Script" path="res://Scenes/UIScenes/ModItem.gd" id="1_pe8tb"]
+[ext_resource type="FontFile" uid="uid://c0tncv8pnqgq4" path="res://addons/material-design-icons/fonts/material_design_icons.ttf" id="2_hbwyr"]
+[ext_resource type="Script" path="res://addons/material-design-icons/nodes/MaterialButton.gd" id="3_3mji5"]
+
+[node name="ModItem" type="VBoxContainer"]
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+size_flags_horizontal = 3
+script = ExtResource("1_pe8tb")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_font_sizes/font_size = 24
+text = "Mod name here"
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Author" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+
+[node name="DownloadButton" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_hbwyr")
+theme_override_font_sizes/font_size = 32
+text = "󰇚"
+script = ExtResource("3_3mji5")
+icon_name = "download"
+icon_size = 32
+
+[node name="HSeparator" type="HSeparator" parent="."]
+layout_mode = 2
+
+[connection signal="pressed" from="HBoxContainer/DownloadButton" to="." method="_on_download_button_pressed"]

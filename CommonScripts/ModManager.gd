@@ -2,10 +2,14 @@ extends Node
 
 var user_mods_path = "user://mods/"
 
+var mod_io_api_key = "14a081a80013ec1f004dc111ecc4f1cc"
+var mod_io_game_id = 5960
+
 var fs = null
 var configuration_manager = null
 
 var mods_loaded = []
+var available_mods = []
 
 func init_mods():
 	# mod loading fails in the editor, see https://github.com/godotengine/godot/issues/19815
@@ -13,13 +17,16 @@ func init_mods():
 		read_mod_dir(user_mods_path)
 	else:
 		GodotLogger.info("disabling init_mods, since running inside editor")
+		
+	get_mod_io_list()
 
 func read_mod_dir(path):
 	GodotLogger.debug("read_mod_dir: " + path)
 	var mod_files = fs.list_files_in_directory(path)
 	
 	for filename in mod_files:
-		if '.pck' in filename:
+		var extension = filename.get_extension()
+		if extension == "pck":
 			load_mod(path, filename)
 
 func load_mod(path, filename):
@@ -62,3 +69,17 @@ func load_mod(path, filename):
 			
 			configuration_manager.config_container.maps[mod_name + "_" + map_key] = map
 				
+func get_mod_io_list():
+	if OS.get_name() == "Android":
+		return
+	
+	var modio = ModIO.new()
+	modio.connect(mod_io_api_key, mod_io_game_id)
+	available_mods = modio.get_mods("")
+	GodotLogger.info("get_mod_io_list found mods: %s" % JSON.stringify(available_mods))
+	
+func mod_downloaded(mod_data):
+	GodotLogger.info("mod downloaded: %s" % JSON.stringify(mod_data))
+	configuration_manager.read_configs()
+	init_mods()
+	
