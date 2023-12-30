@@ -18,6 +18,24 @@ func update_setting(setting_key, value):
 	
 func update_config(key):
 	emit_signal('config_updated', key)
+	
+func show_toast_error(text):
+	ToastParty.show({
+		"text": text,
+		"bgcolor": Color.DARK_RED,
+		"color": Color(1, 1, 1, 1),
+		"gravity": "top",
+		"direction": "center", 
+	})
+	
+func show_toast_success(text):
+	ToastParty.show({
+		"text": text,
+		"bgcolor": Color.DARK_GREEN,
+		"color": Color(1, 1, 1, 1),
+		"gravity": "top",
+		"direction": "center", 
+	})
 
 # Console commands related to GameData
 

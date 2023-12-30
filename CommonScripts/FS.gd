@@ -46,10 +46,14 @@ func extract_zip(path, extract_path):
 	var err := reader.open(path)
 	if err != OK:
 		GodotLogger.error("extract zip error: %s" % err)
-		return
+		return false
 		
 	for file in reader.get_files():
 		GodotLogger.info("extract zip, extracting: %s" % file)
 		write_file_buffer(extract_path + file, reader.read_file(file))
 		
 	reader.close()
+	return true
+
+func file_exists(path):
+	return FileAccess.file_exists(path)

@@ -5,12 +5,12 @@
 [ext_resource type="FontFile" uid="uid://c0tncv8pnqgq4" path="res://addons/material-design-icons/fonts/material_design_icons.ttf" id="3_o5pey"]
 [ext_resource type="Script" path="res://addons/material-design-icons/nodes/MaterialIcon.gd" id="4_c5gll"]
 [ext_resource type="PackedScene" uid="uid://3ojeng56mfwk" path="res://Scenes/SupportScenes/ProgressCircle.tscn" id="5_5gd1v"]
-[ext_resource type="Texture2D" uid="uid://coqj2fcsaxvcn" path="res://addons/controller_icons/assets/key/space.png" id="6_cgovb"]
+[ext_resource type="Texture2D" uid="uid://bva4iswwvta5d" path="res://addons/controller_icons/assets/xbox360/y.png" id="6_28dpf"]
 [ext_resource type="Script" path="res://addons/controller_icons/objects/TextureRect.gd" id="7_bl3kg"]
 [ext_resource type="Script" path="res://addons/material-design-icons/nodes/MaterialButton.gd" id="8_5b8mc"]
-[ext_resource type="Texture2D" uid="uid://cnghdqiitl0fu" path="res://addons/controller_icons/assets/key/esc.png" id="9_1bto8"]
-[ext_resource type="Texture2D" uid="uid://c8t6nj5nejist" path="res://addons/controller_icons/assets/key/p.png" id="10_v4rhh"]
-[ext_resource type="Texture2D" uid="uid://broeuieppu0ni" path="res://addons/controller_icons/assets/key/f.png" id="11_dytwn"]
+[ext_resource type="Texture2D" uid="uid://coxp4sapp4g8n" path="res://addons/controller_icons/assets/xbox360/start.png" id="9_ofhmp"]
+[ext_resource type="Texture2D" uid="uid://bamrmda3in3qq" path="res://addons/controller_icons/assets/xbox360/lb.png" id="10_i2d6a"]
+[ext_resource type="Texture2D" uid="uid://cw2jo5xbteqdu" path="res://addons/controller_icons/assets/xbox360/rb.png" id="11_314ay"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_aphs0"]
 
@@ -153,7 +153,7 @@ mouse_filter = 2
 [node name="ControllerTextureRect" type="TextureRect" parent="HUD/InfoBar/M/H"]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
-texture = ExtResource("6_cgovb")
+texture = ExtResource("6_28dpf")
 expand_mode = 1
 stretch_mode = 5
 script = ExtResource("7_bl3kg")
@@ -246,7 +246,7 @@ custom_minimum_size = Vector2(40, 40)
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
-texture = ExtResource("9_1bto8")
+texture = ExtResource("9_ofhmp")
 expand_mode = 1
 script = ExtResource("7_bl3kg")
 path = "ui_menu"
@@ -275,7 +275,7 @@ custom_minimum_size = Vector2(40, 40)
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
-texture = ExtResource("10_v4rhh")
+texture = ExtResource("10_i2d6a")
 expand_mode = 1
 script = ExtResource("7_bl3kg")
 path = "ui_play"
@@ -303,7 +303,7 @@ layout_mode = 0
 offset_left = -12.0
 offset_right = 28.0
 offset_bottom = 40.0
-texture = ExtResource("11_dytwn")
+texture = ExtResource("11_314ay")
 expand_mode = 1
 script = ExtResource("7_bl3kg")
 path = "ui_fastforward"
