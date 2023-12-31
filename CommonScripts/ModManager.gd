@@ -4,6 +4,7 @@ var user_mods_path = "user://mods/"
 
 var mod_io_api_key = "14a081a80013ec1f004dc111ecc4f1cc"
 var mod_io_game_id = 5960
+var mod_io_interface = null
 
 var fs = null
 var configuration_manager = null
@@ -70,13 +71,11 @@ func load_mod(path, filename):
 			configuration_manager.config_container.maps[mod_name + "_" + map_key] = map
 				
 func get_mod_io_list():
-	if OS.get_name() == "Android":
-		return
-	
-	var modio = ModIO.new()
-	modio.connect(mod_io_api_key, mod_io_game_id)
-	available_mods = modio.get_mods("")
-	GodotLogger.info("get_mod_io_list found mods: %s" % JSON.stringify(available_mods))
+	if mod_io_interface:
+		available_mods = mod_io_interface.get_mod_io_list(mod_io_api_key, mod_io_game_id)
+		GodotLogger.info("get_mod_io_list found mods: %s" % JSON.stringify(available_mods))
+	else:
+		GodotLogger.warn("get_mod_io_list, interface is not loaded")
 	
 func mod_downloaded(mod_data):
 	GodotLogger.info("mod downloaded: %s" % JSON.stringify(mod_data))
