@@ -311,7 +311,11 @@ func update_debug_tile_coords(mouse_position):
 	debug_message.text = str(current_tile)
 	
 func set_tower_preview(tower_type, mouse_position):
-	var drag_tower = load("res://Scenes/Turrets/" + GameData.config.tower_data[tower_type].scene_name + ".tscn").instantiate()
+	var turret_path = "res://Scenes/Turrets/" + GameData.config.tower_data[tower_type].scene_name + ".tscn"
+	if "custom_scene_start_path" in GameData.config.tower_data[tower_type]:
+		var custom_scene_start_path = GameData.config.tower_data[tower_type].custom_scene_start_path
+		turret_path = custom_scene_start_path + "/Scenes/Turrets/" + GameData.config.tower_data[tower_type].scene_name + ".tscn"
+	var drag_tower = load(turret_path).instantiate()
 	drag_tower.set_name("DragTower")
 	drag_tower.modulate = Color("a3a3e4", 0.4)
 	drag_tower.type = tower_type
@@ -356,7 +360,11 @@ func cancel_build_mode():
 	
 func verify_and_build():
 	if build_valid:
-		var new_tower = load("res://Scenes/Turrets/" + GameData.config.tower_data[build_type].scene_name + ".tscn").instantiate()
+		var turret_path = "res://Scenes/Turrets/" + GameData.config.tower_data[build_type].scene_name + ".tscn"
+		if "custom_scene_start_path" in GameData.config.tower_data[build_type]:
+			var custom_scene_start_path = GameData.config.tower_data[build_type].custom_scene_start_path
+			turret_path = custom_scene_start_path + "/Scenes/Turrets/" + GameData.config.tower_data[build_type].scene_name + ".tscn"
+		var new_tower = load(turret_path).instantiate()
 		new_tower.position = build_location
 		new_tower.built = true
 		new_tower.type = build_type

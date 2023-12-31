@@ -52,7 +52,7 @@ func load_mod(path, filename):
 	
 	var mod_maps_str = fs.read_file("res://" + mod_name + "/Assets/Configs/maps.json")
 	if not mod_maps_str:
-		GodotLogger.error("load_mod error loading maps for %s" % filename)
+		GodotLogger.warn("load_mod error loading maps for %s" % filename)
 	else:
 		GodotLogger.info("load_mod maps of: %s" % mod_maps_str)
 		var mod_maps_conv = JSON.new()
@@ -69,6 +69,21 @@ func load_mod(path, filename):
 			map["from_mod"] = true
 			
 			configuration_manager.config_container.maps[mod_name + "_" + map_key] = map
+			
+	var mod_turrets_str = fs.read_file("res://" + mod_name + "/Assets/Configs/tower_data.json")
+	if not mod_turrets_str:
+		GodotLogger.warn("load_mod error loading turrets for %s" % filename)
+	else:
+		GodotLogger.info("load_mod turrets of: %s" % mod_turrets_str)
+		var mod_turrets_conv = JSON.new()
+		mod_turrets_conv.parse(mod_turrets_str)
+		var mod_turrets = mod_turrets_conv.get_data()
+		
+		for turret_key in mod_turrets:
+			var turret = mod_turrets[turret_key]
+			turret["custom_scene_start_path"] = "res://" + mod_name
+			turret["from_mod"] = true
+			configuration_manager.config_container.tower_data[mod_name + "_" + turret_key] = turret
 				
 func get_mod_io_list():
 	if mod_io_interface:
