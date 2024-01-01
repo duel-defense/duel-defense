@@ -182,6 +182,9 @@ func update_menu_items():
 		get_node("MainMenu/Container/TitleContainer").visible = false
 		get_node("MainMenu/Container/VBoxContainer/ResumeGame").visible = true
 		get_node("MainMenu/Container/VBoxContainer/MainMenu").visible = true
+		get_node("MainMenu/Container/VBoxContainer/NewGame").visible = false
+		get_node("MainMenu/Container/VBoxContainer/Mods").visible = false
+		get_node("MainMenu/Container/VBoxContainer/About").visible = false
 		get_node("MainMenu/Container/VBoxContainer/ResumeGame").grab_focus()
 	else:
 		var map_name = GameData.config.settings.main_menu_map
@@ -195,6 +198,9 @@ func update_menu_items():
 		get_node("MainMenu/Container/TitleContainer").visible = true
 		get_node("MainMenu/Container/VBoxContainer/ResumeGame").visible = false
 		get_node("MainMenu/Container/VBoxContainer/MainMenu").visible = false
+		get_node("MainMenu/Container/VBoxContainer/NewGame").visible = true
+		get_node("MainMenu/Container/VBoxContainer/Mods").visible = true
+		get_node("MainMenu/Container/VBoxContainer/About").visible = true
 		get_node("MainMenu/Container/VBoxContainer/NewGame").grab_focus()
 		
 func on_main_menu_pressed():
