@@ -40,8 +40,6 @@ func populate_mods():
 		new_mod_scene.mod_data = mod
 		mods_container.add_child(new_mod_scene)
 		
-	print(OS.has_feature("editor"))
-	print(len(mods_container.get_children()))
 	if len(mods_container.get_children()) == 0 and OS.has_feature("editor"):
 		var mod_scene_label = mod_scene.instantiate()
 		mod_scene_label.mod_label = "Mods do not load in editor"
