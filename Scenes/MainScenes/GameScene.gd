@@ -606,7 +606,13 @@ func spawn_enemies(wave_data, path_name):
 	GodotLogger.info("spawn_enemies, path_name = %s" % path_name)
 	var map_data = GameData.config.maps[map_name]
 	for i in wave_data:
-		var new_enemy = load("res://Scenes/Enemies/" + i.base + ".tscn").instantiate()
+		var enemy_path = "res://Scenes/Enemies/" + i.base + ".tscn"
+		
+		var category_data = GameData.config.enemy_data[i.category]
+		if "custom_scene_start_path" in category_data:
+			var custom_scene_start_path = category_data.custom_scene_start_path
+			enemy_path = custom_scene_start_path + "/Scenes/Enemies/" + i.base + ".tscn"
+		var new_enemy = load(enemy_path).instantiate()
 		new_enemy.category = i.category
 		new_enemy.hide_hp_bar = main_menu_mode
 		if "base_tank" in i and i.base_tank:

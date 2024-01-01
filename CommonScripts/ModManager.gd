@@ -84,6 +84,21 @@ func load_mod(path, filename):
 			turret["custom_scene_start_path"] = "res://" + mod_name
 			turret["from_mod"] = true
 			configuration_manager.config_container.tower_data[mod_name + "_" + turret_key] = turret
+			
+	var mod_enemies_str = fs.read_file("res://" + mod_name + "/Assets/Configs/enemy_data.json")
+	if not mod_enemies_str:
+		GodotLogger.warn("load_mod error loading enemies for %s" % filename)
+	else:
+		GodotLogger.info("load_mod enemies of: %s" % mod_enemies_str)
+		var mod_enemies_conv = JSON.new()
+		mod_enemies_conv.parse(mod_enemies_str)
+		var mod_enemies = mod_enemies_conv.get_data()
+		
+		for enemy_key in mod_enemies:
+			var enemy = mod_enemies[enemy_key]
+			enemy["custom_scene_start_path"] = "res://" + mod_name
+			enemy["from_mod"] = true
+			configuration_manager.config_container.enemy_data[enemy_key] = enemy
 				
 func get_mod_io_list():
 	if mod_io_interface:
