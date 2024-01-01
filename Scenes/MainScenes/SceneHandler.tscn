@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://chda2td08g4ne"]
+[gd_scene load_steps=11 format=3 uid="uid://chda2td08g4ne"]
 
 [ext_resource type="PackedScene" uid="uid://hxdgd1oagsk4" path="res://Scenes/UIScenes/MainMenu.tscn" id="1"]
 [ext_resource type="Script" path="res://Scenes/MainScenes/SceneHandler.gd" id="1_js57m"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://805uxnmkv55g" path="res://Scenes/UIScenes/EditorItemPopup.tscn" id="7_qa2fr"]
 [ext_resource type="PackedScene" uid="uid://bt02vvg82rini" path="res://Scenes/UIScenes/LevelSelect.tscn" id="8_0g8m6"]
 [ext_resource type="PackedScene" uid="uid://cass4lmn3tgrq" path="res://Scenes/UIScenes/Achivements.tscn" id="9_xox68"]
+[ext_resource type="PackedScene" uid="uid://dt5e4vj7g77yj" path="res://Scenes/UIScenes/Mods.tscn" id="10_hvmbj"]
 
 [node name="SceneHandler" type="Node"]
 process_mode = 3
@@ -41,6 +42,9 @@ visible = false
 visible = false
 
 [node name="Achivements" parent="." instance=ExtResource("9_xox68")]
+visible = false
+
+[node name="Mods" parent="." instance=ExtResource("10_hvmbj")]
 visible = false
 
 [connection signal="close_requested" from="AboutPopup" to="AboutPopup" method="_on_close_requested"]

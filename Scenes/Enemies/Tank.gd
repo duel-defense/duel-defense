@@ -1,5 +1,7 @@
 extends PathFollow2D
 
+class_name Tank
+
 signal on_base_damage(damage, is_from_base_tank, category)
 signal on_destroyed(category, on_destroyed)
 

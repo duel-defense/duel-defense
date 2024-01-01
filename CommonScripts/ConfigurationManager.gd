@@ -4,7 +4,7 @@ const FS = preload("res://CommonScripts/FS.gd")
 var fs = FS.new()
 
 const ModManager = preload("res://CommonScripts/ModManager.gd")
-var mod_manager = ModManager.new()
+var mod_manager
 
 var default_config_path = "res://Assets/Configs/"
 var user_config_path = "user://configs/"
@@ -15,8 +15,16 @@ var write_requests_timer = null
 
 func _init():
 	config_container = GameData.config
+	
+	var mod_io_interface = null
+	if type_exists("ModIO"):
+		var ModManagerModIo = load("res://CommonScripts/ModManagerModIo.gd")
+		mod_io_interface = ModManagerModIo.new()
+	
+	mod_manager = ModManager.new()
 	mod_manager.fs = fs
 	mod_manager.configuration_manager = self
+	mod_manager.mod_io_interface = mod_io_interface
 	
 	read_configs()
 	mod_manager.init_mods()

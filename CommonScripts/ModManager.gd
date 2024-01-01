@@ -2,10 +2,15 @@ extends Node
 
 var user_mods_path = "user://mods/"
 
+var mod_io_api_key = "14a081a80013ec1f004dc111ecc4f1cc"
+var mod_io_game_id = 5960
+var mod_io_interface = null
+
 var fs = null
 var configuration_manager = null
 
 var mods_loaded = []
+var available_mods = []
 
 func init_mods():
 	# mod loading fails in the editor, see https://github.com/godotengine/godot/issues/19815
@@ -13,13 +18,16 @@ func init_mods():
 		read_mod_dir(user_mods_path)
 	else:
 		GodotLogger.info("disabling init_mods, since running inside editor")
+		
+	get_mod_io_list()
 
 func read_mod_dir(path):
 	GodotLogger.debug("read_mod_dir: " + path)
 	var mod_files = fs.list_files_in_directory(path)
 	
 	for filename in mod_files:
-		if '.pck' in filename:
+		var extension = filename.get_extension()
+		if extension == "pck":
 			load_mod(path, filename)
 
 func load_mod(path, filename):
@@ -44,7 +52,7 @@ func load_mod(path, filename):
 	
 	var mod_maps_str = fs.read_file("res://" + mod_name + "/Assets/Configs/maps.json")
 	if not mod_maps_str:
-		GodotLogger.error("load_mod error loading maps for %s" % filename)
+		GodotLogger.warn("load_mod error loading maps for %s" % filename)
 	else:
 		GodotLogger.info("load_mod maps of: %s" % mod_maps_str)
 		var mod_maps_conv = JSON.new()
@@ -61,4 +69,46 @@ func load_mod(path, filename):
 			map["from_mod"] = true
 			
 			configuration_manager.config_container.maps[mod_name + "_" + map_key] = map
+			
+	var mod_turrets_str = fs.read_file("res://" + mod_name + "/Assets/Configs/tower_data.json")
+	if not mod_turrets_str:
+		GodotLogger.warn("load_mod error loading turrets for %s" % filename)
+	else:
+		GodotLogger.info("load_mod turrets of: %s" % mod_turrets_str)
+		var mod_turrets_conv = JSON.new()
+		mod_turrets_conv.parse(mod_turrets_str)
+		var mod_turrets = mod_turrets_conv.get_data()
+		
+		for turret_key in mod_turrets:
+			var turret = mod_turrets[turret_key]
+			turret["custom_scene_start_path"] = "res://" + mod_name
+			turret["from_mod"] = true
+			configuration_manager.config_container.tower_data[mod_name + "_" + turret_key] = turret
+			
+	var mod_enemies_str = fs.read_file("res://" + mod_name + "/Assets/Configs/enemy_data.json")
+	if not mod_enemies_str:
+		GodotLogger.warn("load_mod error loading enemies for %s" % filename)
+	else:
+		GodotLogger.info("load_mod enemies of: %s" % mod_enemies_str)
+		var mod_enemies_conv = JSON.new()
+		mod_enemies_conv.parse(mod_enemies_str)
+		var mod_enemies = mod_enemies_conv.get_data()
+		
+		for enemy_key in mod_enemies:
+			var enemy = mod_enemies[enemy_key]
+			enemy["custom_scene_start_path"] = "res://" + mod_name
+			enemy["from_mod"] = true
+			configuration_manager.config_container.enemy_data[enemy_key] = enemy
 				
+func get_mod_io_list():
+	if mod_io_interface:
+		available_mods = mod_io_interface.get_mod_io_list(mod_io_api_key, mod_io_game_id)
+		GodotLogger.info("get_mod_io_list found mods: %s" % JSON.stringify(available_mods))
+	else:
+		GodotLogger.warn("get_mod_io_list, interface is not loaded")
+	
+func mod_downloaded(mod_data):
+	GodotLogger.info("mod downloaded: %s" % JSON.stringify(mod_data))
+	configuration_manager.read_configs()
+	init_mods()
+	

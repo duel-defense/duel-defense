@@ -46,7 +46,9 @@ This will switch to a map called Map1, enable to debug automatic turrets, and st
 
 ### Modding
 
-Mods are in the form of .pck files, that can be put into ~/.local/share/godot/app_userdata/Duel Defense/mods. Mods can override existing files in the game, or new items can be created, such as new levels.
+Mods are in the form of .pck files, that can be put into the user data mods folder, ~/.local/share/godot/app_userdata/Duel Defense/mods on Linux for example. Mods can override existing files in the game, or new items can be created, such as new levels.
+
+Mods can be manually installed. As well, mod.io is integrated with the game, so that mods can be downloaded in-game. See https://mod.io/g/duel-defense1 for a list of mods, and to upload a mod.
 
 For more information about how to create mods, go to https://github.com/d10sfan/duel-defense-mod-example. Note that mods will not be loaded while the game is being tested in the editor, due to a Godot bug.
 

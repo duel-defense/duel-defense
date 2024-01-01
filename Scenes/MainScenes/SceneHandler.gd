@@ -9,6 +9,7 @@ var in_game_for_menu = false
 @onready var configuration_manager = $ConfigurationManager
 @onready var level_select = $LevelSelect
 @onready var achivements = $Achivements
+@onready var mods = $Mods
 
 func _ready():
 	SoundManager.set_default_music_bus("BackgroundMusic")
@@ -24,6 +25,8 @@ func _ready():
 	
 	Console.add_command("open_editor", on_open_editor)
 	Console.add_command("map", on_load_map, 1)
+	
+	mods.configuration_manager = $ConfigurationManager
 	
 	check_autoexec()
 	
@@ -169,6 +172,8 @@ func link_main_menu():
 	get_node("MainMenu/Container/VBoxContainer/MainMenu").connect("pressed", Callable(self, "on_main_menu_pressed"))
 	# warning-ignore:return_value_discarded
 	get_node("MainMenu/Container/VBoxContainer/Achivements").connect("pressed", Callable(self, "on_achivements_pressed"))
+	# warning-ignore:return_value_discarded
+	get_node("MainMenu/Container/VBoxContainer/Mods").connect("pressed", Callable(self, "on_mods_pressed"))
 	
 	update_menu_items()
 	
@@ -198,6 +203,9 @@ func on_main_menu_pressed():
 	
 func on_achivements_pressed():
 	achivements.open()
+	
+func on_mods_pressed():
+	mods.open()
 
 func on_new_game_pressed():
 	Helpers.play_button_sound()

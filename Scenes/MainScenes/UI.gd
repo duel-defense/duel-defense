@@ -204,7 +204,11 @@ func setup_build_buttons(buttons, parent_node, show_regardless = false, func_nam
 			button.connect("pressed", Callable(get_parent(), func_name).bind(button.get_name()))
 			
 			if item.category != "Action":
-				var icon = load("res://Scenes/Turrets/" + item.scene_name + ".tscn").instantiate()
+				var turret_path = "res://Scenes/Turrets/" + item.scene_name + ".tscn"
+				if "custom_scene_start_path" in item:
+					var custom_scene_start_path = item.custom_scene_start_path
+					turret_path = custom_scene_start_path + "/Scenes/Turrets/" + item.scene_name + ".tscn"
+				var icon = load(turret_path).instantiate()
 				icon.name = button_name
 				icon.type = button_name
 				icon.scale = Vector2(0.7, 0.7)
