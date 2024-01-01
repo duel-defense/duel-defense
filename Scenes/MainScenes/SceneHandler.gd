@@ -202,6 +202,9 @@ func update_menu_items():
 		get_node("MainMenu/Container/VBoxContainer/Mods").visible = true
 		get_node("MainMenu/Container/VBoxContainer/About").visible = true
 		get_node("MainMenu/Container/VBoxContainer/NewGame").grab_focus()
+	
+	if OS.has_feature("mobile") or OS.has_feature("web"):
+		get_node("MainMenu/Container/VBoxContainer/Quit").visible = true
 		
 func on_main_menu_pressed():
 	on_congrats_main_menu()
