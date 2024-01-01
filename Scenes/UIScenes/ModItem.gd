@@ -4,6 +4,7 @@ extends Control
 @export var mod_author = ""
 @export var mod_loaded = false
 @export var mod_divider_label = false
+@export var mod_link = ""
 var mod_data
 @export var mod_manager: Node
 @export var fs: Node
@@ -11,6 +12,7 @@ var mod_data
 @onready var label_node = $HBoxContainer/Label
 @onready var author_node = $HBoxContainer/Author
 @onready var download_button_node = $HBoxContainer/DownloadButton
+@onready var link_button_node = $HBoxContainer/LinkButton
 var http_request
 
 func _ready():
@@ -21,6 +23,9 @@ func _ready():
 		
 	if mod_divider_label:
 		label_node.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	
+	if mod_link != "":
+		link_button_node.visible = true
 	
 	http_request = HTTPRequest.new()
 	add_child(http_request)
@@ -56,3 +61,6 @@ func _http_request_completed(_result, response_code, _headers, body):
 	download_button_node.visible = false
 	GameData.show_toast_success("Mod successfully installed!")
 	
+
+func _on_link_button_pressed():
+	OS.shell_open(mod_link)

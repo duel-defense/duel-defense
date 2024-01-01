@@ -112,3 +112,14 @@ func mod_downloaded(mod_data):
 	configuration_manager.read_configs()
 	init_mods()
 	
+func available_mods_for_ui():
+	var mods_list = []
+	
+	for mod in available_mods:
+		var mod_file_loaded = fs.file_exists(user_mods_path + mod.modfile_name)
+		if mod_file_loaded:
+			continue
+			
+		mods_list.append(mod)
+	
+	return mods_list
