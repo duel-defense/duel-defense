@@ -34,6 +34,7 @@ func populate_mods():
 	for mod in mods_available:
 		var new_mod_scene = mod_scene.instantiate()
 		new_mod_scene.mod_label = mod.name
+		new_mod_scene.mod_link = mod.profile_url
 		new_mod_scene.mod_author = "by %s" % mod.submitted_by_username
 		new_mod_scene.mod_manager = configuration_manager.mod_manager
 		new_mod_scene.fs = configuration_manager.fs
