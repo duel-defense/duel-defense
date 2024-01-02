@@ -4,13 +4,20 @@ var user_mods_path = "user://mods/"
 
 var mod_io_api_key = "14a081a80013ec1f004dc111ecc4f1cc"
 var mod_io_game_id = 5960
-var mod_io_interface = null
 
 var fs = null
 var configuration_manager = null
+var http_request
 
 var mods_loaded = []
 var available_mods = []
+
+func _ready():
+	http_request = HTTPRequest.new()
+	add_child(http_request)
+	http_request.request_completed.connect(self._http_request_completed)
+
+	init_mods()
 
 func init_mods():
 	# mod loading fails in the editor, see https://github.com/godotengine/godot/issues/19815
@@ -101,12 +108,32 @@ func load_mod(path, filename):
 			configuration_manager.config_container.enemy_data[enemy_key] = enemy
 				
 func get_mod_io_list():
-	if mod_io_interface:
-		available_mods = mod_io_interface.get_mod_io_list(mod_io_api_key, mod_io_game_id)
-		GodotLogger.info("get_mod_io_list found mods: %s" % JSON.stringify(available_mods))
-	else:
-		GodotLogger.warn("get_mod_io_list, interface is not loaded")
+	var error = http_request.request("https://g-%s.modapi.io/v1/games/%s/mods?api_key=%s" % [mod_io_game_id, mod_io_game_id, mod_io_api_key])
+	if error != OK:
+		GodotLogger.error("An error occurred in the HTTP request. %s" % error)
+		GameData.show_toast_error("An error occurred in the HTTP request")
+
+func _http_request_completed(_result, response_code, _headers, body):
+	if response_code != 200:
+		GodotLogger.error("get mod.io list error: %d" % response_code)
+		GameData.show_toast_error("An error occurred in getting the mod.io list")
+		return
 	
+	var parsed_response = JSON.parse_string(body.get_string_from_utf8())
+	
+	available_mods = []
+	for raw_mod in parsed_response.data:
+		var mod = {}
+		mod.name = raw_mod.name
+		mod.profile_url = raw_mod.profile_url
+		mod.author = raw_mod.submitted_by.username
+		mod.modfile_url = raw_mod.modfile.download.binary_url
+		mod.modfile_name = raw_mod.modfile.filename
+		mod.modfile_version = raw_mod.modfile.version
+		available_mods.append(mod)
+		
+	GodotLogger.info("get_mod_io_list available mods: %s" % JSON.stringify(available_mods))
+
 func mod_downloaded(mod_data):
 	GodotLogger.info("mod downloaded: %s" % JSON.stringify(mod_data))
 	configuration_manager.read_configs()

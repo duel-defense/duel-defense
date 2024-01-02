@@ -205,9 +205,6 @@ func update_menu_items():
 	
 	if OS.has_feature("mobile") or OS.has_feature("web"):
 		get_node("MainMenu/Container/VBoxContainer/Quit").visible = false
-	
-	if OS.has_feature("web"):
-		get_node("MainMenu/Container/VBoxContainer/Mods").visible = false
 		
 func on_main_menu_pressed():
 	on_congrats_main_menu()
