@@ -29,9 +29,10 @@ initial_position = 1
 visible = false
 configuration_manager = NodePath("../ConfigurationManager")
 
-[node name="EditorPopup" parent="." instance=ExtResource("6_qbtsl")]
+[node name="EditorPopup" parent="." node_paths=PackedStringArray("configuration_manager") instance=ExtResource("6_qbtsl")]
 size = Vector2i(400, 500)
 visible = false
+configuration_manager = NodePath("../ConfigurationManager")
 
 [node name="EditorItemPopup" parent="." instance=ExtResource("7_qa2fr")]
 initial_position = 1

@@ -1,9 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://bw7rlknuhkw6x"]
+[gd_scene load_steps=6 format=3 uid="uid://bw7rlknuhkw6x"]
 
 [ext_resource type="Script" path="res://Scenes/UIScenes/EditorPopup.gd" id="1"]
 [ext_resource type="Theme" uid="uid://yove688wbh0t" path="res://Resources/Themes/MainTheme.tres" id="2"]
 [ext_resource type="FontFile" uid="uid://c0tncv8pnqgq4" path="res://addons/material-design-icons/fonts/material_design_icons.ttf" id="3_vmwbx"]
 [ext_resource type="Script" path="res://addons/material-design-icons/nodes/MaterialButton.gd" id="4_d12vk"]
+
+[sub_resource type="SyntaxHighlighter" id="SyntaxHighlighter_cfdbc"]
 
 [node name="EditorPopup" type="Window"]
 title = "Editor"
@@ -59,22 +61,48 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
+[node name="Maps" type="ScrollContainer" parent="VBoxContainer/TabContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/TabContainer/Maps"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("2")
+
+[node name="CodeEdit" type="CodeEdit" parent="VBoxContainer/TabContainer/Maps/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+wrap_mode = 1
+scroll_smooth = true
+minimap_draw = true
+caret_blink = true
+syntax_highlighter = SubResource("SyntaxHighlighter_cfdbc")
+highlight_all_occurrences = true
+highlight_current_line = true
+draw_spaces = true
+line_folding = true
+gutters_draw_line_numbers = true
+
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
 
-[node name="AddButton" type="Button" parent="VBoxContainer/HBoxContainer"]
+[node name="ResetButton" type="Button" parent="VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 focus_mode = 0
 theme_override_fonts/font = ExtResource("3_vmwbx")
 theme_override_font_sizes/font_size = 64
-text = "󰐕"
+text = "󰝳"
 alignment = 0
 script = ExtResource("4_d12vk")
-icon_name = "plus"
+icon_name = "lock-reset"
 icon_size = 64
 
-[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer/AddButton"]
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer/ResetButton"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -88,6 +116,43 @@ offset_bottom = 21.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 32
-text = "Add"
+text = "Reset
+"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="SaveButton" type="Button" parent="VBoxContainer/HBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+theme_override_fonts/font = ExtResource("3_vmwbx")
+theme_override_font_sizes/font_size = 64
+text = "󰆓"
+alignment = 0
+script = ExtResource("4_d12vk")
+icon_name = "content-save"
+icon_size = 64
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer/SaveButton"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -34.0
+offset_top = -21.0
+offset_right = 34.0
+offset_bottom = 21.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 32
+text = "Save
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="tab_changed" from="VBoxContainer/TabContainer" to="." method="_on_tab_container_tab_changed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/ResetButton" to="." method="_on_reset_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/SaveButton" to="." method="_on_save_button_pressed"]
