@@ -22,7 +22,7 @@ jobs:
         sudo apt install wine64
         echo "WINE_PATH=$(which wine64)" >> $GITHUB_OUTPUT
     - name: Save Android Debug Keystore
-      uses: akiojin/decode-base64-github-action@v0.1.0
+      uses: akiojin/decode-base64-github-action@v1.0.0
       with:
         base64: ${{ secrets.ANDROID_DEBUG_KEYSTORE }}
         output-path: debug.keystore
