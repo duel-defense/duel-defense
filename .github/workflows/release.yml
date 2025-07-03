@@ -45,7 +45,7 @@ jobs:
         cache: true
         wine_path: ${{ steps.wine_install.outputs.WINE_PATH }}
     - name: Create Release
-      uses: ncipollo/release-action@v1.16.0
+      uses: ncipollo/release-action@v1.18.0
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         generateReleaseNotes: true
