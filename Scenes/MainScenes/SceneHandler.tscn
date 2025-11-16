@@ -1,8 +1,8 @@
 [gd_scene load_steps=11 format=3 uid="uid://chda2td08g4ne"]
 
 [ext_resource type="PackedScene" uid="uid://hxdgd1oagsk4" path="res://Scenes/UIScenes/MainMenu.tscn" id="1"]
-[ext_resource type="Script" path="res://Scenes/MainScenes/SceneHandler.gd" id="1_js57m"]
-[ext_resource type="Script" path="res://CommonScripts/ConfigurationManager.gd" id="4"]
+[ext_resource type="Script" uid="uid://co7adk2yxdfev" path="res://Scenes/MainScenes/SceneHandler.gd" id="1_js57m"]
+[ext_resource type="Script" uid="uid://2qsccdgymm37" path="res://CommonScripts/ConfigurationManager.gd" id="4"]
 [ext_resource type="PackedScene" uid="uid://bnl7p1oeylqxr" path="res://Scenes/UIScenes/AboutPopup.tscn" id="4_4d0xc"]
 [ext_resource type="PackedScene" uid="uid://c7sq5e5ujjkt" path="res://Scenes/UIScenes/SettingsPopup.tscn" id="5_ciynv"]
 [ext_resource type="PackedScene" uid="uid://bw7rlknuhkw6x" path="res://Scenes/UIScenes/EditorPopup.tscn" id="6_qbtsl"]
