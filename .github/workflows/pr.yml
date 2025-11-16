@@ -9,34 +9,17 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v5
-    - name: Setup JDK
-      uses: actions/setup-java@v5
-      with:
-        java-version: '17'
-        distribution: 'temurin'
-    - name: Setup Android SDK
-      uses: android-actions/setup-android@v3
     - name: Setup wine
       id: wine_install
       run: |
         sudo apt install wine64
         echo "WINE_PATH=$(which wine64)" >> $GITHUB_OUTPUT
-    - name: Save Android Debug Keystore
-      uses: akiojin/decode-base64-github-action@v1.0.10
-      with:
-        base64: ${{ secrets.ANDROID_DEBUG_KEYSTORE }}
-        output-path: debug.keystore
-    - name: Setup Android Debug Keystore
-      run: |
-        echo "GODOT_ANDROID_KEYSTORE_DEBUG_PATH=debug.keystore" >> $GITHUB_ENV
-        echo "GODOT_ANDROID_KEYSTORE_DEBUG_USER=${{ secrets.ANDROID_DEBUG_KEYSTORE_USER }}" >> $GITHUB_ENV
-        echo "GODOT_ANDROID_KEYSTORE_DEBUG_PASSWORD=${{ secrets.ANDROID_DEBUG_KEYSTORE_PASSWORD }}" >> $GITHUB_ENV
     - name: Export Game
       id: export
       uses: firebelley/godot-export@v7.0.0
       with:
-        godot_executable_download_url: https://downloads.tuxfamily.org/godotengine/4.2/Godot_v4.2-stable_linux.x86_64.zip
-        godot_export_templates_download_url: https://downloads.tuxfamily.org/godotengine/4.2/Godot_v4.2-stable_export_templates.tpz
+        godot_executable_download_url: https://github.com/godotengine/godot/releases/download/4.5.1-stable/Godot_v4.5.1-stable_linux.x86_64.zip
+        godot_export_templates_download_url: https://github.com/godotengine/godot/releases/download/4.5.1-stable/Godot_v4.5.1-stable_export_templates.tpz
         relative_project_path: ./
         archive_output: true
         export_debug: true
@@ -47,18 +30,8 @@ jobs:
       with:
         name: linux
         path: ${{ steps.export.outputs.archive_directory }}/LinuxX11.zip
-    - name: Upload Web Artifact
-      uses: actions/upload-artifact@v5
-      with:
-        name: web
-        path: ${{ steps.export.outputs.archive_directory }}/Web.zip
     - name: Upload Windows Artifact
       uses: actions/upload-artifact@v5
       with:
         name: windows
         path: ${{ steps.export.outputs.archive_directory }}/Windows Desktop.zip
-    - name: Upload Android Artifact
-      uses: actions/upload-artifact@v5
-      with:
-        name: android
-        path: ${{ steps.export.outputs.archive_directory }}/Android.zip
